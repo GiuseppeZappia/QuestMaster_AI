@@ -3,6 +3,8 @@ import os
 from langchain_google_genai import ChatGoogleGenerativeAI
 from domain_generation import create_domain_pddl
 from problem_generation import create_problem_pddl
+from reflective_agent import run_correction_workflow
+from pddl_validation import run_fastdownward_and_validate
 from pddl_validation import run_fastdownward_complete
 from dotenv import load_dotenv
 
@@ -31,6 +33,27 @@ def main():
 
     #crea il problema della lore generata
     create_problem_pddl(llm)
+
+    #PARTE VALIDAZIONE E GESTIONE ERRORE ANASTASIA
+
+    pddl_validation_output=run_fastdownward_and_validate()
+
+
+    #CAMBIARE IN BASE A LOGICA ANASTASIA
+    if not pddl_validation_output["success"]:
+        output=pddl_validation_output
+        count_attempts=0
+        while(not output["success"] and count_attempts<8):
+            print(f"❌ Errore nella validazione PDDL: {output['error_message']}")
+            print("🔄 Riprovo a correggere il PDDL...")
+            run_correction_workflow(output["pddl_problem"], llm)
+            output=run_fastdownward_and_validate()
+            count_attempts+=1
+        #FACCIAMO MIN ATTEMPTS E POI HUMAN IN THE LOOP CON UMANO CHE LEGGE DOMAIN E PROBLEM E 
+        #SUGGERISCE CORREZIONE DA FARE? COSI CHIAMEREMMO ANCORA IL METODO  correction_workflow ma con stringa errore passata da utente
+        
+        
+    
 
     results = run_fastdownward_complete()
     
