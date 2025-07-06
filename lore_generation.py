@@ -3,101 +3,92 @@ from langchain.prompts import ChatPromptTemplate
 from langchain.schema import HumanMessage, AIMessage
 import os
 import json
+from utils import load_example_json
 
+# API_KEY=os.getenv("API_KEY")
+# # Configurazione API key
+# os.environ["GOOGLE_API_KEY"] = API_KEY
 
-API_KEY=os.getenv("API_KEY")
-# Configurazione API key
-os.environ["GOOGLE_API_KEY"] = API_KEY
+# # Inizializza il modello Gemini 2.0 Flash
+# llm = ChatGoogleGenerativeAI(
+#     model="gemini-2.0-flash",
+#     temperature=0.6
+# )
 
-# Inizializza il modello Gemini 2.0 Flash
-llm = ChatGoogleGenerativeAI(
-    model="gemini-2.0-flash",
-    temperature=0.6
-)
-
-# Carica il JSON di esempio dalla stessa cartella
-def load_example_json(filename):
-    try:
-        with open(filename, 'r', encoding='utf-8') as f:
-            return json.load(f)
-    except FileNotFoundError:
-        print(f"File {filename} non trovato nella cartella corrente")
-        return None
-    except json.JSONDecodeError as e:
-        print(f"Errore nel parsing del JSON: {e}")
-        return None
 
 # Carica l'esempio JSON 
-example_json = load_example_json("loreDiProva.json") 
+example_json = load_example_json("file_esempio/loreDiProva.json") 
 
-user_input=input("Inserisci la richiesta per la lore della quest: ")
+# user_input=input("Inserisci la richiesta per la lore della quest: ")
 
-# Prompt personalizzato
-prompt = f"""Sei un esperto game designer specializzato nella creazione di avventure narrative interattive per il sistema QuestMaster.
 
-Il tuo compito è creare una lore dettagliata in formato JSON, a partire dalla richiesta dell'utente che verrà poi convertita in un problema di pianificazione PDDL.
+def generate_lore(user_input,llm):
+    # Prompt personalizzato
+    prompt = f"""Sei un esperto game designer specializzato nella creazione di avventure narrative interattive per il sistema QuestMaster.
 
-FORMATO RICHIESTO:
-Devi generare un JSON che segua esattamente la struttura dell'esempio fornito. È fondamentale che includa:
-1. Una descrizione completa della quest con stato iniziale, obiettivo e ostacoli
-2. Il branching factor (numero min/max di azioni disponibili per ogni stato narrativo)
-3. I vincoli di profondità (numero min/max di passi per completare la quest)
-4. Tutti gli elementi necessari per creare un problema PDDL valido 
+    Il tuo compito è creare una lore dettagliata in formato JSON, a partire dalla richiesta dell'utente che verrà poi convertita in un problema di pianificazione PDDL.
 
-ISTRUZIONI:
-- Rispondi SOLO con il JSON valido
-- Non aggiungere testo prima o dopo il JSON
-- Assicurati che la struttura sia identica all'esempio fornito
-- Crea una narrativa coinvolgente e logicamente coerente
+    FORMATO RICHIESTO:
+    Devi generare un JSON che segua esattamente la struttura dell'esempio fornito. È fondamentale che includa:
+    1. Una descrizione completa della quest con stato iniziale, obiettivo e ostacoli
+    2. Il branching factor (numero min/max di azioni disponibili per ogni stato narrativo)
+    3. I vincoli di profondità (numero min/max di passi per completare la quest)
+    4. Tutti gli elementi necessari per creare un problema PDDL valido 
 
-ESEMPIO INPUT UTENTE:
-Crea una quest fantasy dove un erore deve salvare una principessa rapita da un drago. 
+    ISTRUZIONI:
+    - Rispondi SOLO con il JSON valido
+    - Non aggiungere testo prima o dopo il JSON
+    - Assicurati che la struttura sia identica all'esempio fornito
+    - Crea una narrativa coinvolgente e logicamente coerente
 
-ESEMPIO DI SOUTPUT DA PRODURRE:
-{json.dumps(example_json, indent=2, ensure_ascii=False)}
+    ESEMPIO INPUT UTENTE:
+    Crea una quest fantasy dove un erore deve salvare una principessa rapita da un drago. 
 
-NUOVO INPUT UTENTE DI CUI DEVI GENERARE IL JSON DELLA LORE:
-{user_input}
-"""
+    ESEMPIO DI OUTPUT DA PRODURRE:
+    {json.dumps(example_json, indent=2, ensure_ascii=False)}
 
-# Genera la lore
-response = llm.invoke(prompt)
+    NUOVO INPUT UTENTE DI CUI DEVI GENERARE IL JSON DELLA LORE:
+    {user_input}
+    """
 
-# Estrai e pulisci la risposta
-response_text = response.content.strip()
+    # Genera la lore
+    response = llm.invoke(prompt)
 
-# Prova a estrarre il JSON dalla risposta
-if "```json" in response_text:
-    json_start = response_text.find("```json") + 7
-    json_end = response_text.rfind("```")
-    json_text = response_text[json_start:json_end].strip()
-elif response_text.startswith("{"):
-    json_text = response_text
-else:
-    # Cerca il primo { e l'ultimo }
-    start_idx = response_text.find("{")
-    end_idx = response_text.rfind("}") + 1
-    if start_idx != -1 and end_idx != 0:
-        json_text = response_text[start_idx:end_idx]
-    else:
+    # Estrai e pulisci la risposta
+    response_text = response.content.strip()
+
+    # Prova a estrarre il JSON dalla risposta
+    if "```json" in response_text:
+        json_start = response_text.find("```json") + 7
+        json_end = response_text.rfind("```")
+        json_text = response_text[json_start:json_end].strip()
+    elif response_text.startswith("{"):
         json_text = response_text
+    else:
+        # Cerca il primo { e l'ultimo }
+        start_idx = response_text.find("{")
+        end_idx = response_text.rfind("}") + 1
+        if start_idx != -1 and end_idx != 0:
+            json_text = response_text[start_idx:end_idx]
+        else:
+            json_text = response_text
 
-try:
-    # Converti in dizionario per validare
-    lore_data = json.loads(json_text)
-    
-    # Salva la lore generata
-    output_filename = "lore_generata_per_utente.json"
-    with open(output_filename, 'w', encoding='utf-8') as f:
-        json.dump(lore_data, f, indent=2, ensure_ascii=False)
-    
-    print(f"✅ Lore generata con successo e salvata in: {output_filename}")
-    
-    # Mostra anteprima
-    if "quest_description" in lore_data:
-        print(f"\n📖 Titolo: {lore_data['quest_description'].get('title', 'N/A')}")
-        print(f"📝 Descrizione: {lore_data['quest_description'].get('description', 'N/A')[:150]}...")
-    
-except json.JSONDecodeError as e:
-    print(f"❌ Errore nel parsing JSON: {e}")
-    print(f"Risposta ricevuta:\n{response_text}")
+    try:
+        # Converti in dizionario per validare
+        lore_data = json.loads(json_text)
+        
+        # Salva la lore generata
+        output_filename = "file_generati/lore_generata_per_utente.json"
+        with open(output_filename, 'w', encoding='utf-8') as f:
+            json.dump(lore_data, f, indent=2, ensure_ascii=False)
+        
+        print(f"✅ Lore generata con successo e salvata in: {output_filename}")
+        
+        # Mostra anteprima
+        if "quest_description" in lore_data:
+            print(f"\n📖 Titolo: {lore_data['quest_description'].get('title', 'N/A')}")
+            print(f"📝 Descrizione: {lore_data['quest_description'].get('description', 'N/A')[:150]}...")
+        
+    except json.JSONDecodeError as e:
+        print(f"❌ Errore nel parsing JSON: {e}")
+        print(f"Risposta ricevuta:\n{response_text}")

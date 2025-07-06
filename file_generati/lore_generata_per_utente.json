@@ -1,0 +1,25 @@
+{
+  "lore_document": {
+    "quest_description": {
+      "title": "La Maledizione del Tesoro Maledetto",
+      "initial_state": "La ciurma del 'Sea Serpent', capitanata dal famigerato Barbanera, è alla deriva su una zattera dopo che la loro nave è stata distrutta da una tempesta. Hanno perso tutto tranne una vecchia mappa del tesoro, che indica l'ubicazione del leggendario Tesoro Maledetto di Isla Perdida.",
+      "goal": "Trovare il Tesoro Maledetto di Isla Perdida e spezzare la maledizione, permettendo alla ciurma di Barbanera di ricostruire la loro nave e riprendere la loro vita da pirati.",
+      "obstacles": [
+        "La giungla insidiosa di Isla Perdida, piena di trappole mortali e animali feroci.",
+        "Una tribù di cannibali indigeni che proteggono l'accesso al tempio dove è nascosto il tesoro.",
+        "Un equipaggio di pirati rivali, guidati dal crudele Capitano 'Dente di Squalo' Jones, anch'essi alla ricerca del tesoro.",
+        "Il tempio maledetto, protetto da antichi spiriti e enigmi mortali."
+      ],
+      "world_background": "Il Mar dei Caraibi è un luogo di avventura e pericolo, dominato da pirati, corsari e potenze coloniali. Isla Perdida è un'isola remota e inesplorata, avvolta da leggende di tesori perduti e maledizioni antiche.",
+      "contextual_information": "Si dice che il Tesoro Maledetto sia stato maledetto da un potente sciamano indigeno secoli fa, e che chiunque lo tocchi senza spezzare la maledizione sarà perseguitato dalla sfortuna e dalla morte."
+    },
+    "branching_factor": {
+      "min_actions_per_state": 2,
+      "max_actions_per_state": 4
+    },
+    "depth_constraints": {
+      "min_steps_to_goal": 4,
+      "max_steps_to_goal": 8
+    }
+  }
+}
