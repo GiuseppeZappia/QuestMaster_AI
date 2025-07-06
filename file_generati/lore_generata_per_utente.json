@@ -1,17 +1,17 @@
 {
   "lore_document": {
     "quest_description": {
-      "title": "La Maledizione del Tesoro Maledetto",
-      "initial_state": "La ciurma del 'Sea Serpent', capitanata dal famigerato Barbanera, è alla deriva su una zattera dopo che la loro nave è stata distrutta da una tempesta. Hanno perso tutto tranne una vecchia mappa del tesoro, che indica l'ubicazione del leggendario Tesoro Maledetto di Isla Perdida.",
-      "goal": "Trovare il Tesoro Maledetto di Isla Perdida e spezzare la maledizione, permettendo alla ciurma di Barbanera di ricostruire la loro nave e riprendere la loro vita da pirati.",
+      "title": "Il Primo Giorno di Scuola di Sofia",
+      "initial_state": "Sofia, una bambina di sei anni con un fiocco rosa tra i capelli, si trova davanti al cancello della Scuola Primaria 'Arcobaleno'. Stringe forte il suo nuovo zainetto con l'immagine di un unicorno.",
+      "goal": "Sofia deve superare le sue paure, fare nuove amicizie e vivere una giornata positiva a scuola, imparando qualcosa di nuovo e tornando a casa felice.",
       "obstacles": [
-        "La giungla insidiosa di Isla Perdida, piena di trappole mortali e animali feroci.",
-        "Una tribù di cannibali indigeni che proteggono l'accesso al tempio dove è nascosto il tesoro.",
-        "Un equipaggio di pirati rivali, guidati dal crudele Capitano 'Dente di Squalo' Jones, anch'essi alla ricerca del tesoro.",
-        "Il tempio maledetto, protetto da antichi spiriti e enigmi mortali."
+        "La paura di non conoscere nessuno e di sentirsi sola.",
+        "Un bullo di nome Marco che infastidisce i nuovi arrivati.",
+        "Un compito di matematica particolarmente difficile.",
+        "La nostalgia di casa e la mancanza della sua mamma."
       ],
-      "world_background": "Il Mar dei Caraibi è un luogo di avventura e pericolo, dominato da pirati, corsari e potenze coloniali. Isla Perdida è un'isola remota e inesplorata, avvolta da leggende di tesori perduti e maledizioni antiche.",
-      "contextual_information": "Si dice che il Tesoro Maledetto sia stato maledetto da un potente sciamano indigeno secoli fa, e che chiunque lo tocchi senza spezzare la maledizione sarà perseguitato dalla sfortuna e dalla morte."
+      "world_background": "La Scuola Primaria 'Arcobaleno' è un luogo colorato e accogliente, pieno di insegnanti gentili e bambini pronti a giocare. Si trova in un quartiere tranquillo, circondato da parchi e giardini.",
+      "contextual_information": "Sofia ha sempre giocato con i suoi genitori e i suoi nonni. Non ha mai frequentato l'asilo nido e quindi è la prima volta che si trova in un ambiente così grande e pieno di sconosciuti."
     },
     "branching_factor": {
       "min_actions_per_state": 2,

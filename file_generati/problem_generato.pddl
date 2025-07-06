@@ -1,29 +1,29 @@
-;; problem.pddl
-(define (problem tesoro-perdido)
-  (:domain tesoro-maledetto)
+;; problem.pddl per la storia "Il Primo Giorno di Scuola di Sofia"
+(define (problem primo-giorno-sofia)
+  (:domain primo-giorno-scuola-sofia)
 
   (:objects
-    barbanera - barbanera
-    ciurma-serpente - ciurma
-    dentedisqualo - dentedisqualo
-    tesoro-maledetto - tesoro
-    zattera giungla spiaggia tempio - location
+    sofia1 - sofia
+    marco - bullo
+    signora-maestra - insegnante
+    scuola-arcobaleno casa-sofia - luogo
+    compito-matematica - matematica
   )
 
   (:init
-    (at barbanera zattera)          ;; Barbanera è sulla zattera
-    (at ciurma-serpente zattera)    ;; La ciurma è sulla zattera
-    (at tesoro-maledetto tempio)    ;; Il tesoro è nel tempio
-    (alive barbanera)               ;; Barbanera è vivo
-    (tribù-hostile tempio)          ;; La tribù è ostile nel tempio
-    (pirati-rivali spiaggia)        ;; Pirati rivali sono sulla spiaggia
-    (traps-present giungla)         ;; Ci sono trappole nella giungla
-    (at dentedisqualo spiaggia)    ;; Capitan Dentedisqualo è sulla spiaggia
+    (at sofia1 casa-sofia)         ;; Sofia è a casa sua all'inizio
+    (at marco scuola-arcobaleno)    ;; Marco è a scuola
+    (at signora-maestra scuola-arcobaleno) ;; L'insegnante è a scuola
+    (is-afraid sofia1)              ;; Sofia ha paura
+    (is-alone sofia1)               ;; Sofia si sente sola
+    (misses-mom sofia1)             ;; Sofia sente la mancanza della mamma
   )
 
   (:goal (and
-    (has-treasure ciurma-serpente)  ;; La ciurma deve avere il tesoro
-    (curse-broken)                  ;; La maledizione deve essere spezzata
-    (nave-ricostruita)             ;; La nave deve essere ricostruita
+    (at sofia1 casa-sofia)          ;; Sofia deve tornare a casa
+    (is-happy sofia1)               ;; Sofia deve essere felice
+    (met-friend sofia1)            ;; Sofia deve fare amicizia
+    (task-completed compito-matematica)  ;; Il compito deve essere completato
+    (learned-something sofia1)      ;; Sofia deve imparare qualcosa
   ))
 )

@@ -10,6 +10,8 @@ import json
 # with open("loreDiProva.json", 'r', encoding='utf-8') as f:
 #     lore_esempio_json=json.load(f)     
 
+# INCLUDERE: - Deve rispettare i vincoli di branching factor e depth constraints della lore
+
 def create_problem_pddl(llm):
 
     lore_esempio_json = load_example_json("file_esempio/loreDiProva.json")
@@ -24,7 +26,6 @@ def create_problem_pddl(llm):
     - Deve essere compatibile con Fast Downward
     - Deve usare gli stessi predicati e oggetti definiti nel domain
     - Definisci gli objects specifici per questa istanza del problema
-    - Deve rispettare i vincoli di branching factor e depth constraints della lore
     - Imposta lo stato iniziale (:init) basato sulla lore
     - Definisci il goal basato sull'obiettivo della quest
     - Usa la sintassi PDDL standard: (define (problem nome-problema) ...)
@@ -88,12 +89,12 @@ def create_problem_pddl(llm):
         if len(lines) > 10:
             print(f"... e altre {len(lines)-10} righe")
         
-        print(f"\n🎉 GENERAZIONE COMPLETATA!")
-        print(f"📁 File generati:")
+        print(f"\n GENERAZIONE COMPLETATA!")
+        print(f"File generati:")
         print(f"   - lore_generata.json")
         print(f"   - domain_generato.pddl") 
         print(f"   - problem_generato.pddl")
         
     except Exception as e:
-        print(f"❌ Errore nel salvataggio del problem.pddl: {e}")
+        print(f"Errore nel salvataggio del problem.pddl: {e}")
         print(f"Risposta ricevuta:\n{problem_text}")

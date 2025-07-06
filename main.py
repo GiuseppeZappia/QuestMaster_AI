@@ -3,6 +3,11 @@ import os
 from langchain_google_genai import ChatGoogleGenerativeAI
 from domain_generation import create_domain_pddl
 from problem_generation import create_problem_pddl
+from pddl_validation import run_fastdownward_complete
+from dotenv import load_dotenv
+
+load_dotenv() #Per la chiave API
+
 
 def main():
     API_KEY=os.getenv("API_KEY")
@@ -26,6 +31,12 @@ def main():
 
     #crea il problema della lore generata
     create_problem_pddl(llm)
+
+    results = run_fastdownward_complete()
+    
+
+
+    
 
 if __name__ == "__main__":
     main()

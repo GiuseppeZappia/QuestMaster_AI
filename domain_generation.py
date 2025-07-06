@@ -7,7 +7,10 @@ import json
 #     user_lore_json=json.load(f)        
 
 # with open("loreDiProva.json", 'r', encoding='utf-8') as f:
-#     lore_esempio_json=json.load(f)     
+#     lore_esempio_json=json.load(f)    
+# 
+# 
+# INCLUDERE   - Rispetta i vincoli di branching factor e depth constraints della lore nelle istruzioni 
 
 def create_domain_pddl(llm):
     esempio_domain_pddl = load_example_pddl("file_esempio/domain.pddl")
@@ -32,7 +35,6 @@ def create_domain_pddl(llm):
     - Analizza la lore JSON e identifica: stati, oggetti, personaggi, azioni possibili
     - Crea predicati che rappresentino lo stato del mondo narrativo
     - Definisci azioni che corrispondano alle scelte del giocatore
-    - Rispetta i vincoli di branching factor e depth constraints della lore
     - Rispondi SOLO con il codice PDDL valido, senza testo aggiuntivo
     - Ogni riga deve avere un commento che spiega cosa fa
 
