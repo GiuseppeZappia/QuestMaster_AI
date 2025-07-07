@@ -21,22 +21,26 @@ def create_domain_pddl(llm):
     Il tuo compito è convertire una lore in formato JSON in un file domain.pddl valido per Fast Downward.
 
     REQUISITI PER IL DOMAIN.PDDL:
-    - Deve essere compatibile con Fast Downward
-    - Includi predicati per rappresentare stati del mondo, posizioni, oggetti, condizioni
-    - Definisci azioni con precondizioni ed effetti chiari
-    - Deve rispettare i vincoli di branching factor e depth constraints della lore
-    - Ogni azione deve avere parametri tipizzati se necessario
+    - Deve essere **pieno PDDL-STRIPS**, compatibile con Fast Downward (nessuna estensione numerica, temporale o fluents)
+    - :requirements deve essere esattamente  
+        (:requirements :strips :typing :negative-preconditions :equality)
+    - **Non** usare costrutti come `:numeric-fluents`, `:durative-actions`, `increase`, `decrease`, funzioni numeriche, o operatori `<` `>` su valori numerici
+    - Includi unicamente **predicati booleani** e **effetti/add e delete lists**
+    - Definisci azioni con precondizioni ed effetti chiari, tipizzati, e **senza condizionali o effetti numerici**
     - Usa commenti per spiegare ogni sezione
-    - Segui la sintassi PDDL standard: (define (domain nome-dominio) ...)
-    - Includi types, predicates, e actions
-    - Le azioni devono rispecchiare le possibili scelte narrative della lore
+    - Segui rigorosamente la sintassi standard PDDL-STRIPS
+    - Rispetta i vincoli di branching factor e depth constraints della lore
+    - Rispondi **soltanto** con il codice PDDL valido, senza testo introduttivo o spiegazioni esterne
 
     ISTRUZIONI:
-    - Analizza la lore JSON e identifica: stati, oggetti, personaggi, azioni possibili
-    - Crea predicati che rappresentino lo stato del mondo narrativo
-    - Definisci azioni che corrispondano alle scelte del giocatore
-    - Rispondi SOLO con il codice PDDL valido, senza testo aggiuntivo
-    - Ogni riga deve avere un commento che spiega cosa fa
+    1. Analizza la lore JSON e identifica stati, oggetti, personaggi e azioni possibili.
+    2. Crea solo predicati booleani per rappresentare lo stato del mondo narrativo.
+    3. Definisci azioni STRIPS—ognuna con:
+    - Parametri tipizzati
+    - Precondizioni in forma congiuntiva di predicati booleani
+    - Effetti sotto forma di liste di aggiunta (`(pred ...)`) e rimozione (`(not (pred ...))`)
+    4. **Non** usare costrutti ADL avanzati (disjunction, quantificatori, condizionali) né alcuna notazione numerica.
+    5. Rispondi **solo** con il codice PDDL, ogni riga commentata con `;`.
 
     ESEMPIO DI INPUT E OUTPUT:
 
@@ -46,11 +50,11 @@ def create_domain_pddl(llm):
     Output domain.pddl:
     {esempio_domain_pddl}
 
-
     LORE JSON ATTUALE DA CONVERTIRE:
     {json.dumps(load_example_json("file_generati/lore_generata_per_utente.json"), indent=2, ensure_ascii=False)}
 
     OUTPUT DOMAIN.PDDL:"""
+
 
     # Genera il domain.pddl 
     pddl_response = llm.invoke(pddl_prompt)

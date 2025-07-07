@@ -1,33 +1,22 @@
-;; problem.pddl: Salvataggio della Principessa Lyra
+;; problem.pddl: Problema per la simulazione della Ricerca della Prosperità
 
-(define (problem salvataggio-lyra-problem)
-  (:domain salvataggio-lyra)
+(define (problem ricerca-prosperita-problema)
+  (:domain ricerca-prosperita)
 
   (:objects
-    valerian - principe
-    lyra - principessa
-    malkor - stregone
-    golem - golem
-    eldoria - regno
-    foresta montagne fiume fortezza - luogo
+    me - individuo  ;; L'individuo che cerca la prosperità
+    borsa - mercato ;; Il mercato azionario
+    ristorante - attivita ;; Un'attività commerciale (ristorante)
+    bar - attivita ;; Un'altra attività commerciale (bar)
   )
 
   (:init
-    (at valerian eldoria)
-    (at malkor fortezza)
-    (vivo malkor)
-    (at lyra fortezza)
-    (prigioniero lyra fortezza)
-    (goblin-presente foresta)
-    (trappola-attiva montagne)
-    (fiume-attraversabile)
-    (golem-attivo)
-    (at golem fortezza)
+    (ha-denaro me 1000) ;; L'individuo parte con 1000 dollari
+    (at me ristorante) ;; Inizialmente l'individuo si trova al ristorante (potrebbe essere ovunque)
+    (mercato-favorevole borsa) ;; Il mercato azionario è in una fase favorevole all'inizio
   )
 
   (:goal (and
-    (at valerian eldoria)
-    (at lyra eldoria)
-    (sano lyra)
+    (milionario me) ;; L'obiettivo è diventare milionario
   ))
 )

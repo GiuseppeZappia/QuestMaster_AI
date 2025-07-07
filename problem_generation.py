@@ -20,30 +20,41 @@ def create_problem_pddl(llm):
     #Prompt per generare PDDL problem
     problem_prompt = f"""Sei un esperto di pianificazione automatica e PDDL (Planning Domain Definition Language).
 
-    Il tuo compito è creare un file problem.pddl che sia compatibile con il domain.pddl generato e che rappresenti lo scenario specifico della lore.
+    Il tuo compito è creare un file problem.pddl che sia compatibile col domain.pddl generato e che rappresenti lo scenario specifico della lore.
 
     REQUISITI PER IL PROBLEM.PDDL:
-    - Deve essere compatibile con Fast Downward
-    - Deve usare gli stessi predicati e oggetti definiti nel domain
-    - Definisci gli objects specifici per questa istanza del problema
-    - Imposta lo stato iniziale (:init) basato sulla lore
-    - Definisci il goal basato sull'obiettivo della quest
-    - Usa la sintassi PDDL standard: (define (problem nome-problema) ...)
-    - Includi: problem name, domain reference, objects, init, goal
-    - Ogni riga deve avere un commento che spiega cosa fa
+    - Deve essere pieno PDDL‑STRIPS, compatibile con Fast Downward (solo costrutti booleani, no numerici, no durative)
+    - Usa esattamente gli stessi tipi, predicati e nomi di oggetti definiti nel domain
+    - (:objects) elenca tutti gli oggetti usati nella lore, tipizzati correttamente
+    - (:init) include solo literal booleani e negazioni semplici, nessun costrutto ADL avanzato
+    - (:goal) deve essere una congiunzione di predicati booleani che rappresentano l’obiettivo finale
+    - Sintassi rigorosa PDDL‑STRIPS:
+        (define (problem ⟨nome⟩)
+        (:domain ⟨domain-name⟩)
+        (:objects …)
+        (:init …)
+        (:goal (and …))
+        )
+    - Ogni riga commentata con `;` per spiegare cosa definisce
+    - Rispondi **solo** con il codice PDDL, senza testo aggiuntivo
+
+    ISTRUZIONI:
+    1. Mappa la lore JSON su istanze di oggetti e stato iniziale.
+    2. In :objects dichiara ogni entità (personaggi, luoghi, prove, ecc.) con il tipo corretto.
+    3. In :init, metti tutte le asserzioni vere all’inizio (at, prova-superata negata, sfida, ecc.).
+    4. In :goal, unisci con `(and ...)` i predicati che definiscono il successo (es. `(permesso-ottenuto)`).
+    5. **Non** usare costrutti non supportati: nessun `:metric`, `:constraints`, `:fluents`, `forall`, `or`, `imply`, o aritmetica.
 
     ESEMPIO DI INPUT E OUTPUT:
 
     Input JSON della lore:
-    {json.dumps(lore_esempio_json, indent=2, ensure_ascii=False) }
+    {json.dumps(lore_esempio_json, indent=2, ensure_ascii=False)}
 
-    Domain.pddl corrispondente:
+    Domain.pddl di riferimento:
     {load_example_pddl("file_esempio/domain.pddl")}
 
-    Output problem.pddl:
+    Output problem.pddl di esempio:
     {load_example_pddl("file_esempio/problem.pddl")}
-
-
 
     LORE JSON ATTUALE DA CONVERTIRE:
     {json.dumps(user_lore_json, indent=2, ensure_ascii=False)}
@@ -52,6 +63,7 @@ def create_problem_pddl(llm):
     {load_example_pddl("file_generati/domain_generato.pddl")}
 
     OUTPUT PROBLEM.PDDL:"""
+
 
     # Genera il problem.pddl
     print("Generazione problem.pddl in corso...")
