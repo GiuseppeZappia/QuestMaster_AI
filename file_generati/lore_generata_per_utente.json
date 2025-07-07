@@ -1,26 +1,26 @@
 {
   "lore_document": {
     "quest_description": {
-      "title": "Il Salvataggio della Principessa Lyra",
-      "initial_state": "La Principessa Lyra è stata rapita dal malvagio stregone Malkor, che la tiene prigioniera nella sua fortezza in cima alle Montagne del Crepuscolo. Il Principe Valerian, promesso sposo di Lyra, è l'unico disposto a sfidare Malkor.",
-      "goal": "Salvare la Principessa Lyra dalla prigionia di Malkor e riportarla sana e salva al regno di Eldoria.",
+      "title": "La Ricerca della Ricchezza",
+      "initial_state": "Ti trovi all'inizio del tuo percorso finanziario, con risorse limitate e grandi ambizioni. Il tuo obiettivo è raggiungere lo status di milionario.",
+      "goal": "Accumulare un patrimonio netto di almeno 1.000.000 di dollari.",
       "obstacles": [
-        "Un esercito di goblin al servizio di Malkor",
-        "Trappole magiche disseminate lungo il sentiero",
-        "Un fiume impetuoso pieno di creature acquatiche ostili",
-        "Un golem di pietra posto a guardia dell'entrata della fortezza",
-        "Lo stesso Malkor, un potente stregone con capacità magiche oscure"
+        "Bassi salari iniziali e limitate opportunità di guadagno.",
+        "Spese impreviste e debiti crescenti.",
+        "Investimenti rischiosi che possono portare a perdite significative.",
+        "Tasse e inflazione che erodono il potere d'acquisto.",
+        "Concorrenza nel mercato del lavoro e negli affari."
       ],
-      "world_background": "Eldoria è un regno prospero, noto per la sua magia e i suoi cavalieri valorosi. Le Montagne del Crepuscolo sono da sempre considerate un luogo pericoloso, dimora di creature malvagie e stregoni oscuri. Malkor è una figura temuta da tutti, capace di controllare le forze della natura e di evocare creature demoniache.",
-      "contextual_information": "Il matrimonio tra Valerian e Lyra era destinato a sigillare un'alleanza tra due importanti regni, portando pace e prosperità. Il rapimento di Lyra ha scatenato il panico e la paura, e solo il coraggio di Valerian può riportare la speranza."
+      "world_background": "Il mondo è pieno di opportunità e sfide finanziarie. Il successo dipende da una combinazione di duro lavoro, intelligenza finanziaria e fortuna. Diverse strategie e percorsi possono portare alla ricchezza, ma nessuno è garantito.",
+      "contextual_information": "Il tempo necessario per diventare milionari varia enormemente a seconda di fattori come il reddito iniziale, il tasso di risparmio, le scelte di investimento e le condizioni economiche. Alcune persone ci riescono in pochi anni, mentre altre impiegano decenni o non ci riescono affatto."
     },
     "branching_factor": {
       "min_actions_per_state": 2,
-      "max_actions_per_state": 4
+      "max_actions_per_state": 5
     },
     "depth_constraints": {
-      "min_steps_to_goal": 4,
-      "max_steps_to_goal": 8
+      "min_steps_to_goal": 5,
+      "max_steps_to_goal": 15
     }
   }
 }

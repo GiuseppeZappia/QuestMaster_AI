@@ -22,17 +22,17 @@ def main():
         temperature=0.6
     )
 
-    # user_input= input("Inserisci la tua richiesta per generare la lore: ")
+    user_input= input("Inserisci la tua richiesta per generare la lore: ")
     
     
-    # # # #crea e salva la lore 
-    # generate_lore(user_input,llm)
+    # # #crea e salva la lore 
+    generate_lore(user_input,llm)
 
-    # # # #crea il dominio della lore generata
-    # create_domain_pddl(llm)
+    # # #crea il dominio della lore generata
+    create_domain_pddl(llm)
 
-    # # # #crea il problema della lore generata
-    # create_problem_pddl(llm)
+    # # #crea il problema della lore generata
+    create_problem_pddl(llm)
 
     #PARTE VALIDAZIONE E GESTIONE ERRORE ANASTASIA
 

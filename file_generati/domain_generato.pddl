@@ -1,118 +1,66 @@
-;; domain.pddl: Salvataggio della Principessa Lyra
+;; domain.pddl: Dominio per la simulazione della Ricerca della Prosperità
 
-(define (domain salvataggio-lyra)
-  (:requirements :strips :typing :negative-preconditions)
+(define (domain ricerca-prosperita)
+  (:requirements :strips :typing :negative-preconditions :equality :numeric-fluents :action-costs :conditional-effects)
   (:types
-    entity - object
-    luogo - entity
-    personaggio - entity
-    principe - personaggio
-    principessa - personaggio
-    stregone - personaggio
-    goblin - personaggio
-    golem - personaggio
-    regno - luogo
+    entity
+    risorsa - entity
+    attivita - entity
+    individuo - entity
+    mercato - risorsa
   )
 
   (:predicates
-    (at ?x - entity ?l - luogo)  ;; Posizione di un'entità (principe, principessa, ecc.) in un luogo
-    (prigioniero ?p - principessa ?l - luogo) ;; La principessa è prigioniera in un luogo
-    (sano ?p - principessa)  ;; La principessa è sana e salva
-    (alleato ?r - regno)  ;; Il regno è alleato
-    (goblin-presente ?l - luogo) ;; Goblin presenti in un luogo
-    (trappola-attiva ?l - luogo) ;; Trappola magica attiva in un luogo
-    (fiume-attraversabile) ;; Il fiume è attraversabile
-    (golem-attivo) ;; Il golem è attivo
-    (sconfitto ?g - golem) ;; Il golem è sconfitto
-    (sconfitto ?s - stregone) ;; Lo stregone è sconfitto
-    (vivo ?s - stregone) ;; Lo stregone è vivo
+    (at ?i - individuo ?l - attivita) ;; L'individuo si trova in una determinata attività
+    (redditizio ?a - attivita) ;; L'attività è redditizia
+    (tasse-pagate ?i - individuo) ;; L'individuo ha pagato le tasse
+    (mercato-favorevole ?m - mercato) ;; Il mercato è in una fase favorevole
+    (milionario ?i - individuo) ;; L'individuo è milionario
   )
 
-  ;; Azione: Muoversi da un luogo all'altro
-  (:action muovi
-    :parameters (?p - principe ?da - luogo ?a - luogo)
-    :precondition (and (at ?p ?da) (not (= ?da ?a)))
-    :effect (and (at ?p ?a) (not (at ?p ?da)))
+  (:functions
+    (ha-denaro ?i - individuo) - number
   )
 
-  ;; Azione: Combattere i goblin
-  (:action combatti-goblin
-    :parameters (?p - principe ?l - luogo)
-    :precondition (and (at ?p ?l) (goblin-presente ?l))
-    :effect (not (goblin-presente ?l))
+  ;; Azione: Investire in borsa
+  (:action investi-borsa
+    :parameters (?i - individuo ?m - mercato ?quantita - number)
+    :precondition (and (>= (ha-denaro ?i) ?quantita) (mercato-favorevole ?m))
+    :effect (and (increase (ha-denaro ?i) (* ?quantita 0.1)) (decrease (ha-denaro ?i) ?quantita)) ;; Aumenta il denaro del 10%
   )
 
-  ;; Azione: Disattivare una trappola
-  (:action disattiva-trappola
-    :parameters (?p - principe ?l - luogo)
-    :precondition (and (at ?p ?l) (trappola-attiva ?l))
-    :effect (not (trappola-attiva ?l))
+  ;; Azione: Avviare un'attività
+  (:action avvia-attivita
+    :parameters (?i - individuo ?a - attivita ?costo - number)
+    :precondition (and (>= (ha-denaro ?i) ?costo) (not (redditizio ?a)))
+    :effect (and (redditizio ?a) (decrease (ha-denaro ?i) ?costo))
   )
 
-  ;; Azione: Attraversare il fiume
-  (:action attraversa-fiume
-    :parameters (?p - principe ?da - luogo ?a - luogo)
-    :precondition (and (at ?p ?da) (fiume-attraversabile) (not (= ?da ?a)))
-    :effect (and (at ?p ?a) (not (at ?p ?da)))
+  ;; Azione: Lavorare
+  (:action lavora
+    :parameters (?i - individuo ?guadagno - number)
+    :precondition (not (milionario ?i))
+    :effect (increase (ha-denaro ?i) ?guadagno)
   )
 
-  ;; Azione: Combattere il golem
-  (:action combatti-golem
-    :parameters (?p - principe ?l - luogo ?g - golem)
-    :precondition (and (at ?p ?l) (golem-attivo) (at ?g ?l))
-    :effect (and (sconfitto ?g) (not (golem-attivo)))
+  ;; Azione: Pagare le tasse
+  (:action paga-tasse
+    :parameters (?i - individuo ?percentuale - number)
+    :precondition (and (>= (ha-denaro ?i) 1) (not (tasse-pagate ?i)))
+    :effect (and (tasse-pagate ?i) (decrease (ha-denaro ?i) (* (ha-denaro ?i) ?percentuale)))
   )
 
-  ;; Azione: Combattere Malkor
-  (:action combatti-malkor
-    :parameters (?p - principe ?s - stregone ?l - luogo)
-    :precondition (and (at ?p ?l) (at ?s ?l) (vivo ?s))
-    :effect (and (sconfitto ?s) (not (vivo ?s)))
+  ;; Azione: Gestire imprevisti
+  (:action gestisci-imprevisto
+    :parameters (?i - individuo ?costo - number)
+    :precondition (>= (ha-denaro ?i) ?costo)
+    :effect (decrease (ha-denaro ?i) ?costo)
   )
 
-  ;; Azione: Salvare la principessa
-  (:action salva-principessa
-    :parameters (?p - principe ?lyra - principessa ?l - luogo)
-    :precondition (and (at ?p ?l) (prigioniero ?lyra ?l) (sconfitto ?s - stregone))
-    :effect (and (sano ?lyra) (not (prigioniero ?lyra ?l)))
+  ;; Azione: Controlla se sei milionario (azione di test, non modifica lo stato)
+  (:action controlla-milionario
+    :parameters (?i - individuo)
+    :precondition (>= (ha-denaro ?i) 1000000)
+    :effect (when (>= (ha-denaro ?i) 1000000) (milionario ?i))
   )
-
-  ;; Azione: Riportare la principessa al regno
-  (:action riporta-al-regno
-    :parameters (?p - principe ?lyra - principessa ?da - luogo ?a - regno)
-    :precondition (and (at ?p ?da) (at ?lyra ?da) (sano ?lyra))
-    :effect (and (at ?p ?a) (at ?lyra ?a) (not (at ?p ?da)) (not (at ?lyra ?da)))
-  )
-)
-
-(define (problem salvataggio-lyra-problem)
-  (:domain salvataggio-lyra)
-
-  (:objects
-    valerian - principe
-    lyra - principessa
-    malkor - stregone
-    golem - golem
-    eldoria - regno
-    foresta montagne fiume fortezza - luogo
-  )
-
-  (:init
-    (at valerian eldoria)        ;; Il principe Valerian inizia nel regno di Eldoria
-    (at malkor fortezza)          ;; Malkor si trova nella fortezza
-    (vivo malkor)               ;; Malkor è vivo
-    (at lyra fortezza)            ;; La principessa Lyra è prigioniera nella fortezza
-    (prigioniero lyra fortezza)   ;; Lyra è prigioniera nella fortezza
-    (goblin-presente foresta)   ;; Ci sono goblin nella foresta
-    (trappola-attiva montagne)    ;; Ci sono trappole nelle montagne
-    (fiume-attraversabile)      ;; Il fiume è attraversabile
-    (golem-attivo)              ;; Il golem è attivo
-    (at golem fortezza)
-  )
-
-  (:goal (and
-    (at valerian eldoria)       ;; Valerian deve tornare a Eldoria
-    (at lyra eldoria)           ;; Lyra deve tornare a Eldoria
-    (sano lyra)               ;; Lyra deve essere sana e salva
-  ))
 )

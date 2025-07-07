@@ -38,8 +38,7 @@ def correct_pddl(pddl_problem, llm):
     # Invoca l'LLM per ottenere la correzione
     llm_response = llm.invoke(prompt)
     response_text = llm_response.content.strip()
-    print ("---------------------------------------------STAMPO RISPOSTA LLM------------------------------------------------")
-    print(response_text)
+
     # Determina se è una correzione al domain o al problem
     is_domain_correction = False
     is_problem_correction = False
@@ -96,7 +95,7 @@ def correct_pddl(pddl_problem, llm):
             # Fallback se non ci sono abbastanza parti
             corrected_pddl = corrected_pddl.replace("```", "").strip()
     
-    # Pulisci ulteriormente da eventuali residui
+    # Pulizia ulteriore da eventuali residui
     corrected_pddl = corrected_pddl.replace("correzione: problem", "").replace("CORREZIONE: PROBLEM", "").strip()
 
     
