@@ -1,17 +1,18 @@
 {
   "lore_document": {
     "quest_description": {
-      "title": "L'Ombra del Tradimento",
-      "initial_state": "Il clan della Foglia Silenziosa è stato decimato da un traditore interno, Masaru. Il ninja Ryu, unico sopravvissuto, giura vendetta e si prepara a smascherare Masaru e recuperare il rotolo segreto del clan, rubato durante l'attacco.",
-      "goal": "Sconfiggere Masaru, recuperare il rotolo segreto del clan e ripristinare l'onore della Foglia Silenziosa.",
+      "title": "Il Salvataggio della Principessa Lyra",
+      "initial_state": "La Principessa Lyra è stata rapita dal malvagio stregone Malkor, che la tiene prigioniera nella sua fortezza in cima alle Montagne del Crepuscolo. Il Principe Valerian, promesso sposo di Lyra, è l'unico disposto a sfidare Malkor.",
+      "goal": "Salvare la Principessa Lyra dalla prigionia di Malkor e riportarla sana e salva al regno di Eldoria.",
       "obstacles": [
-        "Masaru, un ninja esperto e spietato, maestro nell'arte dell'illusione e del veleno.",
-        "Le guardie di Masaru, ninja corrotti e mercenari senza scrupoli.",
-        "Un labirinto di trappole nascoste nel tempio abbandonato dove Masaru si nasconde.",
-        "Un fiume impetuoso da attraversare, sorvegliato da un demone acquatico evocato da Masaru."
+        "Un esercito di goblin al servizio di Malkor",
+        "Trappole magiche disseminate lungo il sentiero",
+        "Un fiume impetuoso pieno di creature acquatiche ostili",
+        "Un golem di pietra posto a guardia dell'entrata della fortezza",
+        "Lo stesso Malkor, un potente stregone con capacità magiche oscure"
       ],
-      "world_background": "Il mondo è governato da clan ninja in costante conflitto tra loro. L'onore e la disciplina sono i valori fondamentali. La Foglia Silenziosa era un clan rispettato per la sua saggezza e abilità nel ninjutsu silenzioso.",
-      "contextual_information": "Il rotolo segreto contiene tecniche proibite che potrebbero sbilanciare il potere tra i clan, scatenando una guerra senza precedenti. Ryu è l'ultimo depositario della conoscenza del clan e l'unico in grado di fermare Masaru."
+      "world_background": "Eldoria è un regno prospero, noto per la sua magia e i suoi cavalieri valorosi. Le Montagne del Crepuscolo sono da sempre considerate un luogo pericoloso, dimora di creature malvagie e stregoni oscuri. Malkor è una figura temuta da tutti, capace di controllare le forze della natura e di evocare creature demoniache.",
+      "contextual_information": "Il matrimonio tra Valerian e Lyra era destinato a sigillare un'alleanza tra due importanti regni, portando pace e prosperità. Il rapimento di Lyra ha scatenato il panico e la paura, e solo il coraggio di Valerian può riportare la speranza."
     },
     "branching_factor": {
       "min_actions_per_state": 2,

@@ -38,32 +38,67 @@ def correct_pddl(pddl_problem, llm):
     # Invoca l'LLM per ottenere la correzione
     llm_response = llm.invoke(prompt)
     response_text = llm_response.content.strip()
-    
+    print ("---------------------------------------------STAMPO RISPOSTA LLM------------------------------------------------")
+    print(response_text)
     # Determina se è una correzione al domain o al problem
     is_domain_correction = False
     is_problem_correction = False
     
-    if "CORREZIONE: DOMAIN" in response_text.upper() or "DOMAIN" in response_text.upper()[:100]:
+    # Prima controlla per le parole chiave esplicite nella risposta
+    if "CORREZIONE: DOMAIN" in response_text.upper():
+        print("sono nel domain lettere maiuscole")
         is_domain_correction = True
-    elif "CORREZIONE: PROBLEM" in response_text.upper() or "PROBLEM" in response_text.upper()[:100]:
+    elif "CORREZIONE: PROBLEM" in response_text.upper():
+        print("sono nel problem lettere maiuscole")
         is_problem_correction = True
     else:
-        # Fallback: cerca indicatori nel testo
-        if "domain.pddl" in response_text.lower() or "(domain" in response_text.lower():
+        # Fallback: cerca nelle prime righe della risposta per evitare falsi positivi
+        first_lines = '\n'.join(response_text.split('\n')[:3]).upper()
+        if "DOMAIN" in first_lines:
+            print("sono nel domain lettere sotto")
             is_domain_correction = True
-        elif "problem.pddl" in response_text.lower() or "(problem" in response_text.lower():
+        elif "PROBLEM" in first_lines:
+            print("sono nel problem lettere sotto")
             is_problem_correction = True
+        else:
+            print("sono alla fine non ho trovato nulla")
+            # Ultimo fallback: cerca pattern più specifici nel codice PDDL
+            if "```" in response_text:
+                # Estrai il blocco di codice per l'analisi
+                start_idx = response_text.find("```")
+                if start_idx != -1:
+                    first_end = response_text.find("\n", start_idx)
+                    if first_end != -1:
+                        last_start = response_text.rfind("```")
+                        if last_start != start_idx:
+                            code_block = response_text[first_end+1:last_start].strip()
+                            # Controlla se il codice è un domain o problem
+                            if "(define (domain" in code_block:
+                                is_domain_correction = True
+                            elif "(define (problem" in code_block:
+                                is_problem_correction = True
     
     # Estrai il PDDL dalla risposta
     corrected_pddl = response_text
     if "```" in corrected_pddl:
-        start_idx = corrected_pddl.find("```")
-        if start_idx != -1:
-            first_end = corrected_pddl.find("\n", start_idx)
-            if first_end != -1:
-                last_start = corrected_pddl.rfind("```")
-                if last_start != start_idx:
-                    corrected_pddl = corrected_pddl[first_end+1:last_start].strip()
+        # Trova tutti i blocchi di codice
+        parts = corrected_pddl.split("```")
+        if len(parts) >= 3:
+            # Prendi il primo blocco di codice (indice 1)
+            code_block = parts[1]
+            # Rimuovi la prima riga se contiene "pddl" o altri marker
+            lines = code_block.split('\n')
+            if lines and ('pddl' in lines[0].lower() or lines[0].strip() == ''):
+                corrected_pddl = '\n'.join(lines[1:]).strip()
+            else:
+                corrected_pddl = code_block.strip()
+        else:
+            # Fallback se non ci sono abbastanza parti
+            corrected_pddl = corrected_pddl.replace("```", "").strip()
+    
+    # Pulisci ulteriormente da eventuali residui
+    corrected_pddl = corrected_pddl.replace("correzione: problem", "").replace("CORREZIONE: PROBLEM", "").strip()
+
     
     # Se non è possibile determinare automaticamente il tipo, usa interrupt
     if not is_domain_correction and not is_problem_correction:
@@ -152,4 +187,3 @@ def run_correction_workflow(pddl_problem, llm):
             "is_domain_correction": False,
             "is_problem_correction": False
         }
-
