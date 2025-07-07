@@ -6,6 +6,9 @@ def run_fastdownward_planning():
    
     domain_file = load_example_pddl("file_generati/domain_generato.pddl")
     problem_file = load_example_pddl("file_generati/problem_generato.pddl")
+    
+    # domain_file = load_example_pddl("file_esempio/domain.pddl")
+    # problem_file = load_example_pddl("file_esempio/problem.pddl")
 
     results = {
         "planning_success": False,

@@ -1,29 +1,38 @@
-;; problem.pddl per la storia "Il Primo Giorno di Scuola di Sofia"
-(define (problem primo-giorno-sofia)
-  (:domain primo-giorno-scuola-sofia)
+;; problem.pddl
+(define (problem vendetta-ryu)
+  (:domain ombra-tradimento)
 
   (:objects
-    sofia1 - sofia
-    marco - bullo
-    signora-maestra - insegnante
-    scuola-arcobaleno casa-sofia - luogo
-    compito-matematica - matematica
+    ryu1 - ryu
+    masaru1 - masaru
+    rotolo-segreto - rotolo
+    foresta tempio fiume interno-tempio - luogo
+    guardia1 guardia2 - guardia
   )
 
   (:init
-    (at sofia1 casa-sofia)         ;; Sofia è a casa sua all'inizio
-    (at marco scuola-arcobaleno)    ;; Marco è a scuola
-    (at signora-maestra scuola-arcobaleno) ;; L'insegnante è a scuola
-    (is-afraid sofia1)              ;; Sofia ha paura
-    (is-alone sofia1)               ;; Sofia si sente sola
-    (misses-mom sofia1)             ;; Sofia sente la mancanza della mamma
+    (at ryu1 foresta)                 ;; Ryu inizia nella foresta
+    (at masaru1 interno-tempio)       ;; Masaru si nasconde nel tempio
+    (at rotolo-segreto interno-tempio)  ;; Il rotolo è nel tempio
+    (vivo ryu1)                       ;; Ryu è vivo
+    (vivo masaru1)                    ;; Masaru è vivo
+    (guardie-presenti interno-tempio) ;; Ci sono guardie nel tempio
+    (trappole-attive tempio)          ;; Ci sono trappole nel tempio
+    (at guardia1 interno-tempio)
+    (at guardia2 interno-tempio)
+    (adiacente foresta tempio)
+    (adiacente tempio foresta)
+    (adiacente tempio fiume)
+    (adiacente fiume tempio)
+    (adiacente fiume interno-tempio)
+    (adiacente interno-tempio fiume)
+    (adiacente tempio interno-tempio)
+    (adiacente interno-tempio tempio)
   )
 
   (:goal (and
-    (at sofia1 casa-sofia)          ;; Sofia deve tornare a casa
-    (is-happy sofia1)               ;; Sofia deve essere felice
-    (met-friend sofia1)            ;; Sofia deve fare amicizia
-    (task-completed compito-matematica)  ;; Il compito deve essere completato
-    (learned-something sofia1)      ;; Sofia deve imparare qualcosa
+    (sconfitto masaru1)             ;; Masaru deve essere sconfitto
+    (possiede ryu1 rotolo-segreto)   ;; Ryu deve possedere il rotolo
+    (onore-ristabilito)             ;; L'onore del clan deve essere ripristinato
   ))
 )

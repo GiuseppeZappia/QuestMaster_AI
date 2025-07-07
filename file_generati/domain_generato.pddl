@@ -1,71 +1,54 @@
-;; domain.pddl per la storia "Il Primo Giorno di Scuola di Sofia"
-(define (domain primo-giorno-scuola-sofia)
-  (:requirements :strips :typing :negative-preconditions)
-  (:types
-    entity luogo persona compito - object
-    sofia bullo insegnante - persona
-    scuola casa - luogo
-    matematica - compito
-  )
-
+(define (domain ombra-tradimento)
+  (:requirements :strips :typing)
+  (:types ryu masaru rotolo luogo guardia)
   (:predicates
-    (at ?x - entity ?l - luogo)  ;; Posizione di Sofia, Marco, etc.
-    (is-afraid ?s - sofia)        ;; Sofia ha paura
-    (is-alone ?s - sofia)         ;; Sofia si sente sola
-    (met-friend ?s - sofia)       ;; Sofia ha fatto amicizia
-    (bullied ?s - sofia ?b - bullo) ;; Sofia è stata bullizzata
-    (task-completed ?t - compito)  ;; Il compito è stato completato
-    (misses-mom ?s - sofia)       ;; Sofia sente la mancanza della mamma
-    (is-happy ?s - sofia)          ;; Sofia è felice
-    (learned-something ?s - sofia) ;; Sofia ha imparato qualcosa
+    (at ?x - ryu ?l - luogo)
+    (at ?x - masaru ?l - luogo)
+    (at ?r - rotolo ?l - luogo)
+    (vivo ?x - ryu)
+    (vivo ?x - masaru)
+    (sconfitto ?x - masaru)
+    (possiede ?x - ryu ?r - rotolo)
+    (onore-ristabilito)
+    (guardie-presenti ?l - luogo)
+    (trappole-attive ?l - luogo)
+    (at ?g - guardia ?l - luogo)
+    (adiacente ?l1 - luogo ?l2 - luogo)
   )
 
-  ;; Azione: Entrare a scuola
-  (:action enter-school
-    :parameters (?s - sofia ?l - luogo)
-    :precondition (and (at ?s ?l) (eq ?l casa))
-    :effect (and (not (at ?s ?l)) (at ?s scuola) (is-afraid ?s) (is-alone ?s))
+  (:action muovi
+    :parameters (?x - ryu ?from - luogo ?to - luogo)
+    :precondition (and (at ?x ?from) (adiacente ?from ?to) (vivo ?x))
+    :effect (and (at ?x ?to) (not (at ?x ?from)))
   )
 
-  ;; Azione: Parlare con un altro bambino
-  (:action talk-to-child
-    :parameters (?s - sofia ?l - luogo)
-    :precondition (and (at ?s ?l) (is-afraid ?s) (is-alone ?s))
-    :effect (and (not (is-afraid ?s)) (not (is-alone ?s)) (met-friend ?s))
+  (:action combatti-masaru
+    :parameters (?x - ryu ?m - masaru ?l - luogo)
+    :precondition (and (at ?x ?l) (at ?m ?l) (vivo ?x) (vivo ?m))
+    :effect (and (sconfitto ?m) (not (vivo ?m)))
   )
 
-  ;; Azione: Affrontare il bullo
-  (:action confront-bully
-    :parameters (?s - sofia ?b - bullo ?l - luogo)
-    :precondition (and (at ?s ?l) (at ?b ?l) (is-afraid ?s))
-    :effect (and (not (bullied ?s ?b)) (not (is-afraid ?s)))
+  (:action prendi-rotolo
+    :parameters (?x - ryu ?r - rotolo ?l - luogo)
+    :precondition (and (at ?x ?l) (at ?r ?l) (vivo ?x))
+    :effect (possiede ?x ?r)
   )
 
-  ;; Azione: Chiedere aiuto all'insegnante per il compito
-  (:action ask-teacher-for-help
-    :parameters (?s - sofia ?t - compito ?l - luogo ?i - insegnante)
-    :precondition (and (at ?s ?l) (at ?i ?l) (eq ?t matematica))
-    :effect (and (task-completed ?t) (learned-something ?s))
+  (:action ripristina-onore
+    :parameters (?x - ryu ?m - masaru ?r - rotolo)
+    :precondition (and (sconfitto ?m) (possiede ?x ?r))
+    :effect (onore-ristabilito)
   )
 
-  ;; Azione: Pensare alla mamma
-  (:action think-of-mom
-    :parameters (?s - sofia)
-    :precondition (and (misses-mom ?s))
-    :effect (and (not (misses-mom ?s)))
+  (:action combatti-guardia
+    :parameters (?x - ryu ?g - guardia ?l - luogo)
+    :precondition (and (at ?x ?l) (at ?g ?l) (vivo ?x))
+    :effect (not (at ?g ?l))
   )
 
-  ;; Azione: Tornare a casa
-  (:action return-home
-    :parameters (?s - sofia ?l - luogo)
-    :precondition (and (at ?s ?l) (eq ?l scuola) (met-friend ?s) (task-completed ?t) (not (is-afraid ?s)))
-    :effect (and (not (at ?s ?l)) (at ?s casa) (is-happy ?s))
-  )
-
-    ;; Azione: Imparare qualcosa
-  (:action learn
-    :parameters (?s - sofia)
-    :precondition (and (not (learned-something ?s)))
-    :effect (and (learned-something ?s))
+  (:action disattiva-trappole
+    :parameters (?x - ryu ?l - luogo)
+    :precondition (and (at ?x ?l) (trappole-attive ?l) (vivo ?x))
+    :effect (not (trappole-attive ?l))
   )
 )

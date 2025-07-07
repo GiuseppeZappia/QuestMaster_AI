@@ -1,0 +1,5 @@
+(muovi ryu1 foresta tempio)
+(muovi ryu1 tempio interno-tempio)
+(prendi-rotolo ryu1 rotolo-segreto interno-tempio)
+(combatti-masaru ryu1 masaru1 interno-tempio)
+(ripristina-onore ryu1 masaru1 rotolo-segreto)

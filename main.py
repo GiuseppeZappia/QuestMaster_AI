@@ -4,7 +4,7 @@ from langchain_google_genai import ChatGoogleGenerativeAI
 from domain_generation import create_domain_pddl
 from problem_generation import create_problem_pddl
 from reflective_agent import run_correction_workflow
-from pddl_validation import run_fastdownward_and_validate
+# from pddl_validation import run_fastdownward_and_validate
 from pddl_validation import run_fastdownward_complete
 from dotenv import load_dotenv
 
@@ -22,40 +22,39 @@ def main():
         temperature=0.6
     )
 
-    user_input= input("Inserisci la tua richiesta per generare la lore: ")
+    # user_input= input("Inserisci la tua richiesta per generare la lore: ")
     
     
-    #crea e salva la lore 
-    generate_lore(user_input,llm)
+    # #crea e salva la lore 
+    # generate_lore(user_input,llm)
 
-    #crea il dominio della lore generata
-    create_domain_pddl(llm)
+    # #crea il dominio della lore generata
+    # create_domain_pddl(llm)
 
-    #crea il problema della lore generata
-    create_problem_pddl(llm)
+    # #crea il problema della lore generata
+    # create_problem_pddl(llm)
 
     #PARTE VALIDAZIONE E GESTIONE ERRORE ANASTASIA
 
-    pddl_validation_output=run_fastdownward_and_validate()
+    pddl_validation_output=run_fastdownward_complete()
+    # print(pddl_validation_output)
 
+    # print("-----------------------------------------------STAMPO NEL MAINNNNNNN-----------------------------------------------")
+    # print(pddl_validation_output["planning_results"]["planning_output"])
 
     #CAMBIARE IN BASE A LOGICA ANASTASIA
-    if not pddl_validation_output["success"]:
+    if not pddl_validation_output["planning_results"]["planning_success"]:
         output=pddl_validation_output
         count_attempts=0
-        while(not output["success"] and count_attempts<8):
-            print(f"❌ Errore nella validazione PDDL: {output['error_message']}")
+        while(not output["planning_results"]["planning_success"] and count_attempts<8):
+            print("❌ Errore nella validazione PDDL")
             print("🔄 Riprovo a correggere il PDDL...")
-            run_correction_workflow(output["pddl_problem"], llm)
-            output=run_fastdownward_and_validate()
+            run_correction_workflow(output["planning_results"]["planning_output"], llm)
+            output=run_fastdownward_complete()
             count_attempts+=1
         #FACCIAMO MIN ATTEMPTS E POI HUMAN IN THE LOOP CON UMANO CHE LEGGE DOMAIN E PROBLEM E 
         #SUGGERISCE CORREZIONE DA FARE? COSI CHIAMEREMMO ANCORA IL METODO  correction_workflow ma con stringa errore passata da utente
         
-        
-    
-
-    results = run_fastdownward_complete()
     
 
 

@@ -1,17 +1,17 @@
 {
   "lore_document": {
     "quest_description": {
-      "title": "Il Primo Giorno di Scuola di Sofia",
-      "initial_state": "Sofia, una bambina di sei anni con un fiocco rosa tra i capelli, si trova davanti al cancello della Scuola Primaria 'Arcobaleno'. Stringe forte il suo nuovo zainetto con l'immagine di un unicorno.",
-      "goal": "Sofia deve superare le sue paure, fare nuove amicizie e vivere una giornata positiva a scuola, imparando qualcosa di nuovo e tornando a casa felice.",
+      "title": "L'Ombra del Tradimento",
+      "initial_state": "Il clan della Foglia Silenziosa è stato decimato da un traditore interno, Masaru. Il ninja Ryu, unico sopravvissuto, giura vendetta e si prepara a smascherare Masaru e recuperare il rotolo segreto del clan, rubato durante l'attacco.",
+      "goal": "Sconfiggere Masaru, recuperare il rotolo segreto del clan e ripristinare l'onore della Foglia Silenziosa.",
       "obstacles": [
-        "La paura di non conoscere nessuno e di sentirsi sola.",
-        "Un bullo di nome Marco che infastidisce i nuovi arrivati.",
-        "Un compito di matematica particolarmente difficile.",
-        "La nostalgia di casa e la mancanza della sua mamma."
+        "Masaru, un ninja esperto e spietato, maestro nell'arte dell'illusione e del veleno.",
+        "Le guardie di Masaru, ninja corrotti e mercenari senza scrupoli.",
+        "Un labirinto di trappole nascoste nel tempio abbandonato dove Masaru si nasconde.",
+        "Un fiume impetuoso da attraversare, sorvegliato da un demone acquatico evocato da Masaru."
       ],
-      "world_background": "La Scuola Primaria 'Arcobaleno' è un luogo colorato e accogliente, pieno di insegnanti gentili e bambini pronti a giocare. Si trova in un quartiere tranquillo, circondato da parchi e giardini.",
-      "contextual_information": "Sofia ha sempre giocato con i suoi genitori e i suoi nonni. Non ha mai frequentato l'asilo nido e quindi è la prima volta che si trova in un ambiente così grande e pieno di sconosciuti."
+      "world_background": "Il mondo è governato da clan ninja in costante conflitto tra loro. L'onore e la disciplina sono i valori fondamentali. La Foglia Silenziosa era un clan rispettato per la sua saggezza e abilità nel ninjutsu silenzioso.",
+      "contextual_information": "Il rotolo segreto contiene tecniche proibite che potrebbero sbilanciare il potere tra i clan, scatenando una guerra senza precedenti. Ryu è l'ultimo depositario della conoscenza del clan e l'unico in grado di fermare Masaru."
     },
     "branching_factor": {
       "min_actions_per_state": 2,
