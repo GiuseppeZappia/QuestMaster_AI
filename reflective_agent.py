@@ -1,6 +1,5 @@
 from utils import load_example_pddl, load_example_json
 from langgraph.types import Command, interrupt
-import json
 
 
 def correct_pddl(pddl_problem, llm):
@@ -76,12 +75,14 @@ def correct_pddl(pddl_problem, llm):
     CORREZIONE: [DOMAIN/PROBLEM]
     ```
     [codice PDDL corretto]
-    ```"""
+    ```
+    """
 
     # Invoca l'LLM per ottenere la correzione
     llm_response = llm.invoke(prompt)
     response_text = llm_response.content.strip()
-
+    print ("---------------------------------------------STAMPO RISPOSTA LLM------------------------------------------------")
+    print(response_text)
     # Determina se è una correzione al domain o al problem
     is_domain_correction = False
     is_problem_correction = False
@@ -138,13 +139,12 @@ def correct_pddl(pddl_problem, llm):
             # Fallback se non ci sono abbastanza parti
             corrected_pddl = corrected_pddl.replace("```", "").strip()
     
-    # Pulizia ulteriore da eventuali residui
+    # Pulisci ulteriormente da eventuali residui
     corrected_pddl = corrected_pddl.replace("correzione: problem", "").replace("CORREZIONE: PROBLEM", "").strip()
 
-# Se non è possibile determinare automaticamente il tipo, usa interrupt
-
+    
+    # Se non è possibile determinare automaticamente il tipo, usa interrupt
     if not is_domain_correction and not is_problem_correction:
-        print("---------------SONO QUI ----------------")
         # Prepara il messaggio per l'utente
         query_message = f"""⚠️  Non è possibile determinare automaticamente se si tratta di una correzione al domain o al problem
 
@@ -155,8 +155,13 @@ Risposta dell'LLM:
 
 Si tratta di una correzione al DOMAIN o al PROBLEM? (D/P):"""
         
-        # Interrompe l'esecuzione e chiede input umano (Human-in-the-loop)
-        user_input = input(query_message).strip().upper()
+        # Interrompe l'esecuzione e chiede input umano
+        human_choice = interrupt({
+            "query": query_message,
+            "type": "file_type_choice",
+            "options": ["D", "P", "DOMAIN", "PROBLEM"]
+        })
+        
         # Processa la scelta dell'utente con loop infinito fino a input valido
         while True:
             user_input = human_choice.get("data", "").strip().upper()
@@ -226,64 +231,197 @@ def run_correction_workflow(pddl_problem, llm):
             "is_problem_correction": False
         }
     
-
-
-def update_lore_with_corrections(richieste_utente,llm):
-    lore={json.dumps(load_example_json("file_generati/lore_generata_per_utente.json"), indent=2, ensure_ascii=False)}
-
-    prompt =f"""Sei un esperto game designer specializzato nella creazione di avventure narrative interattive per il sistema QuestMaster.
-
-    Il tuo compito è corregere una lore dettagliata in formato JSON, a partire dalle modifiche richieste dell'utente.
-
-    ISTRUZIONI:
-    - Devi limitarti a correggere la lore esistentecon le modifiche richieste, senza modificarne la struttura, quindi il formato JSON deve rimanere identico.
-    - Rispondi SOLO con il JSON valido
-    - Non aggiungere testo prima o dopo il JSON
-    - Assicurati che la struttura sia identica all'esempio fornito
-
-    LORE DA MODIFICARE:
-    {lore}
-    MODIFICHE RICHIESTE DALL'UTENTE:
-    {richieste_utente}
+def run_correction_workflow(pddl_problem, llm):
     """
-
-    response=llm.invoke(prompt)
-
-    # Estrai e pulisci la risposta
-    response_text = response.content.strip()
-
-    # Prova a estrarre il JSON dalla risposta
-    if "```json" in response_text:
-        json_start = response_text.find("```json") + 7
-        json_end = response_text.rfind("```")
-        json_text = response_text[json_start:json_end].strip()
-    elif response_text.startswith("{"):
-        json_text = response_text
-    else:
-        # Cerca il primo { e l'ultimo }
-        start_idx = response_text.find("{")
-        end_idx = response_text.rfind("}") + 1
-        if start_idx != -1 and end_idx != 0:
-            json_text = response_text[start_idx:end_idx]
-        else:
-            json_text = response_text
-
+    Esegue il workflow di correzione PDDL con gestione di interrupt/resume.
+    """
     try:
-        # Converti in dizionario per validare
-        lore_data = json.loads(json_text)
+        # Avvia il processo di correzione
+        corrected_pddl, is_domain, is_problem = correct_pddl(pddl_problem, llm)
         
-        # Salva la lore generata
-        output_filename = "file_generati/lore_generata_per_utente.json"
-        with open(output_filename, 'w', encoding='utf-8') as f:
-            json.dump(lore_data, f, indent=2, ensure_ascii=False)
+        return {
+            "success": True,
+            "corrected_pddl": corrected_pddl,
+            "is_domain_correction": is_domain,
+            "is_problem_correction": is_problem
+        }
         
-        print(f"✅ Lore generata con successo e salvata in: {output_filename}")
+    except Exception as e:
+        return {
+            "success": False,
+            "error": str(e),
+            "corrected_pddl": None,
+            "is_domain_correction": False,
+            "is_problem_correction": False
+        }
+    
+
+
+
+
+
+def run_user_correction_pddl(user_corrections, llm):
+    """
+    Rigenerazione PDDL basata sui suggerimenti dell'utente.
+    Dopo i feedback dell'utente, rigenera completamente domain e problem dalla lore.
+    """
+    try:
+        # Carica i file necessari
+        lore = load_example_json("file_generati/lore_generata_per_utente.json")
+        domain = load_example_pddl("file_generati/domain_generato.pddl")
+        problem = load_example_pddl("file_generati/problem_generato.pddl")
         
-        # Mostra anteprima
-        if "quest_description" in lore_data:
-            print(f"\n📖 Titolo: {lore_data['quest_description'].get('title', 'N/A')}")
-            print(f"📝 Descrizione: {lore_data['quest_description'].get('description', 'N/A')[:150]}...")
+        # Carica la soluzione attuale
+        solution = ""
+        try:
+            with open("fastdownward_output/solution.txt", 'r', encoding='utf-8') as f:
+                solution = f.read().strip()
+        except FileNotFoundError:
+            solution = "Soluzione non disponibile"
         
-    except json.JSONDecodeError as e:
-        print(f"❌ Errore nel parsing JSON: {e}")
-        print(f"Risposta ricevuta:\n{response_text}")
+        # Genera il prompt per rigenerare il DOMAIN
+        domain_prompt = f"""Sei un esperto di pianificazione automatica e PDDL (Planning Domain Definition Language).
+
+        L'utente ha visto il piano generato (ovvero, la SOLUZIONE ATTUALE) e ha suggerito le seguenti correzioni/modifiche:
+        "{user_corrections}"
+
+        SOLUZIONE ATTUALE:
+        {solution}
+
+        LORE:
+        {lore}
+
+        domain.pddl ATTUALE:
+        {domain}
+
+        Il tuo compito è rigenerare completamente il file domain.pddl tenendo conto dei suggerimenti dell'utente.
+        
+        ISTRUZIONI:
+        1. Analizza i suggerimenti dell'utente relativi al piano
+        2. Rigenera il domain.pddl dalla lore incorporando le modifiche necessarie
+        3. Assicurati che le azioni siano coerenti con i feedback dell'utente
+        4. Mantieni la coerenza con la lore fornita
+
+        OUTPUT:
+        Fornisci solo il codice PDDL del domain completo, senza commenti aggiuntivi.
+        """
+
+        # Genera il DOMAIN
+        print("🔄 Rigenerando domain.pddl basandosi sui suggerimenti dell'utente...")
+        domain_response = llm.invoke(domain_prompt)
+        domain_content = domain_response.content.strip()
+        
+        # Pulisci il domain da eventuali marker markdown
+        if "```" in domain_content:
+            parts = domain_content.split("```")
+            if len(parts) >= 3:
+                domain_content = parts[1]
+                lines = domain_content.split('\n')
+                if lines and ('pddl' in lines[0].lower() or lines[0].strip() == ''):
+                    domain_content = '\n'.join(lines[1:]).strip()
+                else:
+                    domain_content = domain_content.strip()
+        
+        # Salva il domain
+        domain_filename = "file_generati/domain_generato.pddl"
+        with open(domain_filename, 'w', encoding='utf-8') as f:
+            f.write(domain_content)
+        print(f"✅ Domain rigenerato e salvato in: {domain_filename}")
+
+        # Genera il prompt per rigenerare il PROBLEM
+        problem_prompt = f"""Sei un esperto di pianificazione automatica e PDDL (Planning Domain Definition Language).
+
+        L'utente ha visto il piano generato e ha suggerito le seguenti correzioni/modifiche:
+        "{user_corrections}"
+
+        SOLUZIONE ATTUALE:
+        {solution}
+
+        LORE:
+        {lore}
+
+        DOMAIN RIGENERATO:
+        {domain_content}
+
+        problem.pddl ATTUALE:
+        {problem}
+
+        Il tuo compito è rigenerare completamente il file problem.pddl tenendo conto dei suggerimenti dell'utente.
+        
+        ISTRUZIONI:
+        1. Analizza i suggerimenti dell'utente relativi al piano
+        2. Rigenera il problem.pddl dalla lore incorporando le modifiche necessarie
+        3. Assicurati che stati iniziali e goal siano coerenti con i feedback dell'utente
+        4. Mantieni la coerenza con la lore e il domain forniti
+
+        OUTPUT:
+        Fornisci solo il codice PDDL del problem completo, senza commenti aggiuntivi.
+        """
+
+        # Genera il PROBLEM
+        print("🔄 Rigenerando problem.pddl basandosi sui suggerimenti dell'utente...")
+        problem_response = llm.invoke(problem_prompt)
+        problem_content = problem_response.content.strip()
+        
+        # Pulisci il problem da eventuali marker markdown
+        if "```" in problem_content:
+            parts = problem_content.split("```")
+            if len(parts) >= 3:
+                problem_content = parts[1]
+                lines = problem_content.split('\n')
+                if lines and ('pddl' in lines[0].lower() or lines[0].strip() == ''):
+                    problem_content = '\n'.join(lines[1:]).strip()
+                else:
+                    problem_content = problem_content.strip()
+        
+        # Salva il problem
+        problem_filename = "file_generati/problem_generato.pddl"
+        with open(problem_filename, 'w', encoding='utf-8') as f:
+            f.write(problem_content)
+        print(f"✅ Problem rigenerato e salvato in: {problem_filename}")
+
+        return {
+            "domain_content": domain_content,
+            "problem_content": problem_content,
+            "success": True
+        }
+        
+    except Exception as e:
+        print(f"❌ Errore durante la rigenerazione basata sui suggerimenti dell'utente: {e}")
+        return {
+            "domain_content": None,
+            "problem_content": None,
+            "success": False,
+            "error": str(e)
+        }
+
+
+def run_user_correction_workflow(user_corrections, llm):
+    """
+    Esegue il workflow di rigenerazione PDDL basato sui suggerimenti dell'utente.
+    """
+    try:
+        # Avvia il processo di rigenerazione
+        result = run_user_correction_pddl(user_corrections, llm)
+        
+        if result["success"]:
+            return {
+                "success": True,
+                "domain_content": result["domain_content"],
+                "problem_content": result["problem_content"]
+            }
+        else:
+            return {
+                "success": False,
+                "error": result.get("error", "Errore sconosciuto"),
+                "domain_content": None,
+                "problem_content": None
+            }
+        
+    except Exception as e:
+        return {
+            "success": False,
+            "error": str(e),
+            "domain_content": None,
+            "problem_content": None
+        }
