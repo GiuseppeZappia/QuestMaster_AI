@@ -9,7 +9,7 @@ import json
 # with open("loreDiProva.json", 'r', encoding='utf-8') as f:
 #     lore_esempio_json=json.load(f)    
 # 
-# 
+
 # INCLUDERE   - Rispetta i vincoli di branching factor e depth constraints della lore nelle istruzioni 
 
 def create_domain_pddl(llm):
@@ -22,25 +22,20 @@ def create_domain_pddl(llm):
 
     REQUISITI PER IL DOMAIN.PDDL:
     - Deve essere **pieno PDDL-STRIPS**, compatibile con Fast Downward (nessuna estensione numerica, temporale o fluents)
-    - :requirements deve essere esattamente  
-        (:requirements :strips :typing :negative-preconditions :equality)
-    - **Non** usare costrutti come `:numeric-fluents`, `:durative-actions`, `increase`, `decrease`, funzioni numeriche, o operatori `<` `>` su valori numerici
-    - Includi unicamente **predicati booleani** e **effetti/add e delete lists**
-    - Definisci azioni con precondizioni ed effetti chiari, tipizzati, e **senza condizionali o effetti numerici**
+    - Includi predicati per rappresentare stati del mondo, posizioni, oggetti, condizioni
+    - Definisci azioni con precondizioni ed effetti chiari
+    - Ogni azione deve avere parametri tipizzati se necessario
     - Usa commenti per spiegare ogni sezione
-    - Segui rigorosamente la sintassi standard PDDL-STRIPS
     - Rispetta i vincoli di branching factor e depth constraints della lore
     - Rispondi **soltanto** con il codice PDDL valido, senza testo introduttivo o spiegazioni esterne
 
     ISTRUZIONI:
-    1. Analizza la lore JSON e identifica stati, oggetti, personaggi e azioni possibili.
-    2. Crea solo predicati booleani per rappresentare lo stato del mondo narrativo.
-    3. Definisci azioni STRIPS—ognuna con:
-    - Parametri tipizzati
-    - Precondizioni in forma congiuntiva di predicati booleani
-    - Effetti sotto forma di liste di aggiunta (`(pred ...)`) e rimozione (`(not (pred ...))`)
-    4. **Non** usare costrutti ADL avanzati (disjunction, quantificatori, condizionali) né alcuna notazione numerica.
-    5. Rispondi **solo** con il codice PDDL, ogni riga commentata con `;`.
+    - Analizza la lore JSON e identifica: stati, oggetti, personaggi, azioni possibili
+    - Crea predicati che rappresentino lo stato del mondo narrativo
+    - Definisci azioni che corrispondano alle scelte del giocatore
+    - Rispondi SOLO con il codice PDDL valido, senza testo aggiuntivo
+    - Ogni riga deve avere un commento che spiega cosa fa
+    - Non usare accenti, scrivi sia commenti che istruzioni senza accenti o caratteri speciali
 
     ESEMPIO DI INPUT E OUTPUT:
 

@@ -1,25 +1,29 @@
 {
   "lore_document": {
     "quest_description": {
-      "title": "L'Incubo Accademico",
-      "initial_state": "Il Professor Scribacchini, noto per la sua incompetenza e severità ingiustificata, ha iniziato a bocciare sistematicamente gli studenti del corso di 'Storia delle Rune Antiche'. L'atmosfera all'Università di Astrakhan è tesa e gli studenti temono per il loro futuro accademico.",
-      "goal": "Dimostrare l'incompetenza del Professor Scribacchini e ottenere una revisione dei voti per gli studenti ingiustamente bocciati.",
+      "title": "La Profezia del Re Corvo",
+      "initial_state": "Il villaggio di Piumadoro è in preda alla disperazione. Il Re Corvo, un'entità malvagia imprigionata secoli fa, sta per liberarsi. Strani presagi e creature corrotte infestano la regione.",
+      "goal": "Sigillare nuovamente il Re Corvo nel Tomo dell'Oblio, impedendo la sua ascesa e salvando Piumadoro.",
       "obstacles": [
-        "L'influenza del Professor Scribacchini all'interno del dipartimento.",
-        "La burocrazia universitaria e le lunghe procedure per presentare un reclamo.",
-        "La paura degli studenti di ritorsioni da parte del professore.",
-        "La difficoltà nel reperire prove concrete dell'incompetenza del professore (esami mal corretti, lezioni senza senso)."
+        "Il Culto del Corvo, fanatici devoti al Re Corvo che ostacolano l'eroe.",
+        "Il Bosco Maledetto, una foresta corrotta dalla presenza del Re Corvo, piena di trappole e creature ostili.",
+        "L'Enigma della Pietra Runica, un antico puzzle magico che protegge l'accesso al Tomo dell'Oblio.",
+        "La Corruzione Mentale, l'influenza del Re Corvo che tenta di piegare la volontà dell'eroe.",
+        "Il Guardiano Corrotto, un potente essere corrotto dal Re Corvo che protegge il Tomo.",
+        "Le Visioni Ingannatrici, illusioni create dal Re Corvo per confondere e disorientare l'eroe.",
+        "Il Fiume di Anime Perdute, un corso d'acqua infestato da spiriti tormentati che cercano di trascinare l'eroe nelle profondità.",
+        "L'Antica Biblioteca Proibita, un luogo pieno di conoscenza oscura e incantesimi pericolosi, protetto da trappole magiche."
       ],
-      "world_background": "L'Università di Astrakhan è un'antica istituzione rinomata per la sua eccellenza accademica. Tuttavia, negli ultimi anni, la corruzione e il nepotismo hanno iniziato a infiltrarsi, minacciando la sua reputazione. Il rettore, il professor Eldritch, è noto per la sua pigrizia e per ignorare i problemi interni.",
-      "contextual_information": "In passato, ci sono stati altri casi di professori incompetenti, ma nessuno ha mai osato sfidarli apertamente per paura di conseguenze negative sulla propria carriera. Alcuni studenti hanno formato una società segreta, 'I Custodi della Conoscenza', per combattere l'ingiustizia accademica."
+      "world_background": "Il mondo di Aerthos è un luogo di magia antica e poteri dimenticati. Il Re Corvo è una figura leggendaria, un essere di caos e distruzione imprigionato secoli fa da un ordine di saggi. Piumadoro è un villaggio isolato, custode di antichi segreti legati alla prigionia del Re Corvo.",
+      "contextual_information": "Una profezia narra che solo un eroe dal cuore puro e dalla mente acuta potrà sigillare nuovamente il Re Corvo. Il tempo stringe, e la corruzione si diffonde rapidamente."
     },
     "branching_factor": {
       "min_actions_per_state": 2,
-      "max_actions_per_state": 4
+      "max_actions_per_state": 3
     },
     "depth_constraints": {
-      "min_steps_to_goal": 4,
-      "max_steps_to_goal": 8
+      "min_steps_to_goal": 7,
+      "max_steps_to_goal": 7
     }
   }
 }

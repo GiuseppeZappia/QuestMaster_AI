@@ -24,26 +24,16 @@ def create_problem_pddl(llm):
 
     REQUISITI PER IL PROBLEM.PDDL:
     - Deve essere pieno PDDL‑STRIPS, compatibile con Fast Downward (solo costrutti booleani, no numerici, no durative)
-    - Usa esattamente gli stessi tipi, predicati e nomi di oggetti definiti nel domain
-    - (:objects) elenca tutti gli oggetti usati nella lore, tipizzati correttamente
-    - (:init) include solo literal booleani e negazioni semplici, nessun costrutto ADL avanzato
-    - (:goal) deve essere una congiunzione di predicati booleani che rappresentano l’obiettivo finale
-    - Sintassi rigorosa PDDL‑STRIPS:
-        (define (problem ⟨nome⟩)
-        (:domain ⟨domain-name⟩)
-        (:objects …)
-        (:init …)
-        (:goal (and …))
-        )
-    - Ogni riga commentata con `;` per spiegare cosa definisce
-    - Rispondi **solo** con il codice PDDL, senza testo aggiuntivo
+    - Deve essere compatibile con Fast Downward
+    - Deve usare gli stessi predicati e oggetti definiti nel domain
+    - Definisci gli objects specifici per questa istanza del problema
+    - Imposta lo stato iniziale (:init) basato sulla lore
+    - Definisci il goal basato sull'obiettivo della quest
+    - Usa la sintassi PDDL standard: (define (problem nome-problema) ...)
+    - Includi: problem name, domain reference, objects, init, goal
+    - Ogni riga deve avere un commento che spiega cosa fa
+    - Non usare accenti, scrivi sia commenti che istruzioni senza accenti o caratteri speciali
 
-    ISTRUZIONI:
-    1. Mappa la lore JSON su istanze di oggetti e stato iniziale.
-    2. In :objects dichiara ogni entità (personaggi, luoghi, prove, ecc.) con il tipo corretto.
-    3. In :init, metti tutte le asserzioni vere all’inizio (at, prova-superata negata, sfida, ecc.).
-    4. In :goal, unisci con `(and ...)` i predicati che definiscono il successo (es. `(permesso-ottenuto)`).
-    5. **Non** usare costrutti non supportati: nessun `:metric`, `:constraints`, `:fluents`, `forall`, `or`, `imply`, o aritmetica.
 
     ESEMPIO DI INPUT E OUTPUT:
 

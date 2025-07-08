@@ -4,7 +4,6 @@ from langchain_google_genai import ChatGoogleGenerativeAI
 from domain_generation import create_domain_pddl
 from problem_generation import create_problem_pddl
 from reflective_agent import run_correction_workflow,update_lore_with_corrections
-# from pddl_validation import run_fastdownward_and_validate
 from pddl_validation import run_fastdownward_complete
 from dotenv import load_dotenv
 from utils import print_lore

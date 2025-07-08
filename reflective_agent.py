@@ -23,8 +23,42 @@ def correct_pddl(pddl_problem, llm):
   - mismatch di tipi
   - errori di sintassi (parentesi, variabili…)
   - incoerenze logiche tra domain e problem
-  - mancanza di percorso valido
+  - mancanza di percorso valido 
 
+    ------------------ESEMPIO ERRORE------------------
+    Di seguito un esempio di errore FASTDOWNWARD e relativa correzione:
+    
+    CODICE PDDL ERRATO:
+    (:action ricicla-denaro
+    :parameters (?s - sacerdote ?l - luogo)
+    :precondition (and (at ?s ?l) (risorse culto-nduja medio))
+    :effect (risorse culto-nduja alto)
+    )
+
+    ERRORE FASTDOWNWARD:
+    Undefined object
+    Got: culto-nduja
+
+    PROBLEMA:
+    "culto-nduja" è un oggetto concreto, definito nel problem,
+    e non è un parametro dell'azione. Fast Downward lo considera 
+    undefined perché il dominio non deve contenere riferimenti a 
+    oggetti specifici.
+
+    SOLUZIONE:
+    (:action ricicla-denaro
+    :parameters (?s - sacerdote ?l - luogo ?o - organizzazione)
+    :precondition (and
+        (at ?s ?l)
+        (risorse ?o medio))
+    :effect (and
+        (not (risorse ?o medio))
+        (risorse ?o alto))
+    )
+
+    Ora l’oggetto culto-nduja verrà passato nel problem file, che è il luogo giusto per oggetti specifici.
+    ------------------FINE ESEMPIO ERRORE------------------
+    
     Devi correggere il seguente errore: {pddl_problem} associato a questi file di lore, domain e problem PDDL:
     
     LORE:
