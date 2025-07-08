@@ -1,80 +1,87 @@
-;; domain.pddl: L'Incubo Accademico
+;; domain.pddl
 (define (domain incubo-accademico)
   (:requirements :strips :typing :negative-preconditions :equality)
   (:types
-    persona luogo documento - object
+    entity persona luogo documento - entity
     studente professore rettore - persona
     universita dipartimento - luogo
     esame lezione - documento
   )
 
   (:predicates
-    (at ?p - persona ?l - luogo)  ; Persona si trova in un luogo
-    (incompetente ?p - professore) ; Professore è incompetente
-    (ha-prove ?s - studente)       ; Studente ha prove
-    (influenza ?p - professore ?d - dipartimento) ; Professore ha influenza nel dipartimento
-    (bocciato ?s - studente)       ; Studente è stato bocciato
-    (reclamo-presentato ?s - studente) ; Studente ha presentato un reclamo
-    (revisione-ottenuta)          ; Revisione dei voti è stata ottenuta
-    (paura ?s - studente)            ; Studente ha paura
-    (esame-scorretto ?e - esame)   ; Esame è stato corretto male
-    (lezione-senza-senso ?l - lezione) ; Lezione non ha senso
-    (rettore-informato)           ; Il rettore è stato informato
+    (at ?x - entity ?l - luogo)            ; x si trova in l
+    (incompetente ?p - professore)          ; il professore è incompetente
+    (prova-ottenuta ?d - documento)        ; prova è stata ottenuta
+    (reclamo-presentato)                  ; il reclamo è stato presentato
+    (voti-revisionati)                    ; i voti sono stati revisionati
+    (ha-paura ?s - studente)              ; lo studente ha paura
+    (influente ?p - professore ?d - dipartimento) ; professore ha influenza nel dipartimento
+    (esame-scorretto ?e - esame)           ; l'esame è stato corretto male
+    (lezione-insensata ?l - lezione)        ; la lezione è insensata
+    (conosce-rettore ?p - professore ?r - rettore) ; il professore conosce il rettore
+    (parla-studente ?s - studente ?p - professore) ; lo studente parla con il professore
   )
 
-  ;; Azione: Muoversi tra i luoghi
+  ;; Muoversi tra i luoghi
   (:action move
-    :parameters (?p - persona ?from - luogo ?to - luogo)
-    :precondition (at ?p ?from)
-    :effect (and (not (at ?p ?from)) (at ?p ?to))
+    :parameters (?e - entity ?from - luogo ?to - luogo)
+    :precondition (and (at ?e ?from))
+    :effect (and (not (at ?e ?from)) (at ?e ?to))
   )
 
-  ;; Azione: Raccogliere prove dell'incompetenza
-  (:action raccogli-prove
-    :parameters (?s - studente ?l - luogo ?e - esame)
-    :precondition (and (at ?s ?l) (esame-scorretto ?e))
-    :effect (and (ha-prove ?s))
+  ;; Ottenere una prova (esame mal corretto)
+  (:action ottieni-prova-esame
+    :parameters (?s - studente ?e - esame ?l - luogo)
+    :precondition (and (at ?s ?l) (at ?e ?l) (esame-scorretto ?e) (not (prova-ottenuta ?e)))
+    :effect (and (prova-ottenuta ?e))
   )
 
-  ;; Azione: Presentare un reclamo formale
+  ;; Ottenere una prova (lezione insensata)
+  (:action ottieni-prova-lezione
+    :parameters (?s - studente ?le - lezione ?l - luogo)
+    :precondition (and (at ?s ?l) (at ?le ?l) (lezione-insensata ?le) (not (prova-ottenuta ?le)))
+    :effect (and (prova-ottenuta ?le))
+  )
+
+  ;; Presentare un reclamo
   (:action presenta-reclamo
-    :parameters (?s - studente ?d - dipartimento)
-    :precondition (and (at ?s ?d) (ha-prove ?s) (not (paura ?s)))
-    :effect (reclamo-presentato ?s)
+    :parameters (?s - studente ?u - universita ?d - dipartimento ?x - documento)
+    :precondition (and (at ?s ?u) (at ?d ?u) (prova-ottenuta ?x) (not (reclamo-presentato)))
+    :effect (and (reclamo-presentato))
   )
 
-  ;; Azione: Informare il rettore della situazione
-  (:action informa-rettore
+  ;; Parlare con il rettore
+  (:action parla-rettore
     :parameters (?s - studente ?r - rettore ?u - universita)
-    :precondition (and (at ?s ?u) (at ?r ?u) (reclamo-presentato ?s))
-    :effect (rettore-informato)
+    :precondition (and (at ?s ?u) (at ?r ?u) (reclamo-presentato))
+    :effect (and (voti-revisionati))
   )
 
-  ;; Azione: Dimostrare l'incompetenza del professore
-  (:action dimostra-incompetenza
-    :parameters (?p - professore ?d - dipartimento)
-    :precondition (and (rettore-informato) (influenza ?p ?d) (incompetente ?p))
-    :effect (and (not (influenza ?p ?d)))
-  )
-
-  ;; Azione: Ottenere una revisione dei voti
-  (:action ottieni-revisione
-    :parameters (?p - professore ?d - dipartimento)
-    :precondition (and (rettore-informato) (not (influenza ?p ?d)))
-    :effect (revisione-ottenuta)
-  )
-
-  ;; Azione: Superare la paura
+  ;; Superare la paura
   (:action supera-paura
     :parameters (?s - studente)
-    :precondition (paura ?s)
-    :effect (not (paura ?s))
+    :precondition (ha-paura ?s)
+    :effect (and (not (ha-paura ?s)))
   )
 
-  ;; Azione: Segnala lezione senza senso
-  (:action segnala-lezione
-    :parameters (?s - studente ?u - universita ?l - lezione ?e - esame)
-    :precondition (and (at ?s ?u) (lezione-senza-senso ?l))
-    :effect (esame-scorretto ?e)
+  ;; Affrontare il professore
+  (:action affronta-professore
+    :parameters (?s - studente ?p - professore ?l - luogo ?d - dipartimento)
+    :precondition (and (not (ha-paura ?s)) (at ?s ?l) (at ?p ?l) (at ?d ?l))
+    :effect (and (incompetente ?p))
+  )
+
+  ;; Dimostrare l'incompetenza
+  (:action dimostra-incompetenza
+    :parameters (?p - professore ?d - dipartimento ?u - universita ?s - studente)
+    :precondition (and (reclamo-presentato) (incompetente ?p) (at ?p ?u) (at ?s ?u) (at ?d ?u))
+    :effect ()
+  )
+
+  ;; Revisione dei voti
+  (:action revisiona-voti
+    :parameters (?u - universita ?s - studente ?r - rettore)
+    :precondition (and (reclamo-presentato) (at ?s ?u) (at ?r ?u))
+    :effect (and (voti-revisionati))
   )
 )

@@ -65,3 +65,13 @@ def print_lore():
     - Passaggi massimi per raggiungere l'obiettivo: {depth["max_steps_to_goal"]}
     """
     print(narrative)
+
+def print_plan():
+    try:
+        with open("fastdownward_output/solution.txt", 'r', encoding='utf-8') as f:
+            solution = f.read()
+            print(solution)
+    except FileNotFoundError:
+        print("File solution.txt non trovato nella cartella file_generati.")
+    except Exception as e:
+        print(f"Errore nel caricamento del piano: {e}")

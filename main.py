@@ -3,11 +3,11 @@ import os ,json
 from langchain_google_genai import ChatGoogleGenerativeAI
 from domain_generation import create_domain_pddl
 from problem_generation import create_problem_pddl
-from reflective_agent import run_correction_workflow,update_lore_with_corrections
+from reflective_agent import run_correction_workflow
 # from pddl_validation import run_fastdownward_and_validate
 from pddl_validation import run_fastdownward_complete
 from dotenv import load_dotenv
-from utils import print_lore
+from utils import print_lore, print_plan
 
 load_dotenv() #Per la chiave API
 
@@ -23,11 +23,11 @@ def main():
         temperature=0.6
     )
 
-    user_input= input("Inserisci la tua richiesta per generare la lore: ")
+    # user_input= input("Inserisci la tua richiesta per generare la lore: ")
     
     
     # # #crea e salva la lore 
-    generate_lore(user_input,llm)
+    # generate_lore(user_input,llm)
 
     # # #chiede all'utente se vuole modificare la lore generata
     print("Di seguito la lore generata:")
@@ -77,11 +77,61 @@ def main():
             count_attempts+=1
         #FACCIAMO MIN ATTEMPTS E POI HUMAN IN THE LOOP CON UMANO CHE LEGGE DOMAIN E PROBLEM E 
         #SUGGERISCE CORREZIONE DA FARE? COSI CHIAMEREMMO ANCORA IL METODO  correction_workflow ma con stringa errore passata da utente
+    
+    #HUMAN IN THE LOOP PER VALIDARE IL PIANO GENERATO
+
+    if pddl_validation_output["planning_results"]["planning_success"]:
+        plan_accepted = False
+      
         
-    
+        while not plan_accepted:
+            # Mostra il piano all'utente e chiede approvazione
+            plan_accepted = human_plan_validation(pddl_validation_output["planning_results"]["planning_output"])
+
+            # Opzione per permettere all'utente di suggerire correzioni
+            user_correction = input("Descrivi il problema o la correzione desiderata: ")
+            print("🔄 Applicando le correzioni suggerite...")
+            run_correction_workflow(user_correction, llm) ##### MODIFICARE
+                
+            # Rivalidare
+            pddl_validation_output = run_fastdownward_complete()
+                
+            if not pddl_validation_output["planning_results"]["planning_success"]:
+                print("❌ Errore nella nuova validazione PDDL, riprovo...")
+                run_correction_workflow(pddl_validation_output["planning_results"]["planning_output"], llm)
+                pddl_validation_output = run_fastdownward_complete()
+        
+        if plan_accepted:
+            print("🎉 Piano finale accettato! Processo completato con successo.")
+ 
+    else:
+        print("❌ Impossibile generare un piano valido.")
+        
 
 
+
+
+
+
+
+
+
+def human_plan_validation(planning_output):
     
+    print("Di seguito il piano generato:")
+    print_plan()
+    
+    while True:
+        scelta = input("\n✅ Il piano generato è soddisfacente? (S/N): ").strip().upper()
+        
+        if scelta == 'S':
+            print("✅ Piano accettato!")
+            return True
+        elif scelta == 'N':
+            print("🔄 Il piano verrà rigenerato...")
+            return False
+        else:
+            print("❌ Scelta non valida, inserisci 'S' per Sì o 'N' per No.")
 
 if __name__ == "__main__":
     main()
