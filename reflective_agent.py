@@ -1,5 +1,6 @@
 from utils import load_example_pddl, load_example_json
 from langgraph.types import Command, interrupt
+import json
 
 
 def correct_pddl(pddl_problem, llm):
@@ -16,6 +17,14 @@ def correct_pddl(pddl_problem, llm):
 
     Il tuo compito è risolvere gli errori ottenuti in seguito alla valutazione di file di tipo domain.pddl e problem.pddl con Fast Downward o VAL.
     Gli errori possono riguardare la sintassi, la struttura, la logica del PDDL o ancora l'assenza di un percorso valido da input ad output.
+
+    Gli errori possono riguardare molti aspetti, tra cui:
+  - oggetti o predicati non definiti
+  - mismatch di tipi
+  - errori di sintassi (parentesi, variabili…)
+  - incoerenze logiche tra domain e problem
+  - mancanza di percorso valido
+
     Devi correggere il seguente errore: {pddl_problem} associato a questi file di lore, domain e problem PDDL:
     
     LORE:
@@ -98,9 +107,10 @@ def correct_pddl(pddl_problem, llm):
     # Pulizia ulteriore da eventuali residui
     corrected_pddl = corrected_pddl.replace("correzione: problem", "").replace("CORREZIONE: PROBLEM", "").strip()
 
-    
-    # Se non è possibile determinare automaticamente il tipo, usa interrupt
+# Se non è possibile determinare automaticamente il tipo, usa interrupt
+
     if not is_domain_correction and not is_problem_correction:
+        print("---------------SONO QUI ----------------")
         # Prepara il messaggio per l'utente
         query_message = f"""⚠️  Non è possibile determinare automaticamente se si tratta di una correzione al domain o al problem
 
@@ -111,13 +121,8 @@ Risposta dell'LLM:
 
 Si tratta di una correzione al DOMAIN o al PROBLEM? (D/P):"""
         
-        # Interrompe l'esecuzione e chiede input umano
-        human_choice = interrupt({
-            "query": query_message,
-            "type": "file_type_choice",
-            "options": ["D", "P", "DOMAIN", "PROBLEM"]
-        })
-        
+        # Interrompe l'esecuzione e chiede input umano (Human-in-the-loop)
+        user_input = input(query_message).strip().upper()
         # Processa la scelta dell'utente con loop infinito fino a input valido
         while True:
             user_input = human_choice.get("data", "").strip().upper()
@@ -186,3 +191,65 @@ def run_correction_workflow(pddl_problem, llm):
             "is_domain_correction": False,
             "is_problem_correction": False
         }
+    
+
+
+def update_lore_with_corrections(richieste_utente,llm):
+    lore={json.dumps(load_example_json("file_generati/lore_generata_per_utente.json"), indent=2, ensure_ascii=False)}
+
+    prompt =f"""Sei un esperto game designer specializzato nella creazione di avventure narrative interattive per il sistema QuestMaster.
+
+    Il tuo compito è corregere una lore dettagliata in formato JSON, a partire dalle modifiche richieste dell'utente.
+
+    ISTRUZIONI:
+    - Devi limitarti a correggere la lore esistentecon le modifiche richieste, senza modificarne la struttura, quindi il formato JSON deve rimanere identico.
+    - Rispondi SOLO con il JSON valido
+    - Non aggiungere testo prima o dopo il JSON
+    - Assicurati che la struttura sia identica all'esempio fornito
+
+    LORE DA MODIFICARE:
+    {lore}
+    MODIFICHE RICHIESTE DALL'UTENTE:
+    {richieste_utente}
+    """
+
+    response=llm.invoke(prompt)
+
+    # Estrai e pulisci la risposta
+    response_text = response.content.strip()
+
+    # Prova a estrarre il JSON dalla risposta
+    if "```json" in response_text:
+        json_start = response_text.find("```json") + 7
+        json_end = response_text.rfind("```")
+        json_text = response_text[json_start:json_end].strip()
+    elif response_text.startswith("{"):
+        json_text = response_text
+    else:
+        # Cerca il primo { e l'ultimo }
+        start_idx = response_text.find("{")
+        end_idx = response_text.rfind("}") + 1
+        if start_idx != -1 and end_idx != 0:
+            json_text = response_text[start_idx:end_idx]
+        else:
+            json_text = response_text
+
+    try:
+        # Converti in dizionario per validare
+        lore_data = json.loads(json_text)
+        
+        # Salva la lore generata
+        output_filename = "file_generati/lore_generata_per_utente.json"
+        with open(output_filename, 'w', encoding='utf-8') as f:
+            json.dump(lore_data, f, indent=2, ensure_ascii=False)
+        
+        print(f"✅ Lore generata con successo e salvata in: {output_filename}")
+        
+        # Mostra anteprima
+        if "quest_description" in lore_data:
+            print(f"\n📖 Titolo: {lore_data['quest_description'].get('title', 'N/A')}")
+            print(f"📝 Descrizione: {lore_data['quest_description'].get('description', 'N/A')[:150]}...")
+        
+    except json.JSONDecodeError as e:
+        print(f"❌ Errore nel parsing JSON: {e}")
+        print(f"Risposta ricevuta:\n{response_text}")

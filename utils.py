@@ -25,3 +25,43 @@ def load_example_pddl(filename):
     except Exception as e:
         print(f"Errore nel caricamento del file PDDL: {e}")
         return None
+    
+
+def print_lore():
+    lore_data = load_example_json("file_generati/lore_generata_per_utente.json")
+
+    # Estrai le sezioni
+    quest = lore_data["lore_document"]["quest_description"]
+    branching = lore_data["lore_document"]["branching_factor"]
+    depth = lore_data["lore_document"]["depth_constraints"]
+
+    # Componi la narrazione
+    narrative = f"""
+    🗝️ Titolo della missione: {quest["title"]}
+
+    🌍 Contesto:
+    {quest["world_background"]}
+
+    ⚠️ Situazione iniziale:
+    {quest["initial_state"]}
+
+    🎯 Obiettivo:
+    {quest["goal"]}
+
+    🚧 Ostacoli lungo il cammino:
+    """
+
+    for obstacle in quest["obstacles"]:
+        narrative += f"  - {obstacle}\n"
+
+    narrative += f"""
+    📜 Informazioni contestuali:
+    {quest["contextual_information"]}
+
+    🔢 Struttura narrativa prevista:
+    - Numero minimo di azioni per stato: {branching["min_actions_per_state"]}
+    - Numero massimo di azioni per stato: {branching["max_actions_per_state"]}
+    - Passaggi minimi per raggiungere l'obiettivo: {depth["min_steps_to_goal"]}
+    - Passaggi massimi per raggiungere l'obiettivo: {depth["max_steps_to_goal"]}
+    """
+    print(narrative)

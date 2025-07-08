@@ -1,22 +1,31 @@
-;; problem.pddl: Problema per la simulazione della Ricerca della Prosperità
+;; problem.pddl: L'Incubo Accademico
 
-(define (problem ricerca-prosperita-problema)
-  (:domain ricerca-prosperita)
+(define (problem incubo-accademico-risolto)
+  (:domain incubo-accademico)
 
   (:objects
-    me - individuo  ;; L'individuo che cerca la prosperità
-    borsa - mercato ;; Il mercato azionario
-    ristorante - attivita ;; Un'attività commerciale (ristorante)
-    bar - attivita ;; Un'altra attività commerciale (bar)
+    studente1 - studente
+    scribacchini - professore
+    eldritch - rettore
+    astrakhan - universita
+    dipartimento-storia - dipartimento
+    esame1 - esame
+    lezione1 - lezione
   )
 
   (:init
-    (ha-denaro me 1000) ;; L'individuo parte con 1000 dollari
-    (at me ristorante) ;; Inizialmente l'individuo si trova al ristorante (potrebbe essere ovunque)
-    (mercato-favorevole borsa) ;; Il mercato azionario è in una fase favorevole all'inizio
+    (at studente1 astrakhan)  ; Lo studente si trova all'università
+    (at scribacchini dipartimento-storia) ; Il professore si trova nel dipartimento
+    (at eldritch astrakhan) ; Il rettore si trova all'università
+    (incompetente scribacchini) ; Il professore è incompetente
+    (influenza scribacchini dipartimento-storia) ; Il professore ha influenza nel dipartimento
+    (bocciato studente1) ; Lo studente è stato bocciato
+    (paura studente1) ; Lo studente ha paura
+    (esame-scorretto esame1) ; L'esame è stato corretto male
+    (lezione-senza-senso lezione1) ; La lezione non ha senso
   )
 
   (:goal (and
-    (milionario me) ;; L'obiettivo è diventare milionario
+    (revisione-ottenuta) ; La revisione dei voti è stata ottenuta
   ))
 )

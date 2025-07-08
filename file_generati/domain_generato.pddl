@@ -1,66 +1,80 @@
-;; domain.pddl: Dominio per la simulazione della Ricerca della Prosperità
-
-(define (domain ricerca-prosperita)
-  (:requirements :strips :typing :negative-preconditions :equality :numeric-fluents :action-costs :conditional-effects)
+;; domain.pddl: L'Incubo Accademico
+(define (domain incubo-accademico)
+  (:requirements :strips :typing :negative-preconditions :equality)
   (:types
-    entity
-    risorsa - entity
-    attivita - entity
-    individuo - entity
-    mercato - risorsa
+    persona luogo documento - object
+    studente professore rettore - persona
+    universita dipartimento - luogo
+    esame lezione - documento
   )
 
   (:predicates
-    (at ?i - individuo ?l - attivita) ;; L'individuo si trova in una determinata attività
-    (redditizio ?a - attivita) ;; L'attività è redditizia
-    (tasse-pagate ?i - individuo) ;; L'individuo ha pagato le tasse
-    (mercato-favorevole ?m - mercato) ;; Il mercato è in una fase favorevole
-    (milionario ?i - individuo) ;; L'individuo è milionario
+    (at ?p - persona ?l - luogo)  ; Persona si trova in un luogo
+    (incompetente ?p - professore) ; Professore è incompetente
+    (ha-prove ?s - studente)       ; Studente ha prove
+    (influenza ?p - professore ?d - dipartimento) ; Professore ha influenza nel dipartimento
+    (bocciato ?s - studente)       ; Studente è stato bocciato
+    (reclamo-presentato ?s - studente) ; Studente ha presentato un reclamo
+    (revisione-ottenuta)          ; Revisione dei voti è stata ottenuta
+    (paura ?s - studente)            ; Studente ha paura
+    (esame-scorretto ?e - esame)   ; Esame è stato corretto male
+    (lezione-senza-senso ?l - lezione) ; Lezione non ha senso
+    (rettore-informato)           ; Il rettore è stato informato
   )
 
-  (:functions
-    (ha-denaro ?i - individuo) - number
+  ;; Azione: Muoversi tra i luoghi
+  (:action move
+    :parameters (?p - persona ?from - luogo ?to - luogo)
+    :precondition (at ?p ?from)
+    :effect (and (not (at ?p ?from)) (at ?p ?to))
   )
 
-  ;; Azione: Investire in borsa
-  (:action investi-borsa
-    :parameters (?i - individuo ?m - mercato ?quantita - number)
-    :precondition (and (>= (ha-denaro ?i) ?quantita) (mercato-favorevole ?m))
-    :effect (and (increase (ha-denaro ?i) (* ?quantita 0.1)) (decrease (ha-denaro ?i) ?quantita)) ;; Aumenta il denaro del 10%
+  ;; Azione: Raccogliere prove dell'incompetenza
+  (:action raccogli-prove
+    :parameters (?s - studente ?l - luogo ?e - esame)
+    :precondition (and (at ?s ?l) (esame-scorretto ?e))
+    :effect (and (ha-prove ?s))
   )
 
-  ;; Azione: Avviare un'attività
-  (:action avvia-attivita
-    :parameters (?i - individuo ?a - attivita ?costo - number)
-    :precondition (and (>= (ha-denaro ?i) ?costo) (not (redditizio ?a)))
-    :effect (and (redditizio ?a) (decrease (ha-denaro ?i) ?costo))
+  ;; Azione: Presentare un reclamo formale
+  (:action presenta-reclamo
+    :parameters (?s - studente ?d - dipartimento)
+    :precondition (and (at ?s ?d) (ha-prove ?s) (not (paura ?s)))
+    :effect (reclamo-presentato ?s)
   )
 
-  ;; Azione: Lavorare
-  (:action lavora
-    :parameters (?i - individuo ?guadagno - number)
-    :precondition (not (milionario ?i))
-    :effect (increase (ha-denaro ?i) ?guadagno)
+  ;; Azione: Informare il rettore della situazione
+  (:action informa-rettore
+    :parameters (?s - studente ?r - rettore ?u - universita)
+    :precondition (and (at ?s ?u) (at ?r ?u) (reclamo-presentato ?s))
+    :effect (rettore-informato)
   )
 
-  ;; Azione: Pagare le tasse
-  (:action paga-tasse
-    :parameters (?i - individuo ?percentuale - number)
-    :precondition (and (>= (ha-denaro ?i) 1) (not (tasse-pagate ?i)))
-    :effect (and (tasse-pagate ?i) (decrease (ha-denaro ?i) (* (ha-denaro ?i) ?percentuale)))
+  ;; Azione: Dimostrare l'incompetenza del professore
+  (:action dimostra-incompetenza
+    :parameters (?p - professore ?d - dipartimento)
+    :precondition (and (rettore-informato) (influenza ?p ?d) (incompetente ?p))
+    :effect (and (not (influenza ?p ?d)))
   )
 
-  ;; Azione: Gestire imprevisti
-  (:action gestisci-imprevisto
-    :parameters (?i - individuo ?costo - number)
-    :precondition (>= (ha-denaro ?i) ?costo)
-    :effect (decrease (ha-denaro ?i) ?costo)
+  ;; Azione: Ottenere una revisione dei voti
+  (:action ottieni-revisione
+    :parameters (?p - professore ?d - dipartimento)
+    :precondition (and (rettore-informato) (not (influenza ?p ?d)))
+    :effect (revisione-ottenuta)
   )
 
-  ;; Azione: Controlla se sei milionario (azione di test, non modifica lo stato)
-  (:action controlla-milionario
-    :parameters (?i - individuo)
-    :precondition (>= (ha-denaro ?i) 1000000)
-    :effect (when (>= (ha-denaro ?i) 1000000) (milionario ?i))
+  ;; Azione: Superare la paura
+  (:action supera-paura
+    :parameters (?s - studente)
+    :precondition (paura ?s)
+    :effect (not (paura ?s))
+  )
+
+  ;; Azione: Segnala lezione senza senso
+  (:action segnala-lezione
+    :parameters (?s - studente ?u - universita ?l - lezione ?e - esame)
+    :precondition (and (at ?s ?u) (lezione-senza-senso ?l))
+    :effect (esame-scorretto ?e)
   )
 )
