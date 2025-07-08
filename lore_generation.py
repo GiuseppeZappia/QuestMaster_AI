@@ -52,7 +52,13 @@ def generate_lore(user_input,llm):
     """
 
     # Genera la lore
-    response = llm.invoke(prompt)
+    try:
+        response = llm.invoke(prompt)
+    except Exception as e:
+        print(f"❌ Errore durante la generazione della lore: {e}")
+        
+
+
 
     # Estrai e pulisci la risposta
     response_text = response.content.strip()
