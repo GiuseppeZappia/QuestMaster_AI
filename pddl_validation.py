@@ -209,3 +209,186 @@ def run_fastdownward_complete():
     print(f"Processo completo: {'SUCCESS' if overall_success else 'FAILED'}")
     
     return final_results
+
+
+
+def validate_plan_with_val():
+    """
+    Valida il piano generato (sas_plan) utilizzando il validatore VAL.
+    
+    Returns:
+        dict: Risultato della validazione con informazioni dettagliate
+    """
+    
+    results = {
+        "validation_successful": False,
+        "plan_valid": False,
+        "validation_output": "",
+        "error_message": None,
+        "validation_details": {}
+    }
+    
+    try:
+        # Leggi le variabili d'ambiente WSL
+        domain_wsl = os.getenv('WSL_DOMAIN_PATH')
+        problem_wsl = os.getenv('WSL_PROBLEM_PATH')
+        val_path = os.getenv('WSL_VAL_PATH')
+        sas_plan_wsl = os.getenv('WSL_SAS_PLAN_PATH')
+        
+        # Verifica configurazione variabili d'ambiente
+        if not domain_wsl or not problem_wsl or not val_path or not sas_plan_wsl:
+            results["error_message"] = "Variabili WSL per VAL non configurate correttamente."
+            print("❌ Variabili WSL per VAL non configurate correttamente.")
+            print("Assicurati di aver configurato: WSL_DOMAIN_PATH, WSL_PROBLEM_PATH, WSL_VAL_PATH, WSL_SAS_PLAN_PATH")
+            return results
+        
+        # Verifica che i file necessari esistano localmente
+        required_files = [
+            "file_generati/domain_generato.pddl",
+            "file_generati/problem_generato.pddl", 
+            "sas_plan"
+        ]
+        
+        for file_path in required_files:
+            if not os.path.exists(file_path):
+                results["error_message"] = f"File mancante: {file_path}"
+                return results
+        
+        print("🔍 Validazione del piano con VAL...")
+        
+        # Comando per eseguire VAL tramite WSL
+        # Validate usa: validate <domain> <problem> <plan>
+        command_str = f'"{val_path}" "{domain_wsl}" "{problem_wsl}" "{sas_plan_wsl}"'
+        
+        # Esegui VAL
+        result = subprocess.run(
+            [
+                "wsl", "-d", "Ubuntu",
+                "bash", "-c", command_str
+            ],
+            capture_output=True,
+            text=True,
+            timeout=60  # Timeout di 60 secondi
+        )
+        
+        # Cattura l'output
+        validation_output = result.stdout + result.stderr
+        results["validation_output"] = validation_output
+        
+        print("Output di VAL:")
+        print("-" * 50)
+        print(validation_output)
+        print("-" * 50)
+        
+        # Analizza l'output per determinare se il piano è valido
+        if result.returncode == 0:
+            results["validation_successful"] = True
+            
+            # Controlla specifici indicatori di validità nel output
+            if "Plan valid" in validation_output or "Plan is valid" in validation_output or "Plan Valid" in validation_output:
+                results["plan_valid"] = True
+                print("✅ Piano validato con successo!")
+            elif "Plan invalid" in validation_output or "Plan is invalid" in validation_output or "Plan Invalid" in validation_output:
+                results["plan_valid"] = False
+                print("❌ Piano non valido!")
+            else:
+                # Analisi più dettagliata dell'output
+                if "Error" in validation_output or "error" in validation_output or "ERROR" in validation_output:
+                    results["plan_valid"] = False
+                    print("❌ Errori rilevati durante la validazione!")
+                else:
+                    results["plan_valid"] = True
+                    print("✅ Piano sembra valido (nessun errore rilevato)")
+        else:
+            results["validation_successful"] = False
+            results["error_message"] = f"VAL ha restituito codice di errore: {result.returncode}"
+            print(f"❌ Errore nell'esecuzione di VAL: {result.returncode}")
+        
+        # Estrai dettagli aggiuntivi dall'output
+        results["validation_details"] = parse_val_output(validation_output)
+        
+    except subprocess.TimeoutExpired:
+        results["error_message"] = "Timeout durante la validazione con VAL"
+        print("❌ Timeout durante la validazione")
+        
+    except Exception as e:
+        results["error_message"] = f"Errore durante la validazione: {str(e)}"
+        print(f"❌ Errore durante la validazione: {e}")
+    
+    return results
+
+
+def parse_val_output(output):
+    """
+    Analizza l'output di VAL per estrarre informazioni dettagliate.
+    
+    Args:
+        output (str): Output completo di VAL
+        
+    Returns:
+        dict: Dettagli parsed dall'output
+    """
+    details = {
+        "goals_achieved": [],
+        "preconditions_satisfied": True,
+        "execution_errors": [],
+        "warnings": [],
+        "plan_execution_trace": []
+    }
+    
+    lines = output.split('\n')
+    
+    for line in lines:
+        line = line.strip()
+        
+        # Cerca goal raggiunti
+        if "Goal" in line and ("achieved" in line or "satisfied" in line):
+            details["goals_achieved"].append(line)
+        
+        # Cerca errori di precondizioni
+        if "Precondition" in line and ("not satisfied" in line or "false" in line or "failed" in line):
+            details["preconditions_satisfied"] = False
+            details["execution_errors"].append(line)
+        
+        # Cerca altri errori comuni
+        if any(keyword in line for keyword in ["Error:", "ERROR:", "Failed:", "Invalid:", "Cannot"]):
+            details["execution_errors"].append(line)
+        
+        # Cerca warning
+        if "Warning:" in line or "WARNING:" in line:
+            details["warnings"].append(line)
+        
+        # Cerca tracce di esecuzione
+        if line.startswith("Checking action") or line.startswith("Action:"):
+            details["plan_execution_trace"].append(line)
+    
+    return details
+
+def get_validation_error_for_correction(validation_results):
+    """
+    Restituisce gli errori di validazione in un formato utilizzabile per la correzione PDDL.
+    """
+    
+    if not validation_results["validation_successful"]:
+        return f"Errore di validazione: {validation_results['error_message']}"
+    
+    if validation_results["plan_valid"]:
+        return None  # Nessun errore
+    
+    # Costruisci un messaggio di errore dettagliato
+    error_message = "ERRORI DI VALIDAZIONE VAL:\n"
+    error_message += validation_results["validation_output"]
+    error_message += "\n\nDETTAGLI:\n"
+    
+    details = validation_results["validation_details"]
+    if details["execution_errors"]:
+        error_message += "Errori di esecuzione:\n"
+        for error in details["execution_errors"]:
+            error_message += f"- {error}\n"
+    
+    if details["warnings"]:
+        error_message += "Warning:\n"
+        for warning in details["warnings"]:
+            error_message += f"- {warning}\n"
+    
+    return error_message
