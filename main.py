@@ -7,7 +7,7 @@ from reflective_agent import run_correction_workflow,run_user_correction_pddl,up
 # from pddl_validation import run_fastdownward_and_validate
 from pddl_validation import run_fastdownward_complete
 from dotenv import load_dotenv
-from utils import print_lore, print_plan, loop_until_valid_pddl
+from utils import print_lore, print_plan
 
 load_dotenv() #Per la chiave API
 
@@ -61,7 +61,13 @@ def main():
 
     #CAMBIARE IN BASE A LOGICA ANASTASIA
     if not pddl_validation_output["planning_results"]["planning_success"]:
-        loop_until_valid_pddl(llm)  # Funzione che continua a correggere fino a validazione riuscita
+        count_attempts=0
+        while(not pddl_validation_output["planning_results"]["planning_success"] and count_attempts<=6):  #usiamo count attempts solo per evitare di sprecare troppe richeiste api, togliere
+            print("❌ Errore nella validazione PDDL")
+            print("🔄 Riprovo a correggere il PDDL...")
+            run_correction_workflow(pddl_validation_output["planning_results"]["planning_output"], llm)
+            pddl_validation_output=run_fastdownward_complete()
+            count_attempts+=1
 
     
     #HUMAN IN THE LOOP PER VALIDARE IL PIANO GENERATO
@@ -80,8 +86,15 @@ def main():
         run_user_correction_pddl(user_correction, llm) 
         # Rivalidare
         pddl_validation_output = run_fastdownward_complete()
+
         if not pddl_validation_output["planning_results"]["planning_success"]:
-            loop_until_valid_pddl(llm)
+            count_attempts=0
+            while(not pddl_validation_output["planning_results"]["planning_success"] and count_attempts<=6):  #usiamo count attempts solo per evitare di sprecare troppe richeiste api, togliere
+                print("❌ Errore nella validazione PDDL")
+                print("🔄 Riprovo a correggere il PDDL...")
+                run_correction_workflow(pddl_validation_output["planning_results"]["planning_output"], llm)
+                pddl_validation_output=run_fastdownward_complete()
+                count_attempts+=1
  
         
 

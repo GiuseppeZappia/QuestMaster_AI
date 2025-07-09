@@ -1,28 +1,24 @@
 {
   "lore_document": {
     "quest_description": {
-      "title": "La Profezia del Re Corvo",
-      "initial_state": "Il villaggio di Piumadoro è in preda alla disperazione. Il Re Corvo, un'entità malvagia imprigionata secoli fa, sta per liberarsi. Strani presagi e creature corrotte infestano la regione.",
-      "goal": "Sigillare nuovamente il Re Corvo nel Tomo dell'Oblio, impedendo la sua ascesa e salvando Piumadoro.",
+      "title": "La Chiave del Drago",
+      "initial_state": "Il regno di Eldoria è minacciato da un antico drago che si è risvegliato nella Caverna di Fumo Nero. La Principessa Aurelia è stata rapita e tenuta prigioniera nel cuore della montagna.",
+      "goal": "Salvare la Principessa Aurelia e recuperare la Chiave di Luce, unico artefatto in grado di sigillare nuovamente il drago.",
       "obstacles": [
-        "Il Culto del Corvo, fanatici devoti al Re Corvo che ostacolano l'eroe.",
-        "Il Bosco Maledetto, una foresta corrotta dalla presenza del Re Corvo, piena di trappole e creature ostili.",
-        "L'Enigma della Pietra Runica, un antico puzzle magico che protegge l'accesso al Tomo dell'Oblio.",
-        "La Corruzione Mentale, l'influenza del Re Corvo che tenta di piegare la volontà dell'eroe.",
-        "Il Guardiano Corrotto, un potente essere corrotto dal Re Corvo che protegge il Tomo.",
-        "Le Visioni Ingannatrici, illusioni create dal Re Corvo per confondere e disorientare l'eroe.",
-        "Il Fiume di Anime Perdute, un corso d'acqua infestato da spiriti tormentati che cercano di trascinare l'eroe nelle profondità.",
-        "L'Antica Biblioteca Proibita, un luogo pieno di conoscenza oscura e incantesimi pericolosi, protetto da trappole magiche."
+        "Il drago di fumo nero e il suo alito infuocato",
+        "Un labirinto di cunicoli instabili nella montagna",
+        "Guardiani scheletri risvegliati da un incantesimo oscuro",
+        "Un ponte sospeso gravemente danneggiato su un abisso profondo"
       ],
-      "world_background": "Il mondo di Aerthos è un luogo di magia antica e poteri dimenticati. Il Re Corvo è una figura leggendaria, un essere di caos e distruzione imprigionato secoli fa da un ordine di saggi. Piumadoro è un villaggio isolato, custode di antichi segreti legati alla prigionia del Re Corvo.",
-      "contextual_information": "Una profezia narra che solo un eroe dal cuore puro e dalla mente acuta potrà sigillare nuovamente il Re Corvo. Il tempo stringe, e la corruzione si diffonde rapidamente."
+      "world_background": "Eldoria è un antico regno di maghi e cavalieri. La sua popolazione vive tranquilla sotto la protezione del casato reale. Leggende narrano di un drago primordiale sigillato secoli fa a protezione del regno, ma la recente corruzione di un artefatto oscuro lo ha liberato.",
+      "contextual_information": "Il regno ha subito carestie e guerre civili in passato, e solo grazie all'eroismo di Casa Valerius il drago venne imprigionato. Ora si teme un ritorno al caos se l'eroe non interverrà."
     },
     "branching_factor": {
       "min_actions_per_state": 2,
-      "max_actions_per_state": 3
+      "max_actions_per_state": 4
     },
     "depth_constraints": {
-      "min_steps_to_goal": 7,
+      "min_steps_to_goal": 3,
       "max_steps_to_goal": 7
     }
   }

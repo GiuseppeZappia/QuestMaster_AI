@@ -1,9 +1,10 @@
--AGGIUNGERE HUMAN IN THE LOOP (LORE ???) ALTRO?
+-AGGIUNGERE HUMAN IN THE LOOP (LORE ???) ALTRO? -Mettere per domain e problem la cosa che rigardi  e se non rispetta passi ecc rifa
 
 -VAL ???
 
--RAG LONGO ULTIMI DU2 (TODO ALLA FINE)
-
 -HTML PHASE 2
 
--Mettere per domain e problem la cosa che rigardi  e se non rispetta passi ecc rifa
+
+-defensive prompting con gestioen eccezioni nella cosa iniziale della lore
+
+-RAG LONGO ULTIMI DU2 (TODO ALLA FINE)

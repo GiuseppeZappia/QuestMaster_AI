@@ -1,7 +1,4 @@
 import json
-from reflective_agent import run_correction_workflow
-from pddl_validation import run_fastdownward_complete
-
 # Carica il JSON di esempio dalla stessa cartella
 def load_example_json(filename):
     try:
@@ -79,11 +76,3 @@ def print_plan():
         print(f"Errore nel caricamento del piano: {e}")
 
 
-def loop_until_valid_pddl(llm):
-    count_attempts=0
-    while(not pddl_validation_output["planning_results"]["planning_success"] and count_attempts<=6):  #usiamo count attempts solo per evitare di sprecare troppe richeiste api, togliere
-        print("❌ Errore nella validazione PDDL")
-        print("🔄 Riprovo a correggere il PDDL...")
-        run_correction_workflow(pddl_validation_output["planning_results"]["planning_output"], llm)
-        pddl_validation_output=run_fastdownward_complete()
-        count_attempts+=1

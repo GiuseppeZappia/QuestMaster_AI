@@ -282,15 +282,13 @@ def update_lore_with_corrections(richieste_utente,llm):
 
 
 def run_user_correction_pddl(user_corrections, llm):
-    """
-    Rigenerazione PDDL unificata basata sui suggerimenti dell'utente.
-    Genera domain e problem in un'unica chiamata LLM.
-    """
+    print("SONO PRIMA DEL TRY")
     try:
         # Carica i file necessari
         lore = load_example_json("file_generati/lore_generata_per_utente.json")
         domain = load_example_pddl("file_generati/domain_generato.pddl")
         problem = load_example_pddl("file_generati/problem_generato.pddl")
+        print("HO CARICATO TUTTO")
         
         # Carica la soluzione attuale
         solution = ""
@@ -341,38 +339,61 @@ def run_user_correction_pddl(user_corrections, llm):
         Non aggiungere commenti aggiuntivi, solo il codice PDDL pulito.
         """
 
-
-
         # Genera DOMAIN e PROBLEM in un'unica chiamata
         print("🔄 Rigenerando domain.pddl e problem.pddl basandosi sui suggerimenti dell'utente...")
         unified_response = llm.invoke(unified_prompt)
         response_content = unified_response.content.strip()
+        print("???????????????????????????????????????????????????????HO RICEVUTO LA RISPOSTA DALL'LLM???????????????????????????????????????????????????????")
+        print(response_content)
         
-        # Pulisci la risposta da eventuali marker markdown
-        if "```" in response_content:
-            parts = response_content.split("```")
-            if len(parts) >= 3:
-                response_content = parts[1]
-                lines = response_content.split('\n')
-                if lines and ('pddl' in lines[0].lower() or lines[0].strip() == ''):
-                    response_content = '\n'.join(lines[1:]).strip()
-                else:
-                    response_content = response_content.strip()
+        # Funzione helper per estrarre contenuto dai blocchi markdown
+        def extract_pddl_from_markdown(content):
+            """Estrae il contenuto PDDL dai blocchi markdown ```pddl"""
+            if "```pddl" in content:
+                # Trova tutti i blocchi ```pddl
+                parts = content.split("```pddl")
+                if len(parts) >= 2:
+                    # Prendi il contenuto dopo ```pddl fino al prossimo ```
+                    pddl_content = parts[1].split("```")[0].strip()
+                    return pddl_content
+            elif "```" in content:
+                # Blocco generico senza specifica del linguaggio
+                parts = content.split("```")
+                if len(parts) >= 3:
+                    return parts[1].strip()
+            return content.strip()
         
         # Separa domain e problem dalla risposta
         if "===DOMAIN===" in response_content and "===PROBLEM===" in response_content:
-            parts = response_content.split("===DOMAIN===")
-            if len(parts) >= 2:
-                domain_and_problem = parts[1]
-                domain_problem_parts = domain_and_problem.split("===PROBLEM===")
+            # Trova le posizioni dei separatori
+            domain_start = response_content.find("===DOMAIN===")
+            problem_start = response_content.find("===PROBLEM===")
+            
+            if domain_start != -1 and problem_start != -1 and domain_start < problem_start:
+                # Estrai la sezione domain (da ===DOMAIN=== a ===PROBLEM===)
+                domain_section = response_content[domain_start + len("===DOMAIN==="):problem_start].strip()
+                # Estrai la sezione problem (da ===PROBLEM=== in poi)
+                problem_section = response_content[problem_start + len("===PROBLEM==="):].strip()
                 
-                if len(domain_problem_parts) >= 2:
-                    domain_content = domain_problem_parts[0].strip()
-                    problem_content = domain_problem_parts[1].strip()
-                else:
-                    raise ValueError("Formato risposta non valido: manca la sezione PROBLEM")
+                print("STAMPA SEZIONE DOMAIN:")
+                print(domain_section)
+                print("STAMPA SEZIONE PROBLEM:")
+                print(problem_section)
+                
+                # Estrai il contenuto PDDL dai blocchi markdown
+                domain_content = extract_pddl_from_markdown(domain_section)
+                problem_content = extract_pddl_from_markdown(problem_section)
+                
+                print("------------------STAMPO DOMINIO ESTRATTO-----------------------")
+                print(domain_content)
+                print("------------------STAMPO PROBLEM ESTRATTO-----------------------")
+                print(problem_content)
+                
+                # Verifica che il contenuto estratto sia valido
+                if not domain_content or not problem_content:
+                    raise ValueError("Contenuto PDDL estratto vuoto")                
             else:
-                raise ValueError("Formato risposta non valido: manca la sezione DOMAIN")
+                raise ValueError("Formato risposta non valido: separatori ===DOMAIN=== e ===PROBLEM=== non trovati nell'ordine corretto")
         else:
             raise ValueError("Formato risposta non valido: mancano i separatori ===DOMAIN=== e ===PROBLEM===")
         
