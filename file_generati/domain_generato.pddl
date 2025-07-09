@@ -1,43 +1,53 @@
-(define (domain chiave-drago)
-  (:requirements :strips :typing :negative-preconditions)
-  (:types
-    entity luogo
-    eroe principessa drago artefatto - entity
-  )
-
+(define (domain calice-francesco)
+  (:requirements :strips :typing)
+  (:types guerriera calice priore setta luogo)
   (:predicates
-    (at ?x - entity ?l - luogo)  ;; Posizione di un'entita in un luogo
-    (dragon-awake ?d - drago)   ;; Il drago e sveglio
-    (has-key ?e - eroe)         ;; L'eroe possiede la chiave
-    (princess-rescued ?p - principessa) ;; La principessa e stata salvata
-    (dragon-sealed ?d - drago)  ;; Il drago e stato sigillato
+    (at ?x - guerriera ?l - luogo)
+    (at ?c - calice ?l - luogo)
+    (guarded ?l - luogo ?s - setta)
+    (trapped ?l - luogo)
+    (priore-corrupted ?p - priore)
+    (spirits-present ?l - luogo)
+    (visited ?l - luogo)
+    (has-calice ?x - guerriera ?c - calice)
+    (delivered ?c - calice ?l - luogo)
+    (protected ?c - calice ?l - luogo)
+    (defeated ?s - setta)
+    (defeated-priore ?p - priore)
   )
 
-  ;; Azione: Muoversi tra due luoghi
   (:action move
-    :parameters (?e - eroe ?from - luogo ?to - luogo)
-    :precondition (and (at ?e ?from))
-    :effect (and (not (at ?e ?from)) (at ?e ?to))
+    :parameters (?x - guerriera ?from - luogo ?to - luogo)
+    :precondition (and (at ?x ?from) (not (at ?x ?to)) (visited ?from))
+    :effect (and (at ?x ?to) (not (at ?x ?from)) (visited ?to))
   )
 
-  ;; Azione: Recuperare la Chiave di Luce
-  (:action get-key
-    :parameters (?e - eroe ?k - artefatto ?l - luogo)
-    :precondition (and (at ?e ?l) (at ?k ?l))
-    :effect (and (has-key ?e) (not (at ?k ?l)))
+  (:action retrieve-calice
+    :parameters (?x - guerriera ?c - calice ?l - luogo)
+    :precondition (and (at ?x ?l) (at ?c ?l) (not (has-calice ?x ?c)))
+    :effect (and (has-calice ?x ?c) (not (at ?c ?l)))
   )
 
-  ;; Azione: Salvare la principessa
-  (:action rescue-princess
-    :parameters (?e - eroe ?p - principessa ?l - luogo)
-    :precondition (and (at ?e ?l) (at ?p ?l) (has-key ?e))
-    :effect (princess-rescued ?p)
+  (:action deliver-calice
+    :parameters (?x - guerriera ?c - calice ?l - luogo)
+    :precondition (and (at ?x ?l) (has-calice ?x ?c))
+    :effect (and (delivered ?c ?l) (not (has-calice ?x ?c)))
   )
 
-  ;; Azione: Sigillare il drago con la chiave
-  (:action seal-dragon
-    :parameters (?e - eroe ?d - drago ?l - luogo)
-    :precondition (and (has-key ?e) (dragon-awake ?d) (at ?e ?l) (at ?d ?l))
-    :effect (and (dragon-sealed ?d) (not (dragon-awake ?d)))
+  (:action defeat-setta
+    :parameters (?x - guerriera ?l - luogo ?s - setta)
+    :precondition (and (at ?x ?l) (guarded ?l ?s))
+    :effect (and (defeated ?s) (not (guarded ?l ?s)))
+  )
+   (:action explore-crypts
+    :parameters (?x - guerriera ?l - luogo)
+    :precondition (and (at ?x ?l) (spirits-present ?l))
+    :effect (and (visited ?l) (not (spirits-present ?l)))
+  )
+
+  (:action disarm-traps
+    :parameters (?x - guerriera ?l - luogo)
+    :precondition (and (at ?x ?l) (trapped ?l))
+    :effect (not (trapped ?l))
   )
 )

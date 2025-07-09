@@ -8,6 +8,8 @@ from reflective_agent import run_correction_workflow,run_user_correction_pddl,up
 from pddl_validation import run_fastdownward_complete
 from dotenv import load_dotenv
 from utils import print_lore, print_plan
+from story_generation import generate_story
+import subprocess
 
 load_dotenv() #Per la chiave API
 
@@ -96,7 +98,8 @@ def main():
                 pddl_validation_output=run_fastdownward_complete()
                 count_attempts+=1
  
-        
+    generate_story(llm)
+    subprocess.run(["streamlit", "run", "prova.py"])
 
 def human_plan_validation(planning_output):
     

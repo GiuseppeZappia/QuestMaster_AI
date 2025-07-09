@@ -1,25 +1,25 @@
 {
   "lore_document": {
     "quest_description": {
-      "title": "La Chiave del Drago",
-      "initial_state": "Il regno di Eldoria è minacciato da un antico drago che si è risvegliato nella Caverna di Fumo Nero. La Principessa Aurelia è stata rapita e tenuta prigioniera nel cuore della montagna.",
-      "goal": "Salvare la Principessa Aurelia e recuperare la Chiave di Luce, unico artefatto in grado di sigillare nuovamente il drago.",
+      "title": "Il Calice Perduto di San Francesco",
+      "initial_state": "Isabella, una guerriera assassina addestrata nell'arte del silenzio e dell'inganno, riceve una soffiata anonima: un calice ottocentesco di inestimabile valore, appartenuto a San Francesco, è nascosto all'interno di un antico tempio francescano abbandonato.",
+      "goal": "Recuperare il Calice Perduto di San Francesco e consegnarlo al suo misterioso committente.",
       "obstacles": [
-        "Il drago di fumo nero e il suo alito infuocato",
-        "Un labirinto di cunicoli instabili nella montagna",
-        "Guardiani scheletri risvegliati da un incantesimo oscuro",
-        "Un ponte sospeso gravemente danneggiato su un abisso profondo"
+        "Il tempio è sorvegliato da una setta occulta che venera un'antica divinità pagana, disposta a tutto per proteggere il calice.",
+        "Trappole nascoste e passaggi segreti proteggono le stanze interne del tempio.",
+        "Il priore del tempio, un uomo corrotto e assetato di potere, ha stretto un patto con forze oscure per mantenere il calice al sicuro.",
+        "Un labirinto di cripte sotterranee infestate da spiriti irrequieti."
       ],
-      "world_background": "Eldoria è un antico regno di maghi e cavalieri. La sua popolazione vive tranquilla sotto la protezione del casato reale. Leggende narrano di un drago primordiale sigillato secoli fa a protezione del regno, ma la recente corruzione di un artefatto oscuro lo ha liberato.",
-      "contextual_information": "Il regno ha subito carestie e guerre civili in passato, e solo grazie all'eroismo di Casa Valerius il drago venne imprigionato. Ora si teme un ritorno al caos se l'eroe non interverrà."
+      "world_background": "La Francia del XIX secolo è un crogiolo di intrighi politici, società segrete e fervore religioso. Ordini monastici decadenti nascondono segreti ancestrali, mentre sette occulte tramano nell'ombra per ottenere potere e conoscenza.",
+      "contextual_information": "Il calice non è solo un oggetto di valore storico e religioso, ma si dice che possieda poteri curativi e che sia in grado di conferire immortalità a chi lo possiede. Diverse fazioni sono interessate al suo recupero, ognuna con le proprie motivazioni occulte."
     },
     "branching_factor": {
       "min_actions_per_state": 2,
       "max_actions_per_state": 4
     },
     "depth_constraints": {
-      "min_steps_to_goal": 3,
-      "max_steps_to_goal": 7
+      "min_steps_to_goal": 4,
+      "max_steps_to_goal": 8
     }
   }
 }

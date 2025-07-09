@@ -1,24 +1,27 @@
-(define (problem salvare-aurelia)
-  (:domain chiave-drago)
+(define (problem recupero-calice)
+  (:domain calice-francesco)
 
   (:objects
-    ettore - eroe
-    aurelia - principessa
-    fumo-nero - drago
-    chiave-luce - artefatto
-    eldoria cuore-montagna caverna-fumo-nero - luogo
+    isabella - guerriera
+    francesco-calice - calice
+    priore1 - priore
+    setta1 - setta
+    ingresso tempio stanze-interne cripte committente - luogo
   )
 
   (:init
-    (at ettore eldoria)              ;; L'eroe inizia a Eldoria
-    (at aurelia cuore-montagna)    ;; La principessa e prigioniera nel cuore della montagna
-    (at chiave-luce cuore-montagna) ;; La chiave e nel cuore della montagna
-    (at fumo-nero caverna-fumo-nero) ;; Il drago e nella caverna
-    (dragon-awake fumo-nero)         ;; Il drago e sveglio
+    (at isabella ingresso)
+    (at francesco-calice tempio)
+    (at priore1 tempio)
+    (guarded tempio setta1)
+    (trapped stanze-interne)
+    (priore-corrupted priore1)
+    (spirits-present cripte)
+    (visited ingresso)
   )
 
   (:goal (and
-    (princess-rescued aurelia)       ;; La principessa deve essere salvata
-    (dragon-sealed fumo-nero)        ;; Il drago deve essere sigillato
+    (delivered francesco-calice committente)
+    (at isabella committente)
   ))
 )

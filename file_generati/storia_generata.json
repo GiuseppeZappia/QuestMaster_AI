@@ -1,0 +1,174 @@
+[
+  {
+    "node_id": "start",
+    "description": "Parigi, 1888. Isabella, guerriera assassina, riceve una soffiata: il Calice Perduto di San Francesco è nascosto in un tempio abbandonato. Il tuo misterioso committente ti attende, ma il tempio pullula di pericoli.",
+    "choices": [
+      {
+        "text": "Ti dirigi verso il tempio abbandonato.",
+        "next_node": "move_to_tempio",
+        "is_correct": true
+      },
+      {
+        "text": "Indaghi sulla soffiata in una taverna malfamata.",
+        "next_node": "fail_taverna",
+        "is_correct": false
+      },
+      {
+        "text": "Cerchi informazioni presso un vecchio libraio esperto di reliquie.",
+        "next_node": "fail_libraio",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "node_id": "move_to_tempio",
+    "description": "Raggiungi il tempio. L'ingresso principale è sorvegliato da figure incappucciate. L'aria è pregna di un odore acre di incenso e decadenza.",
+    "choices": [
+      {
+        "text": "Ti infiltri nel tempio.",
+        "next_node": "retrieve_calice",
+        "is_correct": true
+      },
+      {
+        "text": "Provi a corrompere le guardie all'ingresso.",
+        "next_node": "fail_corruzione",
+        "is_correct": false
+      },
+      {
+        "text": "Cerchi un ingresso secondario meno sorvegliato.",
+        "next_node": "fail_secondario",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "node_id": "retrieve_calice",
+    "description": "Sei all'interno del tempio. Tra simboli occulti e altari profanati, trovi il Calice di San Francesco. Un potere arcano emana dall'oggetto.",
+    "choices": [
+      {
+        "text": "Fuggi dal tempio con il calice.",
+        "next_node": "move_to_committente",
+        "is_correct": true
+      },
+      {
+        "text": "Cerchi altri manufatti di valore nel tempio.",
+        "next_node": "fail_avarizia",
+        "is_correct": false
+      },
+      {
+        "text": "Provi a usare il calice per curare le tue ferite.",
+        "next_node": "fail_ferite",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "node_id": "move_to_committente",
+    "description": "Ti dirigi verso il luogo dell'incontro con il committente, sentendoti osservata. Il calice sembra attirare l'attenzione.",
+    "choices": [
+      {
+        "text": "Consegni il calice al committente.",
+        "next_node": "deliver_calice",
+        "is_correct": true
+      },
+      {
+        "text": "Ti fermi a riflettere sul significato del calice e del tuo ruolo in questa storia.",
+        "next_node": "fail_riflessione",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "node_id": "deliver_calice",
+    "description": "Il committente accoglie il calice con avidità. La tua missione è compiuta, ma il vero scopo di tutto questo ti sfugge ancora.",
+    "choices": []
+  },
+  {
+    "node_id": "fail_taverna",
+    "description": "Nella taverna, una rissa scoppia. Vieni coinvolta e arrestata dalla polizia. La setta occulta si dilegua con il calice.",
+    "choices": [
+      {
+        "text": "Riprova",
+        "next_node": "game_over",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "node_id": "fail_libraio",
+    "description": "Il libraio ti vende informazioni errate. Ti perdi in un vicolo cieco e perdi tempo prezioso. La setta si è già impossessata del calice.",
+    "choices": [
+      {
+        "text": "Riprova",
+        "next_node": "game_over",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "node_id": "fail_corruzione",
+    "description": "Le guardie rifiutano la tua offerta e ti attaccano. Sopraffatta, vieni catturata e imprigionata. Il calice è perduto.",
+    "choices": [
+      {
+        "text": "Riprova",
+        "next_node": "game_over",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "node_id": "fail_secondario",
+    "description": "L'ingresso secondario è una trappola. Cadi in un pozzo pieno di serpenti velenosi. Il calice resta nelle mani della setta.",
+    "choices": [
+      {
+        "text": "Riprova",
+        "next_node": "game_over",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "node_id": "fail_avarizia",
+    "description": "Mentre cerchi altri tesori, vieni sorpresa dal priore corrotto. Un rituale oscuro ti trasforma in una statua di sale. Il calice è al sicuro.",
+    "choices": [
+      {
+        "text": "Riprova",
+        "next_node": "game_over",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "node_id": "fail_ferite",
+    "description": "Il calice reagisce al tuo sangue, proiettandoti in una visione del futuro. La setta ti cattura in stato confusionale.",
+    "choices": [
+      {
+        "text": "Riprova",
+        "next_node": "game_over",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "node_id": "fail_riflessione",
+    "description": "La tua esitazione ti costa cara. Il committente, spazientito, invia i suoi sicari. Vieni uccisa prima di poter consegnare il calice.",
+    "choices": [
+      {
+        "text": "Riprova",
+        "next_node": "game_over",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "node_id": "game_over",
+    "description": "La missione è fallita. Il Calice Perduto di San Francesco rimane un mistero. Vuoi ritentare la sorte?",
+    "choices": [
+      {
+        "text": "Ricomincia dall'inizio",
+        "next_node": "start",
+        "is_correct": true
+      }
+    ]
+  }
+]

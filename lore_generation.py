@@ -90,10 +90,10 @@ def generate_lore(user_input,llm):
         
         print(f"✅ Lore generata con successo e salvata in: {output_filename}")
         
-        # Mostra anteprima
-        if "quest_description" in lore_data:
-            print(f"\n📖 Titolo: {lore_data['quest_description'].get('title', 'N/A')}")
-            print(f"📝 Descrizione: {lore_data['quest_description'].get('description', 'N/A')[:150]}...")
+        # # Mostra anteprima
+        # if "quest_description" in lore_data:
+        #     print(f"\n📖 Titolo: {lore_data['quest_description'].get('title', 'N/A')}")
+        #     print(f"📝 Descrizione: {lore_data['quest_description'].get('description', 'N/A')[:150]}...")
         
     except json.JSONDecodeError as e:
         print(f"❌ Errore nel parsing JSON: {e}")
