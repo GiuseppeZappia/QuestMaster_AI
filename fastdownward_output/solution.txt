@@ -1,4 +1,0 @@
-(move isabella ingresso tempio)
-(retrieve-calice isabella francesco-calice tempio)
-(move isabella tempio committente)
-(deliver-calice isabella francesco-calice committente)
