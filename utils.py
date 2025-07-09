@@ -67,11 +67,11 @@ def print_lore():
 
 def print_plan():
     try:
-        with open("fastdownward_output/solution.txt", 'r', encoding='utf-8') as f:
+        with open("sas_plan", 'r', encoding='utf-8') as f:
             solution = f.read()
             print(solution)
     except FileNotFoundError:
-        print("File solution.txt non trovato nella cartella file_generati.")
+        print("File sas_plan non trovato.")
     except Exception as e:
         print(f"Errore nel caricamento del piano: {e}")
 

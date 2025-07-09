@@ -1,5 +1,0 @@
-(move ettore eldoria cuore-montagna)
-(get-key ettore chiave-luce cuore-montagna)
-(rescue-princess ettore aurelia cuore-montagna)
-(move ettore cuore-montagna caverna-fumo-nero)
-(seal-dragon ettore fumo-nero caverna-fumo-nero)

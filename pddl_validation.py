@@ -90,8 +90,6 @@ def run_fastdownward_planning():
 
 def get_fastdownward_solution():
     
-    output_dir = "fastdownward_output"
-    
     results = {
         "solution_retrieved": False,
         "solution_path": None,
@@ -126,29 +124,21 @@ def get_fastdownward_solution():
             print(solution_content)
             print("-" * 50)
             
-            # Salva la soluzione in un file locale
-            os.makedirs(output_dir, exist_ok=True)
-            solution_file = os.path.join(output_dir, "solution.txt")
-            
             # Processa le azioni (ogni linea del sas_plan rappresenta un'azione)
             lines = solution_content.split('\n')
             actions = []
             
             for line in lines:
                 line = line.strip()
-                if line and not line.startswith(';'):  # Ignora commenti
+                # Ignora righe vuote, commenti (;) e righe che iniziano con "cost"
+                if line and not line.startswith(';') and not line.startswith('cost'):
                     actions.append(line)
             
-            # Salva la soluzione
-            with open(solution_file, 'w') as f:
-                for action in actions:
-                    f.write(action + '\n')
-            
             results["solution_retrieved"] = True
-            results["solution_path"] = solution_file
+            results["solution_path"] = "sas_plan"  # Punta al file originale
             results["actions"] = actions
             
-            print(f"Soluzione salvata in: {solution_file}")
+            print(f"Soluzione letta da: sas_plan")
             print(f"Numero totale di azioni: {len(actions)}")
             
             # Mostra anteprima della soluzione

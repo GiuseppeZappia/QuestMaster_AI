@@ -293,7 +293,7 @@ def run_user_correction_pddl(user_corrections, llm):
         # Carica la soluzione attuale
         solution = ""
         try:
-            with open("fastdownward_output/solution.txt", 'r', encoding='utf-8') as f:
+            with open("sas_plan", 'r', encoding='utf-8') as f:
                 solution = f.read().strip()
         except FileNotFoundError:
             solution = "Soluzione non disponibile"
