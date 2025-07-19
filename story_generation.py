@@ -6,19 +6,19 @@ import json
 from utils import load_example_json, load_example_pddl
 
 
-# Carica l'esempio JSON 
-example_story_json = load_example_json("file_esempio/json_storia_esempio.json") 
-lore_example_story_json= load_example_json("file_esempio/lore_storia_esempio.json")
-with open("file_esempio/piano_sas_example.txt", 'r') as f:
-    piano_esempio = f.read()
-
-
-lore_da_usare=load_example_json("file_generati/lore_generata_per_utente.json")
-with open('sas_plan', 'r') as f:
-    piano_da_usare = f.read()
-
 
 def generate_story(llm):
+    example_story_json = load_example_json("file_esempio/json_storia_esempio.json") 
+    
+    lore_example_story_json= load_example_json("file_esempio/lore_storia_esempio.json")
+    
+    with open("file_esempio/piano_sas_example.txt", 'r') as f:
+        piano_esempio = f.read()
+    
+    lore_da_usare=load_example_json("file_generati/lore_generata_per_utente.json")
+
+    with open('sas_plan', 'r') as f:
+        piano_da_usare = f.read()
     # Prompt personalizzato
     prompt = f"""Sei un assistente esperto in progettazione di storie interattive guidate da pianificazione automatica (AI Planning) e narrazione ramificata.
     Ti fornisco i seguenti file:
@@ -99,7 +99,7 @@ def generate_story(llm):
     try:
         # Converti in dizionario per validare
         lore_data = json.loads(json_text)
-        
+        print(lore_data)
         # Salva la lore generata
         output_filename = "file_generati/storia_generata.json"
         with open(output_filename, 'w', encoding='utf-8') as f:

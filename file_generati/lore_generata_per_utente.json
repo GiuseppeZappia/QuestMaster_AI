@@ -1,25 +1,31 @@
 {
   "lore_document": {
     "quest_description": {
-      "title": "Il Calice Perduto di San Francesco",
-      "initial_state": "Isabella, una guerriera assassina addestrata nell'arte del silenzio e dell'inganno, riceve una soffiata anonima: un calice ottocentesco di inestimabile valore, appartenuto a San Francesco, è nascosto all'interno di un antico tempio francescano abbandonato.",
-      "goal": "Recuperare il Calice Perduto di San Francesco e consegnarlo al suo misterioso committente.",
+      "title": "Fuga dalla Roccia",
+      "initial_state": "Sei il detenuto #AZ-1441, rinchiuso nel Blocco B di Alcatraz, la prigione di massima sicurezza da cui nessuno è mai fuggito. La tua cella è fredda, umida e la porta è chiusa a chiave. L'unica cosa che hai è la tua astuzia e un cucchiaio di metallo che hai affilato di nascosto.",
+      "goal": "Fuggire dall'isola di Alcatraz. Devi eludere la sorveglianza, creare una zattera improvvisata, attraversare le fredde acque della baia di San Francisco e raggiungere la terraferma prima che l'allarme generale ti condanni a una fine certa.",
       "obstacles": [
-        "Il tempio è sorvegliato da una setta occulta che venera un'antica divinità pagana, disposta a tutto per proteggere il calice.",
-        "Trappole nascoste e passaggi segreti proteggono le stanze interne del tempio.",
-        "Il priore del tempio, un uomo corrotto e assetato di potere, ha stretto un patto con forze oscure per mantenere il calice al sicuro.",
-        "Un labirinto di cripte sotterranee infestate da spiriti irrequieti."
+        "Guardie inflessibili che pattugliano i corridoi a intervalli regolari.",
+        "Sistemi di chiusura complessi e porte d'acciaio.",
+        "Fari di ricerca che spazzano il cortile e le acque circostanti.",
+        "Le correnti gelide e pericolose della baia di San Francisco.",
+        "Informatori e prigionieri rivali pronti a tradirti per un favore.",
+        "La necessità di creare strumenti di evasione con materiali di fortuna.",
+        "Il rischio di ipotermia progressiva una volta in acqua.",
+        "La fitta nebbia della baia, che può disorientare ma anche offrire copertura.",
+        "La sirena della prigione che può scattare al minimo errore, allertando tutta l'isola.",
+        "La pressione psicologica e la paura costante di essere scoperti."
       ],
-      "world_background": "La Francia del XIX secolo è un crogiolo di intrighi politici, società segrete e fervore religioso. Ordini monastici decadenti nascondono segreti ancestrali, mentre sette occulte tramano nell'ombra per ottenere potere e conoscenza.",
-      "contextual_information": "Il calice non è solo un oggetto di valore storico e religioso, ma si dice che possieda poteri curativi e che sia in grado di conferire immortalità a chi lo possiede. Diverse fazioni sono interessate al suo recupero, ognuna con le proprie motivazioni occulte."
+      "world_background": "Alcatraz, conosciuta come 'La Roccia', è un'isola-fortezza nella baia di San Francisco. Dal 1934 al 1963 è stata la prigione federale più temuta d'America, ospitando criminali come Al Capone. La sua fama di inespugnabilità è leggendaria, costruita sulla sorveglianza spietata e l'isolamento naturale.",
+      "contextual_information": "Sei stato condannato ingiustamente per una rapina che non hai commesso. Ogni appello è stato respinto. La tua unica speranza di riabbracciare la tua famiglia e dimostrare la tua innocenza è tentare l'impossibile: l'evasione. Hai passato mesi a osservare le routine delle guardie e a studiare i punti deboli della struttura, pianificando ogni mossa."
     },
     "branching_factor": {
       "min_actions_per_state": 2,
       "max_actions_per_state": 4
     },
     "depth_constraints": {
-      "min_steps_to_goal": 4,
-      "max_steps_to_goal": 8
+      "min_steps_to_goal": 6,
+      "max_steps_to_goal": 6
     }
   }
 }

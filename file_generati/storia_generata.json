@@ -1,160 +1,421 @@
 [
   {
     "node_id": "start",
-    "description": "Parigi, 1888. Isabella, guerriera assassina, riceve una soffiata: il Calice Perduto di San Francesco è nascosto in un tempio abbandonato. Il tuo misterioso committente ti attende, ma il tempio pullula di pericoli.",
+    "description": "Sei il detenuto #AZ-1441, rinchiuso nel Blocco B di Alcatraz. La tua cella è fredda, umida e la porta è chiusa a chiave. L'unica cosa che hai è la tua astuzia e un cucchiaio di metallo che hai affilato di nascosto. È ora di agire.",
     "choices": [
       {
-        "text": "Ti dirigi verso il tempio abbandonato.",
-        "next_node": "move_to_tempio",
+        "text": "Usa il cucchiaio affilato per scassinare la serratura della cella e sgattaiolare fuori.",
+        "next_node": "corridoio_b",
         "is_correct": true
       },
       {
-        "text": "Indaghi sulla soffiata in una taverna malfamata.",
-        "next_node": "fail_taverna",
+        "text": "Urla per chiamare una guardia.",
+        "next_node": "fail_urlo_1",
         "is_correct": false
       },
       {
-        "text": "Cerchi informazioni presso un vecchio libraio esperto di reliquie.",
-        "next_node": "fail_libraio",
+        "text": "Cerca di sfondare la porta con la spalla.",
+        "next_node": "fail_spalla_1",
         "is_correct": false
       }
     ]
   },
   {
-    "node_id": "move_to_tempio",
-    "description": "Raggiungi il tempio. L'ingresso principale è sorvegliato da figure incappucciate. L'aria è pregna di un odore acre di incenso e decadenza.",
+    "node_id": "corridoio_b",
+    "description": "Sei fuori! Il corridoio del Blocco B è silenzioso, illuminato solo dalla luce fioca che filtra dalle finestre alte. Le ombre danzano, nascondendo sia la salvezza che il pericolo. Devi raggiungere il cortile.",
     "choices": [
       {
-        "text": "Ti infiltri nel tempio.",
-        "next_node": "retrieve_calice",
+        "text": "Attendi il momento giusto tra una ronda e l'altra per attraversare il corridoio e raggiungere il cortile.",
+        "next_node": "cortile",
         "is_correct": true
       },
       {
-        "text": "Provi a corrompere le guardie all'ingresso.",
-        "next_node": "fail_corruzione",
+        "text": "Corri a perdifiato verso l'uscita del cortile.",
+        "next_node": "fail_corsa_corridoio_1",
         "is_correct": false
       },
       {
-        "text": "Cerchi un ingresso secondario meno sorvegliato.",
-        "next_node": "fail_secondario",
+        "text": "Prova a nasconderti nell'ufficio delle guardie.",
+        "next_node": "fail_ufficio_1",
         "is_correct": false
       }
     ]
   },
   {
-    "node_id": "retrieve_calice",
-    "description": "Sei all'interno del tempio. Tra simboli occulti e altari profanati, trovi il Calice di San Francesco. Un potere arcano emana dall'oggetto.",
+    "node_id": "cortile",
+    "description": "Sei nel cortile. L'aria fredda della notte ti sferza il viso. I fari di ricerca spazzano il perimetro con una regolarità spietata. L'officina, il tuo prossimo obiettivo, è dall'altra parte. Contiene i materiali per la tua fuga.",
     "choices": [
       {
-        "text": "Fuggi dal tempio con il calice.",
-        "next_node": "move_to_committente",
+        "text": "Sfrutta le ombre e il passaggio dei fari per raggiungere l'officina senza essere visto.",
+        "next_node": "officina",
         "is_correct": true
       },
       {
-        "text": "Cerchi altri manufatti di valore nel tempio.",
-        "next_node": "fail_avarizia",
+        "text": "Tenta di disattivare uno dei fari di ricerca.",
+        "next_node": "fail_faro_1",
         "is_correct": false
       },
       {
-        "text": "Provi a usare il calice per curare le tue ferite.",
-        "next_node": "fail_ferite",
+        "text": "Cerca un'altra via di fuga attraverso le cucine.",
+        "next_node": "fail_cucine_1",
+        "is_correct": false
+      },
+      {
+        "text": "Aspetta che la nebbia si infittisca.",
+        "next_node": "fail_nebbia_1",
         "is_correct": false
       }
     ]
   },
   {
-    "node_id": "move_to_committente",
-    "description": "Ti dirigi verso il luogo dell'incontro con il committente, sentendoti osservata. Il calice sembra attirare l'attenzione.",
+    "node_id": "officina",
+    "description": "Dentro l'officina, l'odore di olio e metallo riempie l'aria. Attrezzi e materiali sono sparsi ovunque. Devi trovare rapidamente ciò che ti serve per costruire una zattera improvvisata.",
     "choices": [
       {
-        "text": "Consegni il calice al committente.",
-        "next_node": "deliver_calice",
+        "text": "Raccogli impermeabili, tubi e legno per assemblare una zattera.",
+        "next_node": "ritorno_riva",
         "is_correct": true
       },
       {
-        "text": "Ti fermi a riflettere sul significato del calice e del tuo ruolo in questa storia.",
-        "next_node": "fail_riflessione",
+        "text": "Cerca di costruire un'arma per difenderti.",
+        "next_node": "fail_arma_1",
+        "is_correct": false
+      },
+      {
+        "text": "Fai troppo rumore cercando i materiali migliori.",
+        "next_node": "fail_rumore_1",
         "is_correct": false
       }
     ]
   },
   {
-    "node_id": "deliver_calice",
-    "description": "Il committente accoglie il calice con avidità. La tua missione è compiuta, ma il vero scopo di tutto questo ti sfugge ancora.",
+    "node_id": "ritorno_riva",
+    "description": "Con i materiali in spalla, il peso della speranza è quasi schiacciante quanto quello fisico. Devi riattraversare il cortile e raggiungere la riva rocciosa dell'isola, l'ultimo baluardo prima della libertà.",
+    "choices": [
+      {
+        "text": "Ripercorri con cautela la strada attraverso il cortile fino alla riva.",
+        "next_node": "costruzione_zattera",
+        "is_correct": true
+      },
+      {
+        "text": "Prendi una scorciatoia vicino alla torre di guardia.",
+        "next_node": "fail_scorciatoia_1",
+        "is_correct": false
+      },
+      {
+        "text": "Corri il più velocemente possibile, sperando di non essere visto.",
+        "next_node": "fail_corsa_cortile_1",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "node_id": "costruzione_zattera",
+    "description": "Sulla riva, le onde gelide della baia si infrangono contro gli scogli. San Francisco brilla in lontananza. È il momento della verità: devi costruire la zattera e affrontare le acque.",
+    "choices": [
+      {
+        "text": "Assembla rapidamente la zattera e spingiti nelle acque gelide della baia.",
+        "next_node": "successo",
+        "is_correct": true
+      },
+      {
+        "text": "Aspetta l'alba per avere più luce.",
+        "next_node": "fail_alba_1",
+        "is_correct": false
+      },
+      {
+        "text": "Controlla di nuovo i materiali, perdendo tempo prezioso.",
+        "next_node": "fail_controllo_1",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "node_id": "successo",
+    "description": "Dopo una lotta estenuante contro le correnti gelide e la paura, i tuoi piedi toccano la sabbia della terraferma. Ce l'hai fatta. Sei fuggito da Alcatraz. La tua lotta per la giustizia è appena iniziata, ma ora sei un uomo libero.",
     "choices": []
   },
   {
-    "node_id": "fail_taverna",
-    "description": "Nella taverna, una rissa scoppia. Vieni coinvolta e arrestata dalla polizia. La setta occulta si dilegua con il calice.",
+    "node_id": "fail_urlo_1",
+    "description": "Una guardia arriva, ma invece di ascoltarti, ti colpisce con il manganello per il baccano che hai causato.",
     "choices": [
       {
-        "text": "Riprova",
+        "text": "Continua...",
+        "next_node": "fail_urlo_2",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "node_id": "fail_urlo_2",
+    "description": "Vieni trascinato in isolamento. Il tuo piano di fuga è svanito nel nulla.",
+    "choices": [
+      {
+        "text": "Fine.",
         "next_node": "game_over",
         "is_correct": false
       }
     ]
   },
   {
-    "node_id": "fail_libraio",
-    "description": "Il libraio ti vende informazioni errate. Ti perdi in un vicolo cieco e perdi tempo prezioso. La setta si è già impossessata del calice.",
+    "node_id": "fail_spalla_1",
+    "description": "La porta d'acciaio non si muove di un millimetro. Il rumore sordo attira l'attenzione della ronda notturna.",
     "choices": [
       {
-        "text": "Riprova",
+        "text": "Continua...",
+        "next_node": "fail_spalla_2",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "node_id": "fail_spalla_2",
+    "description": "Le guardie ti trovano fuori posto e capiscono le tue intenzioni. La tua sorveglianza viene raddoppiata.",
+    "choices": [
+      {
+        "text": "Fine.",
         "next_node": "game_over",
         "is_correct": false
       }
     ]
   },
   {
-    "node_id": "fail_corruzione",
-    "description": "Le guardie rifiutano la tua offerta e ti attaccano. Sopraffatta, vieni catturata e imprigionata. Il calice è perduto.",
+    "node_id": "fail_corsa_corridoio_1",
+    "description": "Il rumore dei tuoi passi rimbomba nel silenzio. Una guardia sbuca da un angolo, allarmata.",
     "choices": [
       {
-        "text": "Riprova",
+        "text": "Continua...",
+        "next_node": "fail_corsa_corridoio_2",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "node_id": "fail_corsa_corridoio_2",
+    "description": "Non hai scampo. L'allarme suona in tutta la prigione. La tua fuga è finita prima di iniziare.",
+    "choices": [
+      {
+        "text": "Fine.",
         "next_node": "game_over",
         "is_correct": false
       }
     ]
   },
   {
-    "node_id": "fail_secondario",
-    "description": "L'ingresso secondario è una trappola. Cadi in un pozzo pieno di serpenti velenosi. Il calice resta nelle mani della setta.",
+    "node_id": "fail_ufficio_1",
+    "description": "Entri nell'ufficio, ma una guardia era all'interno, a riposare nell'ombra.",
     "choices": [
       {
-        "text": "Riprova",
+        "text": "Continua...",
+        "next_node": "fail_ufficio_2",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "node_id": "fail_ufficio_2",
+    "description": "Vieni catturato all'istante. Per punizione, vieni trasferito nel blocco di massima sicurezza.",
+    "choices": [
+      {
+        "text": "Fine.",
         "next_node": "game_over",
         "is_correct": false
       }
     ]
   },
   {
-    "node_id": "fail_avarizia",
-    "description": "Mentre cerchi altri tesori, vieni sorpresa dal priore corrotto. Un rituale oscuro ti trasforma in una statua di sale. Il calice è al sicuro.",
+    "node_id": "fail_faro_1",
+    "description": "Mentre ti arrampichi verso il faro, la tua ombra viene proiettata gigantesca sul muro del cortile.",
     "choices": [
       {
-        "text": "Riprova",
+        "text": "Continua...",
+        "next_node": "fail_faro_2",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "node_id": "fail_faro_2",
+    "description": "Vieni individuato immediatamente. Le sirene urlano e le guardie ti circondano.",
+    "choices": [
+      {
+        "text": "Fine.",
         "next_node": "game_over",
         "is_correct": false
       }
     ]
   },
   {
-    "node_id": "fail_ferite",
-    "description": "Il calice reagisce al tuo sangue, proiettandoti in una visione del futuro. La setta ti cattura in stato confusionale.",
+    "node_id": "fail_cucine_1",
+    "description": "Le cucine sono chiuse a chiave. Mentre armeggi con la serratura, un prigioniero informatore ti vede.",
     "choices": [
       {
-        "text": "Riprova",
+        "text": "Continua...",
+        "next_node": "fail_cucine_2",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "node_id": "fail_cucine_2",
+    "description": "L'informatore baratta la tua libertà per un trattamento di favore. Le guardie ti tendono un'imboscata.",
+    "choices": [
+      {
+        "text": "Fine.",
         "next_node": "game_over",
         "is_correct": false
       }
     ]
   },
   {
-    "node_id": "fail_riflessione",
-    "description": "La tua esitazione ti costa cara. Il committente, spazientito, invia i suoi sicari. Vieni uccisa prima di poter consegnare il calice.",
+    "node_id": "fail_nebbia_1",
+    "description": "Aspetti troppo a lungo. La nebbia non arriva e la ronda mattutina inizia il suo giro.",
     "choices": [
       {
-        "text": "Riprova",
+        "text": "Continua...",
+        "next_node": "fail_nebbia_2",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "node_id": "fail_nebbia_2",
+    "description": "Vieni scoperto accovacciato nell'ombra. Il tuo piano è fallito miseramente.",
+    "choices": [
+      {
+        "text": "Fine.",
+        "next_node": "game_over",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "node_id": "fail_arma_1",
+    "description": "Perdi tempo prezioso a costruire un'arma rozza. Il tempo a tua disposizione sta per scadere.",
+    "choices": [
+      {
+        "text": "Continua...",
+        "next_node": "fail_arma_2",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "node_id": "fail_arma_2",
+    "description": "Una guardia entra per un controllo di routine e ti trova con l'arma in mano. La tua fuga è finita.",
+    "choices": [
+      {
+        "text": "Fine.",
+        "next_node": "game_over",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "node_id": "fail_rumore_1",
+    "description": "Una pila di tubi di metallo cade a terra con un frastuono assordante.",
+    "choices": [
+      {
+        "text": "Continua...",
+        "next_node": "fail_rumore_2",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "node_id": "fail_rumore_2",
+    "description": "Il rumore attira le guardie più vicine. Vengono a controllare e ti trovano fuori dalla tua cella.",
+    "choices": [
+      {
+        "text": "Fine.",
+        "next_node": "game_over",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "node_id": "fail_scorciatoia_1",
+    "description": "La scorciatoia è un'illusione. Ti porta direttamente sotto la luce accecante della torre di guardia.",
+    "choices": [
+      {
+        "text": "Continua...",
+        "next_node": "fail_scorciatoia_2",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "node_id": "fail_scorciatoia_2",
+    "description": "Sei un bersaglio facile. L'allarme scatta e la tua fuga si conclude a pochi metri dall'acqua.",
+    "choices": [
+      {
+        "text": "Fine.",
+        "next_node": "game_over",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "node_id": "fail_corsa_cortile_1",
+    "description": "Il peso dei materiali ti rallenta. Inciampi e il rumore attira l'attenzione.",
+    "choices": [
+      {
+        "text": "Continua...",
+        "next_node": "fail_corsa_cortile_2",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "node_id": "fail_corsa_cortile_2",
+    "description": "Un faro di ricerca ti inchioda sul posto. Non hai via di scampo.",
+    "choices": [
+      {
+        "text": "Fine.",
+        "next_node": "game_over",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "node_id": "fail_alba_1",
+    "description": "Mentre aspetti, il cielo inizia a schiarirsi. La tua sagoma diventa visibile contro il mare.",
+    "choices": [
+      {
+        "text": "Continua...",
+        "next_node": "fail_alba_2",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "node_id": "fail_alba_2",
+    "description": "Una guardia dalla torre ti avvista. La sirena della prigione segna la fine del tuo sogno di libertà.",
+    "choices": [
+      {
+        "text": "Fine.",
+        "next_node": "game_over",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "node_id": "fail_controllo_1",
+    "description": "La tua esitazione è fatale. Una pattuglia inaspettata ti scopre sulla riva.",
+    "choices": [
+      {
+        "text": "Continua...",
+        "next_node": "fail_controllo_2",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "node_id": "fail_controllo_2",
+    "description": "Cercano di arrestarti, ma tu ti getti in acqua. L'ipotermia ti vince prima che tu possa nuotare lontano.",
+    "choices": [
+      {
+        "text": "Fine.",
         "next_node": "game_over",
         "is_correct": false
       }
@@ -162,10 +423,10 @@
   },
   {
     "node_id": "game_over",
-    "description": "La missione è fallita. Il Calice Perduto di San Francesco rimane un mistero. Vuoi ritentare la sorte?",
+    "description": "La tua fuga è fallita. Le fredde mura di Alcatraz ti inghiottono di nuovo, questa volta per sempre. Vuoi riprovare?",
     "choices": [
       {
-        "text": "Ricomincia dall'inizio",
+        "text": "Ricomincia",
         "next_node": "start",
         "is_correct": true
       }

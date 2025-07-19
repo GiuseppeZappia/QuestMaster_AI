@@ -22,15 +22,15 @@ def main():
 
     # Inizializza il modello Gemini 2.0 Flash
     llm = ChatGoogleGenerativeAI(
-        model="gemini-2.0-flash",
+        model="gemini-2.5-pro",
         temperature=0.6
     )
 
-    # user_input= input("Inserisci la tua richiesta per generare la lore: ")
+    user_input= input("Inserisci la tua richiesta per generare la lore: ")
     
     
     # crea e salva la lore 
-    # generate_lore(user_input,llm)
+    generate_lore(user_input,llm)
 
     # chiede all'utente se vuole modificare la lore generata
     print("Di seguito la lore generata:")
@@ -54,10 +54,10 @@ def main():
             print("Scelta non valida, riprova.")
         
 
-    # crea il dominio della lore generata
+    # # crea il dominio della lore generata
     create_domain_pddl(llm)
 
-    # crea il problema della lore generata
+    # # crea il problema della lore generata
     create_problem_pddl(llm)
 
     pddl_validation_output=run_fastdownward_complete()
@@ -66,45 +66,46 @@ def main():
     correct_pddl_after_fastdownward(pddl_validation_output, llm)
 
     # VALIDAZIONE TRAMITE VAL
-    validation_results = validate_plan_with_val()
+    # validation_results = validate_plan_with_val()
 
 
     # Se la validazione fallisce, esegui il workflow di correzione
-    correct_pddl_after_val(validation_results, llm)
+    # correct_pddl_after_val(validation_results, llm)
+
         
     # Mostra i risultati
-    if validation_results["validation_successful"]:
-            if validation_results["plan_valid"]:
-                print("🎉 VALIDAZIONE COMPLETATA: Piano valido!")
+    # if validation_results["validation_successful"]:
+    #         if validation_results["plan_valid"]:
+    #             print("🎉 VALIDAZIONE COMPLETATA: Piano valido!")
                 
-                # Mostra dettagli positivi
-                details = validation_results["validation_details"]
-                if details["goals_achieved"]:
-                    print("✅ Goal raggiunti:")
-                    for goal in details["goals_achieved"]:
-                        print(f"   - {goal}")
+    #             # Mostra dettagli positivi
+    #             details = validation_results["validation_details"]
+    #             if details["goals_achieved"]:
+    #                 print("✅ Goal raggiunti:")
+    #                 for goal in details["goals_achieved"]:
+    #                     print(f"   - {goal}")
                 
                 
-            else:
-                print("⚠️  VALIDAZIONE COMPLETATA: Piano non valido!")
+    #         else:
+    #             print("⚠️  VALIDAZIONE COMPLETATA: Piano non valido!")
                 
-                # Mostra errori
-                details = validation_results["validation_details"]
-                if details["execution_errors"]:
-                    print("❌ Errori rilevati:")
-                    for error in details["execution_errors"]:
-                        print(f"   - {error}")
+    #             # Mostra errori
+    #             details = validation_results["validation_details"]
+    #             if details["execution_errors"]:
+    #                 print("❌ Errori rilevati:")
+    #                 for error in details["execution_errors"]:
+    #                     print(f"   - {error}")
                 
-                if details["warnings"]:
-                    print("⚠️  Warning:")
-                    for warning in details["warnings"]:
-                        print(f"   - {warning}")
-    else:
-        print("❌ VALIDAZIONE FALLITA!")
-        if validation_results["error_message"]:
-            print(f"Errore: {validation_results['error_message']}")
+    #             if details["warnings"]:
+    #                 print("⚠️  Warning:")
+    #                 for warning in details["warnings"]:
+    #                     print(f"   - {warning}")
+    # else:
+    #     print("❌ VALIDAZIONE FALLITA!")
+    #     if validation_results["error_message"]:
+    #         print(f"Errore: {validation_results['error_message']}")
         
-        return validation_results
+    #     return validation_results
     
    
     #HUMAN IN THE LOOP PER VALIDARE IL PIANO GENERATO
@@ -129,10 +130,10 @@ def main():
         correct_pddl_after_fastdownward(pddl_validation_output, llm)
 
         # VALIDAZIONE TRAMITE VAL
-        validation_results = validate_plan_with_val()
+        # validation_results = validate_plan_with_val()
 
         # Se la validazione fallisce, esegui il workflow di correzione
-        correct_pddl_after_val(validation_results, llm)
+        # correct_pddl_after_val(validation_results, llm)
  
     generate_story(llm)
     subprocess.run(["streamlit", "run", "prova.py"])
@@ -157,24 +158,25 @@ def human_plan_validation(planning_output):
 
 def correct_pddl_after_fastdownward(pddl_validation_output, llm):
     if not pddl_validation_output["planning_results"]["planning_success"]:
-        count_attempts=0
-        while(not pddl_validation_output["planning_results"]["planning_success"] and count_attempts<=6):  #usiamo count attempts solo per evitare di sprecare troppe richeiste api, togliere
+        while(not pddl_validation_output["planning_results"]["planning_success"]):  #usiamo count attempts solo per evitare di sprecare troppe richeiste api, togliere
             print("❌ Errore nella validazione PDDL")
             print("🔄 Riprovo a correggere il PDDL...")
             run_correction_workflow(pddl_validation_output["planning_results"]["planning_output"], llm)
             pddl_validation_output=run_fastdownward_complete()
-            count_attempts+=1
 
 def correct_pddl_after_val(validation_results, llm):
     if not validation_results["validation_successful"]:
         error_message = get_validation_error_for_correction(validation_results)
         run_correction_workflow(error_message, llm)
-        while(not pddl_validation_output["planning_results"]["planning_success"] and count_attempts<=6):  #usiamo count attempts solo per evitare di sprecare troppe richeiste api, togliere
-            print("❌ Errore nella validazione PDDL")
-            print("🔄 Riprovo a correggere il PDDL...")
-            run_correction_workflow(pddl_validation_output["planning_results"]["planning_output"], llm)
-            pddl_validation_output=run_fastdownward_complete()
-            count_attempts+=1 
+        pddl_validation_output=run_fastdownward_complete()
+        while(not pddl_validation_output["planning_results"]["planning_success"] or not validation_results["validation_successful"] ):  #usiamo count attempts solo per evitare di sprecare troppe richeiste api, togliere
+            if(not pddl_validation_output["planning_results"]["planning_success"]):
+                print("❌ Errore nella validazione PDDL")
+                print("🔄 Riprovo a correggere il PDDL...")
+                run_correction_workflow(pddl_validation_output["planning_results"]["planning_output"], llm)
+                pddl_validation_output=run_fastdownward_complete()
+            if(not validation_results["validation_successful"]):
+                validation_results=validate_plan_with_val()
 
 if __name__ == "__main__":
     main()
