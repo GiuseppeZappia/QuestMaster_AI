@@ -276,7 +276,6 @@ def validate_plan_with_val():
         results["validation_output"] = validation_output
         
         print("Output di VAL:")
-        print("-" * 50)
         print(validation_output)
         print("-" * 50)
         
@@ -367,28 +366,60 @@ def parse_val_output(output):
 def get_validation_error_for_correction(validation_results):
     """
     Restituisce gli errori di validazione in un formato utilizzabile per la correzione PDDL.
+    Include sia il codice di errore che la descrizione completa.
     """
-    
+    if validation_results["validation_successful"]:
+        return "Non ci sono errori di validazione. Il piano è valido."
+
     if not validation_results["validation_successful"]:
-        return f"Errore di validazione: {validation_results['error_message']}"
+        # Costruisci un messaggio di errore più dettagliato
+        error_message = "ERRORI DI VALIDAZIONE VAL:\n"
+        
+        # Includi l'output completo di validazione se disponibile
+        if "validation_output" in validation_results and validation_results["validation_output"]:
+            error_message += f"Output VAL:\n{validation_results['validation_output']}\n\n"
+        
+        # Includi il messaggio di errore base
+        if "error_message" in validation_results:
+            error_message += f"Errore: {validation_results['error_message']}\n"
+        
+        # Includi dettagli aggiuntivi se disponibili
+        if "validation_details" in validation_results:
+            details = validation_results["validation_details"]
+            if details.get("execution_errors"):
+                error_message += "\nErrori di esecuzione:\n"
+                for error in details["execution_errors"]:
+                    error_message += f"- {error}\n"
+            
+            if details.get("warnings"):
+                error_message += "\nWarning:\n"
+                for warning in details["warnings"]:
+                    error_message += f"- {warning}\n"
+        
+        return error_message
     
-    if validation_results["plan_valid"]:
+    if validation_results.get("plan_valid"):
         return None  # Nessun errore
     
-    # Costruisci un messaggio di errore dettagliato
+    # Costruisci un messaggio di errore dettagliato per piani non validi
     error_message = "ERRORI DI VALIDAZIONE VAL:\n"
-    error_message += validation_results["validation_output"]
-    error_message += "\n\nDETTAGLI:\n"
     
-    details = validation_results["validation_details"]
-    if details["execution_errors"]:
-        error_message += "Errori di esecuzione:\n"
-        for error in details["execution_errors"]:
-            error_message += f"- {error}\n"
+    # Includi l'output completo di validazione (codice + descrizione)
+    if "validation_output" in validation_results and validation_results["validation_output"]:
+        error_message += f"Output VAL:\n{validation_results['validation_output']}\n"
     
-    if details["warnings"]:
-        error_message += "Warning:\n"
-        for warning in details["warnings"]:
-            error_message += f"- {warning}\n"
+    error_message += "\nDETTAGLI:\n"
+    
+    if "validation_details" in validation_results:
+        details = validation_results["validation_details"]
+        if details.get("execution_errors"):
+            error_message += "Errori di esecuzione:\n"
+            for error in details["execution_errors"]:
+                error_message += f"- {error}\n"
+        
+        if details.get("warnings"):
+            error_message += "Warning:\n"
+            for warning in details["warnings"]:
+                error_message += f"- {warning}\n"
     
     return error_message
