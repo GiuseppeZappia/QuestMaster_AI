@@ -13,7 +13,7 @@ from domain_generation import create_domain_pddl
 from problem_generation import create_problem_pddl
 from reflective_agent import run_correction_workflow, run_user_correction_pddl, update_lore_with_corrections
 from pddl_validation import run_fastdownward_complete, validate_plan_with_val, get_validation_error_for_correction
-from utils import print_lore, print_plan, load_example_json
+from utils import print_lore, load_example_json
 from story_generation import generate_story
 
 

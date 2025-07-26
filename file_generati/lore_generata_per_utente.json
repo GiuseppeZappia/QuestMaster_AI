@@ -1,25 +1,25 @@
 {
   "lore_document": {
     "quest_description": {
-      "title": "L'Eco Silenzioso di Titano",
-      "initial_state": "Leo, un genio dodicenne, si trova a bordo della stazione di ricerca 'Astra' su Titano. Un'improvvisa eruzione solare ha causato un guasto catastrofico a tutti i sistemi, facendo precipitare la base nel silenzio e nel buio. L'IA centrale, HELIOS, è offline e il supporto vitale sta per esaurirsi.",
-      "goal": "Raggiungere il nucleo di controllo principale, riavviare l'IA HELIOS utilizzando un protocollo di emergenza manuale e ripristinare il supporto vitale prima che le riserve di ossigeno si esauriscano.",
+      "title": "L'Equazione Fatata",
+      "initial_state": "Il tuo figlioccio, Leo, è un giovane e promettente fisico teorico sull'orlo di una crisi. È bloccato su un complesso problema di coerenza quantistica che potrebbe definire o distruggere la sua carriera. Tu, un Fantagenitore dell'Agenzia per il Potenziale Umano, sei stato appena assegnato al suo caso con il compito di sbloccare il suo genio.",
+      "goal": "Guidare Leo attraverso le sfide accademiche e personali, aiutandolo a formulare e pubblicare una teoria rivoluzionaria sulla fisica quantistica, vincere il prestigioso Premio Nobel e assicurargli un posto nell'olimpo della scienza.",
       "obstacles": [
-        "Porte di sicurezza sigillate che richiedono diversi livelli di accesso.",
-        "Un drone di manutenzione difettoso che identifica ogni forma di vita come una minaccia.",
-        "Una perdita di refrigerante nel settore ingegneristico che rende l'area pericolosa.",
-        "La necessità di trovare e assemblare i frammenti del codice di riavvio manuale, sparsi nei terminali della stazione."
+        "Il Dr. Aris Thorne, un accademico rivale senza scrupoli, che cerca di sabotare o rubare la ricerca di Leo.",
+        "Il 'Paradosso dell'Interferenza Arcana': l'uso di magia su concetti scientifici complessi può generare effetti collaterali imprevedibili, come la corruzione dei dati o la creazione di anomalie logiche.",
+        "La profonda sindrome dell'impostore di Leo, che lo porta a dubitare delle sue capacità nei momenti più critici.",
+        "Un 'Gremlin della Logica', un'entità magica dispettosa attratta dalla fusione di magia e scienza, che sabota attivamente gli esperimenti e le simulazioni."
       ],
-      "world_background": "La stazione 'Astra' su Titano è l'avamposto di ricerca più avanzato dell'umanità, costruito per studiare i laghi di metano della luna. È gestita dall'IA HELIOS, considerata l'apice dell'intelligenza artificiale. Leo si trova lì come parte di un programma speciale per giovani dotati.",
-      "contextual_information": "La stazione è stata costruita con protocolli di sicurezza estremamente complessi dopo un precedente tentativo fallito di colonizzazione su Marte. Questo rende un riavvio manuale un'impresa quasi impossibile. I genitori di Leo sono stati i principali architetti di HELIOS, e il ragazzo possiede una comprensione unica e quasi intuitiva dei suoi sistemi."
+      "world_background": "Il mondo segreto dei Fantagenitori opera sotto l'egida dell' 'Agenzia per il Potenziale Umano'. La loro non è una magia di zucche e cavalli, ma di sottili interventi sul tessuto della realtà: incantesimi di ispirazione, colpi di fortuna orchestrati e potenziamenti della concentrazione. Un intervento troppo diretto è severamente proibito dal Regolamento Celeste, poiché può creare paradossi o allertare entità magiche rivali.",
+      "contextual_information": "Il mondo accademico è un campo di battaglia. Leo lavora in un'università prestigiosa ma con fondi cronicamente insufficienti. Il suo successo non solo gli garantirebbe fama eterna, ma potrebbe anche salvare il suo dipartimento dalla chiusura. La tua performance come Fantagenitore è costantemente monitorata e valutata dall'Agenzia: il successo di Leo è anche il tuo."
     },
     "branching_factor": {
-      "min_actions_per_state": 2,
-      "max_actions_per_state": 3
+      "min_actions_per_state": 4,
+      "max_actions_per_state": 4
     },
     "depth_constraints": {
-      "min_steps_to_goal": 4,
-      "max_steps_to_goal": 8
+      "min_steps_to_goal": 6,
+      "max_steps_to_goal": 9
     }
   }
 }

@@ -1,257 +1,194 @@
 [
   {
     "node_id": "start",
-    "description": "Sei Leo, un genio di dodici anni, intrappolato nella stazione di ricerca 'Astra' su Titano. Un'eruzione solare ha mandato tutto in blackout. L'IA HELIOS è offline, il supporto vitale è agli sgoccioli e un silenzio spettrale avvolge i corridoi metallici. Ti trovi nel tuo quartierino, l'aria si fa sempre più rarefatta. Ricordi che i tuoi genitori, gli architetti di HELIOS, tenevano una scheda di accesso di emergenza per l'ingegneria proprio qui.",
+    "description": "Sei un Fantagenitore dell'Agenzia per il Potenziale Umano. Il tuo nuovo incarico è Leo, un brillante fisico bloccato su un problema di coerenza quantistica. La sua carriera è a un bivio e il suo rivale, il Dr. Aris Thorne, trama nell'ombra. La prima minaccia da affrontare è proprio il sabotaggio accademico.",
     "choices": [
       {
-        "text": "Cerca e prendi la scheda di accesso per il settore ingegneria.",
-        "next_node": "prendi_scheda_ingegneria",
+        "text": "Usa un incantesimo di 'sfortuna burocratica' per far perdere i dati di sabotaggio di Thorne.",
+        "next_node": "neutralize_sabotage",
         "is_correct": true
       },
       {
-        "text": "Tenta di forzare la porta del tuo quartierino.",
-        "next_node": "fail_forza_porta",
+        "text": "Appari a Leo in sogno e rivelagli la soluzione completa dell'equazione.",
+        "next_node": "fail_direct_intervention",
         "is_correct": false
       },
       {
-        "text": "Resta fermo e attendi i soccorsi dalla Terra.",
-        "next_node": "fail_attendi_soccorsi",
+        "text": "Ignora Thorne e concentrati solo sulla sindrome dell'impostore di Leo.",
+        "next_node": "fail_ignore_thorne",
+        "is_correct": false
+      },
+      {
+        "text": "Suggerisci a Leo di cambiare campo di ricerca per evitare lo stress.",
+        "next_node": "fail_change_field",
         "is_correct": false
       }
     ]
   },
   {
-    "node_id": "prendi_scheda_ingegneria",
-    "description": "Con mano tremante ma decisa, trovi la scheda di accesso per l'ingegneria nascosta in un doppio fondo del tuo terminale personale. È il primo passo. Ora devi raggiungere il corridoio centrale per accedere al resto della stazione.",
+    "node_id": "neutralize_sabotage",
+    "description": "L'intervento ha funzionato: i tentativi di sabotaggio di Thorne sono stati neutralizzati da una serie di 'sfortunati' incidenti digitali. Ora Leo è al sicuro dalle minacce esterne, ma la sua mente è un groviglio di dubbi e distrazioni. Ha bisogno di concentrazione assoluta.",
     "choices": [
       {
-        "text": "Esci dal quartierino e dirigiti verso il corridoio centrale.",
-        "next_node": "muovi_corridoio_centrale",
+        "text": "Lancia un 'Potenziamento della Concentrazione' per affinare la sua mente.",
+        "next_node": "boost_concentration",
         "is_correct": true
       },
       {
-        "text": "Cerca del cibo nelle razioni di emergenza.",
-        "next_node": "fail_cerca_cibo",
+        "text": "Invia una lettera anonima all'università per denunciare Thorne.",
+        "next_node": "fail_expose_thorne",
+        "is_correct": false
+      },
+      {
+        "text": "Organizza una vacanza a sorpresa per Leo per farlo rilassare.",
+        "next_node": "fail_vacation",
+        "is_correct": false
+      },
+      {
+        "text": "Prova a lanciare un incantesimo di ispirazione, sperando che basti.",
+        "next_node": "fail_wrong_spell",
         "is_correct": false
       }
     ]
   },
   {
-    "node_id": "muovi_corridoio_centrale",
-    "description": "Sei nel corridoio centrale. Le luci di emergenza rosse lampeggiano a intermittenza. Di fronte a te, la massiccia porta della sala ingegneria è sigillata. Un piccolo terminale accanto ad essa mostra un allarme: 'PERDITA REFRIGERANTE CRITICA'. Devi prima sbloccare la porta.",
+    "node_id": "boost_concentration",
+    "description": "Il potenziamento ha fatto effetto. Leo è incredibilmente concentrato, ma nota qualcosa di strano: le sue simulazioni producono risultati illogici, come se un'entità dispettosa stesse manomettendo i calcoli. È l'opera di un Gremlin della Logica, attratto dalla tua magia.",
     "choices": [
       {
-        "text": "Usa la scheda per sbloccare la porta della sala ingegneria.",
-        "next_node": "sblocca_porta_ingegneria",
+        "text": "Esegui un rituale di 'Esilio Logico' per scacciare il gremlin.",
+        "next_node": "chase_gremlin",
         "is_correct": true
       },
       {
-        "text": "Ignora l'ingegneria e prova ad andare al laboratorio.",
-        "next_node": "fail_vai_laboratorio",
+        "text": "Aumenta la potenza del tuo incantesimo di concentrazione per 'forzare' i calcoli.",
+        "next_node": "fail_paradox",
+        "is_correct": false
+      },
+      {
+        "text": "Convinci Leo che si tratta di un bug nel suo software.",
+        "next_node": "fail_blame_software",
+        "is_correct": false
+      },
+      {
+        "text": "Prova a negoziare con il Gremlin offrendogli enigmi da risolvere.",
+        "next_node": "fail_negotiate_gremlin",
         "is_correct": false
       }
     ]
   },
   {
-    "node_id": "sblocca_porta_ingegneria",
-    "description": "La scheda funziona. Un 'click' metallico risuona nel silenzio e la porta si apre di pochi centimetri, ma un sibilo minaccioso proviene dall'interno. Il terminale ora ti dà accesso ai controlli ambientali di emergenza. La perdita di refrigerante è pericolosa e va fermata prima di entrare.",
+    "node_id": "chase_gremlin",
+    "description": "Il Gremlin della Logica è stato scacciato e i sistemi di Leo sono tornati alla normalità. Ora ha la concentrazione e gli strumenti, ma gli manca la scintilla finale, il lampo di genio per unire tutti i pezzi. È il momento per un tocco di pura ispirazione.",
     "choices": [
       {
-        "text": "Usa il terminale per riparare la perdita di refrigerante da remoto.",
-        "next_node": "ripara_perdita",
+        "text": "Lancia un sottile 'Incantesimo di Ispirazione' che appaia come un'intuizione improvvisa.",
+        "next_node": "cast_inspiration",
         "is_correct": true
       },
       {
-        "text": "Entra subito nella sala, ignorando il sibilo.",
-        "next_node": "fail_ignora_perdita",
+        "text": "Lascia un libro con la soluzione aperta sulla sua scrivania.",
+        "next_node": "fail_leave_book",
+        "is_correct": false
+      },
+      {
+        "text": "Fagli credere di aver vinto un piccolo premio per aumentare la sua autostima.",
+        "next_node": "fail_fake_prize",
+        "is_correct": false
+      },
+      {
+        "text": "Digli di prendersi una pausa. L'ispirazione arriverà da sola.",
+        "next_node": "fail_bad_timing_break",
         "is_correct": false
       }
     ]
   },
   {
-    "node_id": "ripara_perdita",
-    "description": "Con una concentrazione che smentisce la tua età, navighi tra i protocolli di emergenza sul terminale. Attivi le valvole di sicurezza e il sibilo cessa. L'allarme si spegne. La sala ingegneria ora è sicura per l'accesso.",
+    "node_id": "cast_inspiration",
+    "description": "Eureka! L'incantesimo ha funzionato alla perfezione. Leo balza in piedi, gli occhi illuminati da una nuova comprensione. Inizia a scrivere furiosamente, collegando concetti che prima sembravano distanti. La teoria sta prendendo forma nella sua mente.",
     "choices": [
       {
-        "text": "Entra nella sala ingegneria.",
-        "next_node": "muovi_sala_ingegneria",
+        "text": "Lascialo lavorare, osservando discretamente mentre formalizza la sua teoria.",
+        "next_node": "formulate_theory",
         "is_correct": true
       },
       {
-        "text": "Riavvia il terminale per sicurezza.",
-        "next_node": "fail_riavvia_terminale",
+        "text": "Lancia un altro incantesimo per farlo scrivere più velocemente.",
+        "next_node": "fail_double_spell",
+        "is_correct": false
+      },
+      {
+        "text": "Suggeriscigli di chiamare subito la stampa per annunciare la scoperta.",
+        "next_node": "fail_premature_announcement",
+        "is_correct": false
+      },
+      {
+        "text": "Interrompilo per assicurarti che stia scrivendo le cose giuste.",
+        "next_node": "fail_interrupt",
         "is_correct": false
       }
     ]
   },
   {
-    "node_id": "muovi_sala_ingegneria",
-    "description": "La sala ingegneria è un groviglio di cavi e condotti. L'aria odora di ozono. Sai che qui è custodita la scheda di accesso per il nucleo di controllo, il cuore pulsante di HELIOS. La vedi su una console dall'altra parte della stanza.",
+    "node_id": "formulate_theory",
+    "description": "La teoria è completa. È un'opera di genio, elegante e rivoluzionaria. Ora, questo capolavoro deve uscire dal suo laboratorio e raggiungere la comunità scientifica per essere riconosciuto. È il momento della pubblicazione.",
     "choices": [
       {
-        "text": "Attraversa la stanza e prendi la scheda per il nucleo.",
-        "next_node": "prendi_scheda_nucleo",
+        "text": "Guidalo verso la scelta della rivista accademica più prestigiosa per la pubblicazione.",
+        "next_node": "publish_research",
         "is_correct": true
       },
       {
-        "text": "Inizia a studiare i diagrammi del motore principale.",
-        "next_node": "fail_studia_motore",
+        "text": "Suggeriscigli di pubblicare la teoria su un blog per una diffusione più rapida.",
+        "next_node": "fail_publish_blog",
+        "is_correct": false
+      },
+      {
+        "text": "Consiglialo di vendere la sua ricerca a una grande azienda tecnologica.",
+        "next_node": "fail_sell_research",
+        "is_correct": false
+      },
+      {
+        "text": "Spingilo a tenere la teoria per sé per perfezionarla ancora per qualche anno.",
+        "next_node": "fail_wait_too_long",
         "is_correct": false
       }
     ]
   },
   {
-    "node_id": "prendi_scheda_nucleo",
-    "description": "Hai la scheda di accesso al nucleo. Mentre la prendi, noti un datapad accanto ad essa. Contiene il primo frammento del codice di riavvio manuale. Un pezzo del puzzle è tuo.",
+    "node_id": "publish_research",
+    "description": "La ricerca è stata pubblicata e ha scatenato un terremoto nel mondo della fisica. Gli accademici di tutto il mondo discutono del 'Modello di Leo'. Il suo nome è sulla bocca di tutti e le voci di una possibile candidatura al Nobel si fanno sempre più insistenti.",
     "choices": [
       {
-        "text": "Scarica il primo frammento di codice (Frammento A).",
-        "next_node": "prendi_frammento_a",
+        "text": "Attendi con fiducia il verdetto del comitato per il Nobel.",
+        "next_node": "win_nobel_prize",
         "is_correct": true
       },
       {
-        "text": "Lascia il datapad e torna subito nel corridoio.",
-        "next_node": "fail_lascia_frammento_a",
+        "text": "Usa la magia per influenzare la decisione del comitato per il Nobel.",
+        "next_node": "fail_influence_nobel",
+        "is_correct": false
+      },
+      {
+        "text": "Inizia una massiccia campagna mediatica per promuovere Leo.",
+        "next_node": "fail_pr_campaign",
+        "is_correct": false
+      },
+      {
+        "text": "Spingi Leo a iniziare subito un nuovo progetto per dimostrare di non essere un 'one-hit wonder'.",
+        "next_node": "fail_next_project",
         "is_correct": false
       }
     ]
   },
   {
-    "node_id": "prendi_frammento_a",
-    "description": "Frammento A acquisito. Ora hai tutto ciò che ti serve dalla sala ingegneria. Devi tornare nel corridoio centrale per raggiungere il laboratorio, dove dovrebbe trovarsi il secondo frammento.",
-    "choices": [
-      {
-        "text": "Torna nel corridoio centrale.",
-        "next_node": "muovi_corridoio_centrale_2",
-        "is_correct": true
-      },
-      {
-        "text": "Prova a decifrare il frammento A da solo.",
-        "next_node": "fail_decifra_frammento",
-        "is_correct": false
-      }
-    ]
-  },
-  {
-    "node_id": "muovi_corridoio_centrale_2",
-    "description": "Sei di nuovo nel corridoio centrale. Un rumore metallico e stridente attira la tua attenzione: è un drone di manutenzione, i suoi sensori ottici brillano di un rosso ostile. Il suo protocollo è chiaramente corrotto: ti identifica come una minaccia. Per raggiungere il laboratorio, devi neutralizzarlo.",
-    "choices": [
-      {
-        "text": "Accedi a un pannello di controllo nel corridoio per disattivare il drone.",
-        "next_node": "disattiva_drone",
-        "is_correct": true
-      },
-      {
-        "text": "Corri verso la porta del laboratorio sperando di essere più veloce.",
-        "next_node": "fail_corri_dal_drone",
-        "is_correct": false
-      }
-    ]
-  },
-  {
-    "node_id": "disattiva_drone",
-    "description": "Sfruttando un punto cieco nel suo pattugliamento, raggiungi un pannello di sicurezza. Inserisci un comando di override diagnostico che manda il drone in stand-by. La macchina si ferma, inerte. La via per il laboratorio è libera.",
-    "choices": [
-      {
-        "text": "Entra nel laboratorio.",
-        "next_node": "muovi_laboratorio",
-        "is_correct": true
-      },
-      {
-        "text": "Prova a riprogrammare il drone per farlo diventare tuo alleato.",
-        "next_node": "fail_riprogramma_drone",
-        "is_correct": false
-      }
-    ]
-  },
-  {
-    "node_id": "muovi_laboratorio",
-    "description": "Il laboratorio è pieno di esperimenti lasciati a metà. Ologrammi spenti e provette fluttuanti in assenza di gravità creano un'atmosfera surreale. La porta per il nucleo di controllo è qui, sigillata come le altre. Ti serve la scheda che hai appena recuperato.",
-    "choices": [
-      {
-        "text": "Usa la scheda di accesso al nucleo per sbloccare la porta.",
-        "next_node": "sblocca_porta_nucleo",
-        "is_correct": true
-      },
-      {
-        "text": "Cerca prima il secondo frammento di codice nel laboratorio.",
-        "next_node": "fail_cerca_frammento_prima",
-        "is_correct": false
-      }
-    ]
-  },
-  {
-    "node_id": "sblocca_porta_nucleo",
-    "description": "La porta del nucleo di controllo emette un ronzio e si apre. Prima di procedere, devi trovare l'ultimo pezzo del puzzle. Scorgi un altro datapad su un banco di lavoro, probabilmente contenente il secondo frammento di codice.",
-    "choices": [
-      {
-        "text": "Prendi il secondo frammento di codice (Frammento B).",
-        "next_node": "prendi_frammento_b",
-        "is_correct": true
-      },
-      {
-        "text": "Entra subito nel nucleo, convinto di potercela fare senza.",
-        "next_node": "fail_entra_senza_frammento_b",
-        "is_correct": false
-      }
-    ]
-  },
-  {
-    "node_id": "prendi_frammento_b",
-    "description": "Hai anche il Frammento B. Ora possiedi entrambi i pezzi del codice di riavvio. È il momento di affrontare la sfida finale. Il nucleo di controllo ti attende.",
-    "choices": [
-      {
-        "text": "Entra nel nucleo di controllo.",
-        "next_node": "muovi_nucleo_controllo",
-        "is_correct": true
-      },
-      {
-        "text": "Controlla di nuovo tutti i sistemi del laboratorio.",
-        "next_node": "fail_controlla_laboratorio",
-        "is_correct": false
-      }
-    ]
-  },
-  {
-    "node_id": "muovi_nucleo_controllo",
-    "description": "Il nucleo di controllo è una sala circolare dominata da un'enorme sfera di energia pulsante: il cuore di HELIOS, ora spento e scuro. La console principale è di fronte a te, in attesa del codice. L'aria è quasi irrespirabile.",
-    "choices": [
-      {
-        "text": "Assembla i due frammenti sulla console principale.",
-        "next_node": "assembla_codice",
-        "is_correct": true
-      },
-      {
-        "text": "Prova a riavviare HELIOS usando solo la tua autorità di utente.",
-        "next_node": "fail_riavvio_semplice",
-        "is_correct": false
-      }
-    ]
-  },
-  {
-    "node_id": "assembla_codice",
-    "description": "Unisci i due frammenti. Le stringhe di dati si fondono, creando una sequenza complessa ma elegante. Il codice di riavvio manuale è completo. La console si illumina, pronta a ricevere il comando finale. L'ossigeno è quasi esaurito.",
-    "choices": [
-      {
-        "text": "Esegui il codice e riavvia HELIOS e il supporto vitale.",
-        "next_node": "riavvia_helios",
-        "is_correct": true
-      },
-      {
-        "text": "Fai una pausa per riprendere fiato.",
-        "next_node": "fail_pausa_fatale",
-        "is_correct": false
-      }
-    ]
-  },
-  {
-    "node_id": "riavvia_helios",
-    "description": "Con un ultimo sforzo, avvii la sequenza. La sfera di energia nel nucleo torna a pulsare di una luce blu e calda. Le luci della stazione si riaccendono, il ronzio dei sistemi torna a riempire il silenzio e senti l'aria fresca del supporto vitale riattivato. Una voce calma e familiare risuona dagli altoparlanti: 'HELIOS online. Supporto vitale ripristinato. Ben tornato, Leo.' Ce l'hai fatta.",
+    "node_id": "win_nobel_prize",
+    "description": "La chiamata da Stoccolma è arrivata. Leo ha vinto il Premio Nobel per la Fisica. È salito sul palco, incredulo e felice, ringraziando una misteriosa 'musa' che lo ha guidato. Missione compiuta. L'Agenzia per il Potenziale Umano è molto soddisfatta di te.",
     "choices": []
   },
   {
-    "node_id": "fail_forza_porta",
-    "description": "La porta è costruita per resistere a impatti di micrometeoriti. I tuoi tentativi sono inutili e sprechi solo preziose energie. Il tempo stringe.",
+    "node_id": "fail_direct_intervention",
+    "description": "Rivelare la soluzione è un'infrazione gravissima del Regolamento Celeste. L'Agenzia ti revoca l'incarico e la mente di Leo, incapace di comprendere la provenienza dell'idea, collassa. Missione fallita.",
     "choices": [
       {
         "text": "Riprova",
@@ -261,8 +198,8 @@
     ]
   },
   {
-    "node_id": "fail_attendi_soccorsi",
-    "description": "I soccorsi dalla Terra impiegherebbero mesi ad arrivare. L'ossigeno si esaurisce molto prima. L'oscurità ti avvolge.",
+    "node_id": "fail_ignore_thorne",
+    "description": "Mentre ti concentri su Leo, Thorne riesce a rubare parte della sua ricerca e a pubblicarla con il suo nome. Leo è devastato dal tradimento e abbandona il progetto. Missione fallita.",
     "choices": [
       {
         "text": "Riprova",
@@ -272,8 +209,8 @@
     ]
   },
   {
-    "node_id": "fail_cerca_cibo",
-    "description": "Mentre cerchi del cibo, perdi minuti preziosi. Ogni secondo è vitale e l'orologio dell'ossigeno non si ferma.",
+    "node_id": "fail_change_field",
+    "description": "Leo segue il tuo consiglio e cambia campo, ma il suo genio rimane inespresso. Diventa un mediocre professore di fisica generale, perseguitato dal potenziale che non ha mai realizzato. Missione fallita.",
     "choices": [
       {
         "text": "Riprova",
@@ -283,8 +220,8 @@
     ]
   },
   {
-    "node_id": "fail_vai_laboratorio",
-    "description": "La porta del laboratorio richiede un accesso di livello superiore. Senza passare dall'ingegneria, sei bloccato qui nel corridoio, mentre il tempo scorre.",
+    "node_id": "fail_expose_thorne",
+    "description": "La tua denuncia anonima scatena un'indagine, ma senza prove concrete si arena. Thorne, sospettando di Leo, intensifica il suo sabotaggio, rendendo impossibile ogni progresso. Missione fallita.",
     "choices": [
       {
         "text": "Riprova",
@@ -294,8 +231,8 @@
     ]
   },
   {
-    "node_id": "fail_ignora_perdita",
-    "description": "Appena apri la porta, il gas refrigerante ti investe. È tossico e perdi i sensi quasi all'istante. La missione finisce qui.",
+    "node_id": "fail_vacation",
+    "description": "La vacanza rilassa Leo, ma gli fa anche perdere il filo dei suoi pensieri. Al suo ritorno, non riesce più a ritrovare la concentrazione e il suo slancio creativo si esaurisce. Missione fallita.",
     "choices": [
       {
         "text": "Riprova",
@@ -305,8 +242,8 @@
     ]
   },
   {
-    "node_id": "fail_riavvia_terminale",
-    "description": "Il riavvio del terminale non è necessario e ti fa perdere tempo. Il livello di ossigeno nella stazione continua a calare inesorabilmente.",
+    "node_id": "fail_wrong_spell",
+    "description": "L'ispirazione senza concentrazione crea solo confusione. Leo ha mille idee brillanti ma non riesce a focalizzarsi su nessuna, finendo per esaurirsi mentalmente. Missione fallita.",
     "choices": [
       {
         "text": "Riprova",
@@ -316,8 +253,8 @@
     ]
   },
   {
-    "node_id": "fail_studia_motore",
-    "description": "I diagrammi sono affascinanti, ma troppo complessi per essere utili ora. Hai sprecato tempo che non avevi. L'allarme ossigeno suona più forte.",
+    "node_id": "fail_paradox",
+    "description": "Troppa magia concentrata in un unico punto scatena il 'Paradosso dell'Interferenza Arcana'. I dati di Leo vengono irrimediabilmente corrotti e il suo computer si fonde. Missione fallita.",
     "choices": [
       {
         "text": "Riprova",
@@ -327,8 +264,8 @@
     ]
   },
   {
-    "node_id": "fail_lascia_frammento_a",
-    "description": "Torni nel corridoio senza il frammento di codice. Te ne accorgi troppo tardi. Senza di esso, il riavvio di HELIOS è impossibile.",
+    "node_id": "fail_blame_software",
+    "description": "Leo passa settimane a cercare un bug inesistente, perdendo tempo prezioso. La sua frustrazione cresce e la sua sindrome dell'impostore si aggrava, convincendolo di non essere un buon programmatore. Missione fallita.",
     "choices": [
       {
         "text": "Riprova",
@@ -338,8 +275,8 @@
     ]
   },
   {
-    "node_id": "fail_decifra_frammento",
-    "description": "Il codice è criptato e richiede entrambi i frammenti per essere assemblato. Tenti inutilmente, sprecando tempo ed energie.",
+    "node_id": "fail_negotiate_gremlin",
+    "description": "Il Gremlin della Logica non è interessato a negoziare. Vede il tuo tentativo come un gioco e intensifica il caos, trasformando la ricerca di Leo in un'assurdità matematica. Missione fallita.",
     "choices": [
       {
         "text": "Riprova",
@@ -349,8 +286,8 @@
     ]
   },
   {
-    "node_id": "fail_corri_dal_drone",
-    "description": "Il drone è molto più veloce. Ti intercetta a metà corridoio e, identificandoti come una minaccia, ti neutralizza con un impulso elettrico.",
+    "node_id": "fail_leave_book",
+    "description": "L'intervento è troppo diretto. Leo trova il libro, ma si sente un imbroglione per non averci pensato da solo. La sua sindrome dell'impostore prende il sopravvento e abbandona la ricerca. Missione fallita.",
     "choices": [
       {
         "text": "Riprova",
@@ -360,8 +297,8 @@
     ]
   },
   {
-    "node_id": "fail_riprogramma_drone",
-    "description": "I protocolli di sicurezza del drone sono troppo robusti. Il tuo tentativo di riprogrammazione innesca un allarme silenzioso e il drone ti attacca.",
+    "node_id": "fail_fake_prize",
+    "description": "Leo scopre che il premio era falso. L'umiliazione lo distrugge, erodendo la poca fiducia che gli era rimasta. Si chiude in se stesso, rifiutando ogni ulteriore aiuto. Missione fallita.",
     "choices": [
       {
         "text": "Riprova",
@@ -371,8 +308,8 @@
     ]
   },
   {
-    "node_id": "fail_cerca_frammento_prima",
-    "description": "Cerchi il frammento nel laboratorio, ma la porta per il nucleo rimane il tuo ostacolo principale. Perdi tempo prezioso in una ricerca prematura.",
+    "node_id": "fail_bad_timing_break",
+    "description": "Leo si prende una pausa proprio quando è sull'orlo della scoperta. Il delicato filo del suo ragionamento si spezza e non riesce più a ritrovarlo. L'opportunità è persa. Missione fallita.",
     "choices": [
       {
         "text": "Riprova",
@@ -382,8 +319,8 @@
     ]
   },
   {
-    "node_id": "fail_entra_senza_frammento_b",
-    "description": "Entri nel nucleo senza il secondo frammento. Quando provi ad assemblare il codice, ti rendi conto del tuo errore fatale. È troppo tardi per tornare indietro.",
+    "node_id": "fail_double_spell",
+    "description": "L'eccesso di magia corrompe il processo creativo. Leo scrive una teoria incomprensibile, piena di salti logici indotti dalla magia. Viene deriso dalla comunità scientifica. Missione fallita.",
     "choices": [
       {
         "text": "Riprova",
@@ -393,8 +330,8 @@
     ]
   },
   {
-    "node_id": "fail_controlla_laboratorio",
-    "description": "Non c'è più nulla di utile nel laboratorio. Il tempo che impieghi per ricontrollare è tempo sottratto alle tue riserve di ossigeno.",
+    "node_id": "fail_premature_announcement",
+    "description": "L'annuncio prematuro attira l'attenzione di Thorne, che sfrutta l'incompletezza della teoria per demolirla pubblicamente. Leo viene etichettato come un ciarlatano. Missione fallita.",
     "choices": [
       {
         "text": "Riprova",
@@ -404,8 +341,8 @@
     ]
   },
   {
-    "node_id": "fail_riavvio_semplice",
-    "description": "I protocolli di emergenza sono chiari: senza il codice di riavvio manuale assemblato, qualsiasi tentativo di reboot viene respinto dal sistema. Hai fallito.",
+    "node_id": "fail_interrupt",
+    "description": "Interrompendolo, spezzi il suo flusso creativo. Leo perde l'intuizione e non riesce più a recuperarla. Il momento magico è svanito per sempre. Missione fallita.",
     "choices": [
       {
         "text": "Riprova",
@@ -415,8 +352,63 @@
     ]
   },
   {
-    "node_id": "fail_pausa_fatale",
-    "description": "Esiti. Quel singolo momento di pausa è tutto ciò che serve perché il livello di ossigeno scenda sotto la soglia critica. La vista ti si annebbia e cadi a terra.",
+    "node_id": "fail_publish_blog",
+    "description": "La pubblicazione sul blog viene ignorata dal mondo accademico. La teoria, pur brillante, non ottiene alcun riconoscimento ufficiale e viene presto dimenticata. Missione fallita.",
+    "choices": [
+      {
+        "text": "Riprova",
+        "next_node": "game_over",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "node_id": "fail_sell_research",
+    "description": "La teoria viene secretata dall'azienda e usata per scopi commerciali. Il nome di Leo scompare e il progresso scientifico pubblico non ne beneficia. Hai tradito lo spirito della tua missione. Missione fallita.",
+    "choices": [
+      {
+        "text": "Riprova",
+        "next_node": "game_over",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "node_id": "fail_wait_too_long",
+    "description": "Mentre Leo esita, un team di fisici svizzeri pubblica una teoria simile. Il suo lavoro diventa obsoleto prima ancora di essere pubblicato. Il tempismo è tutto. Missione fallita.",
+    "choices": [
+      {
+        "text": "Riprova",
+        "next_node": "game_over",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "node_id": "fail_influence_nobel",
+    "description": "Influenzare il comitato del Nobel è il peccato capitale per un Fantagenitore. L'Agenzia ti intercetta e ti bandisce. Leo, senza la tua guida, non vince. Missione fallita catastroficamente.",
+    "choices": [
+      {
+        "text": "Riprova",
+        "next_node": "game_over",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "node_id": "fail_pr_campaign",
+    "description": "La campagna mediatica risulta volgare e controproducente. Il comitato del Nobel apprezza la sostanza, non l'apparenza, e vede la mossa come un tentativo di influenzarli. Leo viene ignorato. Missione fallita.",
+    "choices": [
+      {
+        "text": "Riprova",
+        "next_node": "game_over",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "node_id": "fail_next_project",
+    "description": "Spingendolo subito oltre, non gli permetti di godere del suo successo. La pressione di doversi ripetere lo schiaccia e non riesce a concludere il suo prossimo lavoro. Il Nobel non arriva. Missione fallita.",
     "choices": [
       {
         "text": "Riprova",
@@ -427,10 +419,10 @@
   },
   {
     "node_id": "game_over",
-    "description": "La tua missione è fallita. La stazione 'Astra' diventa una tomba silenziosa nelle gelide nebbie di Titano. Vuoi tentare di nuovo?",
+    "description": "La tua guida non è stata efficace. Leo non è riuscito a raggiungere il suo potenziale e la sua ricerca è caduta nell'oblio. Vuoi riprovare?",
     "choices": [
       {
-        "text": "Ricomincia dall'inizio.",
+        "text": "Ricomincia dall'inizio",
         "next_node": "start",
         "is_correct": true
       }
