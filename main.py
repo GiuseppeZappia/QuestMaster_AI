@@ -1,10 +1,13 @@
+import sys
+from pathlib import Path
+parent_dir = Path(__file__).parent.parent
+sys.path.append(str(parent_dir))
 from file_generation.lore_generation import generate_lore
 import os ,json
 from langchain_google_genai import ChatGoogleGenerativeAI
-from domain_generation import create_domain_pddl
+from file_generation.domain_generation import create_domain_pddl
 from file_generation.problem_generation import create_problem_pddl
 from correction_and_validation.reflective_agent import run_correction_workflow,run_user_correction_pddl,update_lore_with_corrections
-# from pddl_validation import run_fastdownward_and_validate
 from correction_and_validation.pddl_validation import run_fastdownward_complete
 from dotenv import load_dotenv
 from utils import print_lore, print_plan
@@ -27,11 +30,11 @@ def main():
         temperature=0.6
     )
 
-    #user_input= input("Inserisci la tua richiesta per generare la lore: ")
+    user_input= input("Inserisci la tua richiesta per generare la lore: ")
     
     
     # crea e salva la lore 
-    #generate_lore(user_input,llm)
+    generate_lore(user_input,llm)
 
     # chiede all'utente se vuole modificare la lore generata
     print("Di seguito la lore generata:")
@@ -138,38 +141,6 @@ def validate_pddl_complete(llm, max_attempts=100):
         "error": "Numero massimo di tentativi raggiunto",
         "attempts": max_attempts
     }
-
-
-# Funzione per mostrare i risultati della validazione
-def show_validation_results(validation_results):
-    if validation_results["validation_successful"]:
-        if validation_results["plan_valid"]:
-            print("🎉 VALIDAZIONE COMPLETATA: Piano valido!")
-            
-            # Mostra dettagli positivi
-            details = validation_results["validation_details"]
-            if details["goals_achieved"]:
-                print("✅ Goal raggiunti:")
-                for goal in details["goals_achieved"]:
-                    print(f"   - {goal}")
-        else:
-            print("⚠️  VALIDAZIONE COMPLETATA: Piano non valido!")
-            
-            # Mostra errori
-            details = validation_results["validation_details"]
-            if details["execution_errors"]:
-                print("❌ Errori rilevati:")
-                for error in details["execution_errors"]:
-                    print(f"   - {error}")
-            
-            if details["warnings"]:
-                print("⚠️  Warning:")
-                for warning in details["warnings"]:
-                    print(f"   - {warning}")
-    else:
-        print("❌ VALIDAZIONE FALLITA!")
-        if validation_results["error_message"]:
-            print(f"Errore: {validation_results['error_message']}")
 
 
 def human_plan_validation(actions_list):

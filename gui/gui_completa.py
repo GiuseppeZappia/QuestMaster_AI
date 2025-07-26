@@ -1,6 +1,9 @@
 import streamlit as st
 import json
+import sys
 from pathlib import Path
+parent_dir = Path(__file__).parent.parent
+sys.path.append(str(parent_dir))
 from typing import Dict, List, Any
 import time
 import random
@@ -9,7 +12,7 @@ import subprocess
 from dotenv import load_dotenv
 from file_generation.lore_generation import generate_lore
 from langchain_google_genai import ChatGoogleGenerativeAI
-from domain_generation import create_domain_pddl
+from file_generation.domain_generation import create_domain_pddl
 from file_generation.problem_generation import create_problem_pddl
 from correction_and_validation.reflective_agent import run_correction_workflow, run_user_correction_pddl, update_lore_with_corrections
 from correction_and_validation.pddl_validation import run_fastdownward_complete, validate_plan_with_val, get_validation_error_for_correction

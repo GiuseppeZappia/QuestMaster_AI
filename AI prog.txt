@@ -1,6 +1,0 @@
-
-
-
--defensive prompting con gestioen eccezioni nella cosa iniziale della lore
-
--RAG LONGO ULTIMI DU2 (TODO ALLA FINE)
