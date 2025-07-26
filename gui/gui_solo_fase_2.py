@@ -761,23 +761,64 @@ def main():
     
     if not choices:
         # Nodo finale (vittoria)
-        if st.session_state.current_node == 'finale':
-            st.markdown(f"""
-            <div class="victory fade-in">
-                <h2 style="font-family: 'Cinzel', serif; font-size: 2.5rem; margin-bottom: 1.5rem;">
-                    🏆 TRIONFO LEGGENDARIO! 🏆
-                </h2>
-                <p style="font-size: 1.3rem; margin-bottom: 1.5rem; font-weight: 600;">
-                    Hai conquistato l'immortalità attraverso questa epica odissea!
-                </p>
-                <p style="font-size: 1.1rem; color: rgba(255,255,255,0.95); margin-bottom: 1rem;">
-                    Con <strong style="color: #ffd700;">{len(st.session_state.choices_made)}</strong> decisioni magistrali hai forgiato il tuo destino di gloria.
-                </p>
-                <p style="font-size: 1rem; margin-top: 2rem; font-style: italic; color: rgba(255,255,255,0.9);">
-                    Il tuo nome risuonerà nell'eternità, Campione delle Scelte Sagge! 🌟
+        if not choices and st.session_state.current_node != 'game_over':
+            # Schermata di vittoria semplificata
+            st.balloons()  # Effetto palloncini di Streamlit
+                        
+                        # Messaggio finale
+            st.markdown("""
+            <div style="
+                background: linear-gradient(45deg, #ffd700, #ff6b6b);
+                color: white;
+                padding: 2rem;
+                border-radius: 20px;
+                text-align: center;
+                margin: 2rem 0;
+                border: 2px solid #ffffff;
+            ">
+                <h4 style="margin-bottom: 1rem; font-family: 'Cinzel', serif;">
+                    🏛️ IL TUO NOME NEGLI ANNALI DELL'ETERNITÀ 🏛️
+                </h4>
+                <p style="font-size: 1.1rem; font-style: italic;">
+                    "Nei tempi che verranno, i cantastorie narreranno delle tue gesta.<br>
+                    Il tuo coraggio risuonerà attraverso i secoli, Campione delle Scelte Sagge!"
                 </p>
             </div>
             """, unsafe_allow_html=True)
+            
+            # Emojis finali
+            st.markdown("""
+            <div style="text-align: center; font-size: 2rem; margin: 2rem 0;">
+                🎉 ✨ 🎊 ⭐ 🌟 💫 🏆 👑
+            </div>
+            """, unsafe_allow_html=True)
+            
+            # Statistiche della vittoria
+            col1, col2, col3 = st.columns([1, 2, 1])
+            with col2:
+                st.markdown(f"""
+                <div style="
+                    background: rgba(255,255,255,0.9); 
+                    border-radius: 15px; 
+                    padding: 2rem; 
+                    margin: 2rem 0;
+                    color: #333333;
+                    text-align: center;
+                ">
+                    <h3 style="color: #ffd700; margin-bottom: 1rem; font-family: 'Cinzel', serif;">
+                        📊 STATISTICHE DELLA GLORIA 📊
+                    </h3>
+                    <p style="font-size: 1.2rem; margin-bottom: 0.5rem;">
+                        ⚔️ Decisioni Magistrali: <strong style="color: #ff6b6b; font-size: 1.4rem;">{len(st.session_state.choices_made)}</strong>
+                    </p>
+                    <p style="font-size: 1.2rem; margin-bottom: 0.5rem;">
+                        🎯 Tasso di Successo: <strong style="color: #00b894; font-size: 1.4rem;">100%</strong>
+                    </p>
+                    <p style="font-size: 1.2rem;">
+                        👑 Titolo Conquistato: <strong style="color: #a29bfe; font-size: 1.4rem;">LEGGENDA IMMORTALE</strong>
+                    </p>
+                </div>
+                """, unsafe_allow_html=True)
         
         col1, col2, col3 = st.columns([1, 2, 1])
         with col2:

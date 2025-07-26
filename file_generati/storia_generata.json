@@ -1,290 +1,55 @@
 [
   {
     "node_id": "start",
-<<<<<<< HEAD
-    "description": "Sei un Fantagenitore dell'Agenzia per il Potenziale Umano. Il tuo nuovo incarico è Leo, un brillante fisico bloccato su un problema di coerenza quantistica. La sua carriera è a un bivio e il suo rivale, il Dr. Aris Thorne, trama nell'ombra. La prima minaccia da affrontare è proprio il sabotaggio accademico.",
+    "description": "Principe Valerius, sei giunto al Castello delle Spine. Un muro impenetrabile di rovi incantati e velenosi ti sbarra la strada, proteggendo la Principessa Lira, prigioniera di un sonno maledetto. La tua Spada di Famiglia brilla, ma sai che da sola non può nulla contro questa magia oscura. Ricordi un'antica leggenda: solo l'acqua della Fontana della Luna può donare a una lama reale il potere di recidere le spine.",
     "choices": [
       {
-        "text": "Usa un incantesimo di 'sfortuna burocratica' per far perdere i dati di sabotaggio di Thorne.",
-        "next_node": "neutralize_sabotage",
+        "text": "Cerca la Fontana della Luna nel cortile, immergi la spada e apriti un varco tra i rovi.",
+        "next_node": "breach_thorns",
         "is_correct": true
       },
       {
-        "text": "Appari a Leo in sogno e rivelagli la soluzione completa dell'equazione.",
-        "next_node": "fail_direct_intervention",
-        "is_correct": false
-      },
-      {
-        "text": "Ignora Thorne e concentrati solo sulla sindrome dell'impostore di Leo.",
-        "next_node": "fail_ignore_thorne",
-        "is_correct": false
-      },
-      {
-        "text": "Suggerisci a Leo di cambiare campo di ricerca per evitare lo stress.",
-        "next_node": "fail_change_field",
-=======
-    "description": "La Vallata di Argentea è stretta nella morsa di un inverno innaturale. Dal Picco Gelido, il drago Glaurung, corrotto dal 'Cuore d'Ombra', scatena la sua furia gelida. Ti trovi nel villaggio, ultimo baluardo di calore e speranza. La 'Fiamma Eterna', custodita qui, è l'unica speranza per purificare il drago e salvare la valle.",
-    "choices": [
-      {
-        "text": "Raccogli la Fiamma Eterna dal santuario del villaggio.",
-        "next_node": "collect_flame",
-        "is_correct": true
-      },
-      {
-        "text": "Cerca di ragionare con gli anziani per trovare un'altra soluzione.",
-        "next_node": "fail_talk_elders_1",
-        "is_correct": false
-      },
-      {
-        "text": "Tenta di raggiungere il Picco Gelido senza la Fiamma Eterna.",
-        "next_node": "fail_no_flame_1",
->>>>>>> 23973b243322887357864d94ff5533f34c48748a
+        "text": "Ignora la leggenda e tenta di tagliare i rovi con la forza bruta della tua spada.",
+        "next_node": "fail_cut_thorns_1",
         "is_correct": false
       }
     ]
   },
   {
-<<<<<<< HEAD
-    "node_id": "neutralize_sabotage",
-    "description": "L'intervento ha funzionato: i tentativi di sabotaggio di Thorne sono stati neutralizzati da una serie di 'sfortunati' incidenti digitali. Ora Leo è al sicuro dalle minacce esterne, ma la sua mente è un groviglio di dubbi e distrazioni. Ha bisogno di concentrazione assoluta.",
+    "node_id": "breach_thorns",
+    "description": "La tua lama, ora scintillante del potere lunare, recide i rovi maledetti come se fossero fili d'erba. Superato il muro di spine, raggiungi la stanza della principessa. Lira giace su un letto di rose, addormentata. Accanto a lei, un oscuro artefatto pulsa di energia malefica, mantenendo viva la maledizione. La leggenda parla chiaro: solo il bacio del vero amore può spezzare un simile incantesimo.",
     "choices": [
       {
-        "text": "Lancia un 'Potenziamento della Concentrazione' per affinare la sua mente.",
-        "next_node": "boost_concentration",
+        "text": "Avvicinati alla Principessa Lira e svegliala con il bacio del vero amore.",
+        "next_node": "princess_awake",
         "is_correct": true
       },
       {
-        "text": "Invia una lettera anonima all'università per denunciare Thorne.",
-        "next_node": "fail_expose_thorne",
-        "is_correct": false
-      },
-      {
-        "text": "Organizza una vacanza a sorpresa per Leo per farlo rilassare.",
-        "next_node": "fail_vacation",
-        "is_correct": false
-      },
-      {
-        "text": "Prova a lanciare un incantesimo di ispirazione, sperando che basti.",
-        "next_node": "fail_wrong_spell",
-=======
-    "node_id": "collect_flame",
-    "description": "Hai con te la Fiamma Eterna, la sua luce danza calda e rassicurante nel palmo della tua mano. Il sentiero principale per il Picco è bloccato da una valanga perenne, e sai che i guardiani di ghiaccio, animati dalla magia oscura del drago, pattugliano i sentieri secondari tra i crepacci.",
-    "choices": [
-      {
-        "text": "Affronta i guardiani di ghiaccio per aprirti un varco verso i crepacci.",
-        "next_node": "defeat_guardians",
-        "is_correct": true
-      },
-      {
-        "text": "Usa la Fiamma Eterna per tentare di sciogliere la valanga.",
-        "next_node": "fail_melt_avalanche_1",
-        "is_correct": false
-      },
-      {
-        "text": "Aspetta la notte, sperando che i guardiani si ritirino.",
-        "next_node": "fail_wait_night_1",
->>>>>>> 23973b243322887357864d94ff5533f34c48748a
+        "text": "Tenta di distruggere l'artefatto oscuro con la tua spada incantata.",
+        "next_node": "fail_destroy_artifact_1",
         "is_correct": false
       }
     ]
   },
   {
-<<<<<<< HEAD
-    "node_id": "boost_concentration",
-    "description": "Il potenziamento ha fatto effetto. Leo è incredibilmente concentrato, ma nota qualcosa di strano: le sue simulazioni producono risultati illogici, come se un'entità dispettosa stesse manomettendo i calcoli. È l'opera di un Gremlin della Logica, attratto dalla tua magia.",
-    "choices": [
-      {
-        "text": "Esegui un rituale di 'Esilio Logico' per scacciare il gremlin.",
-        "next_node": "chase_gremlin",
-        "is_correct": true
-      },
-      {
-        "text": "Aumenta la potenza del tuo incantesimo di concentrazione per 'forzare' i calcoli.",
-        "next_node": "fail_paradox",
-        "is_correct": false
-      },
-      {
-        "text": "Convinci Leo che si tratta di un bug nel suo software.",
-        "next_node": "fail_blame_software",
-        "is_correct": false
-      },
-      {
-        "text": "Prova a negoziare con il Gremlin offrendogli enigmi da risolvere.",
-        "next_node": "fail_negotiate_gremlin",
-=======
-    "node_id": "defeat_guardians",
-    "description": "Con astuzia e il calore protettivo della Fiamma, riesci a superare i guardiani di ghiaccio, che si frantumano in mille pezzi. Ora sei di fronte a un labirinto di crepacci profondi e scivolosi, l'ultimo ostacolo prima del Picco Gelido.",
-    "choices": [
-      {
-        "text": "Attraversa con cautela il labirinto di crepacci per raggiungere il Picco Gelido.",
-        "next_node": "cross_crevasses",
-        "is_correct": true
-      },
-      {
-        "text": "Cerca di saltare il crepaccio più grande per fare più in fretta.",
-        "next_node": "fail_jump_crevasse_1",
-        "is_correct": false
-      },
-      {
-        "text": "Segui delle strane luci blu che sembrano indicare un sentiero.",
-        "next_node": "fail_follow_lights_1",
->>>>>>> 23973b243322887357864d94ff5533f34c48748a
-        "is_correct": false
-      }
-    ]
-  },
-  {
-<<<<<<< HEAD
-    "node_id": "chase_gremlin",
-    "description": "Il Gremlin della Logica è stato scacciato e i sistemi di Leo sono tornati alla normalità. Ora ha la concentrazione e gli strumenti, ma gli manca la scintilla finale, il lampo di genio per unire tutti i pezzi. È il momento per un tocco di pura ispirazione.",
-    "choices": [
-      {
-        "text": "Lancia un sottile 'Incantesimo di Ispirazione' che appaia come un'intuizione improvvisa.",
-        "next_node": "cast_inspiration",
-        "is_correct": true
-      },
-      {
-        "text": "Lascia un libro con la soluzione aperta sulla sua scrivania.",
-        "next_node": "fail_leave_book",
-        "is_correct": false
-      },
-      {
-        "text": "Fagli credere di aver vinto un piccolo premio per aumentare la sua autostima.",
-        "next_node": "fail_fake_prize",
-        "is_correct": false
-      },
-      {
-        "text": "Digli di prendersi una pausa. L'ispirazione arriverà da sola.",
-        "next_node": "fail_bad_timing_break",
-=======
-    "node_id": "cross_crevasses",
-    "description": "Hai navigato con successo il labirinto ghiacciato e finalmente sei giunto sul Picco Gelido. L'aria è rarefatta e tagliente. Lì, nel suo nido, vedi Glaurung. Non è una creatura malvagia, ma una bestia sofferente, il cui ruggito è un lamento. Il Cuore d'Ombra pulsa oscuro sul suo petto.",
-    "choices": [
-      {
-        "text": "Avvicinati con coraggio e usa la Fiamma Eterna per purificare il Cuore d'Ombra.",
-        "next_node": "purify_dragon",
-        "is_correct": true
-      },
-      {
-        "text": "Attacca il drago con la tua arma, sperando di indebolirlo.",
-        "next_node": "fail_attack_dragon_1",
-        "is_correct": false
-      },
-      {
-        "text": "Lancia la Fiamma Eterna da lontano, sperando di colpire il bersaglio.",
-        "next_node": "fail_throw_flame_1",
->>>>>>> 23973b243322887357864d94ff5533f34c48748a
-        "is_correct": false
-      }
-    ]
-  },
-  {
-<<<<<<< HEAD
-    "node_id": "cast_inspiration",
-    "description": "Eureka! L'incantesimo ha funzionato alla perfezione. Leo balza in piedi, gli occhi illuminati da una nuova comprensione. Inizia a scrivere furiosamente, collegando concetti che prima sembravano distanti. La teoria sta prendendo forma nella sua mente.",
-    "choices": [
-      {
-        "text": "Lascialo lavorare, osservando discretamente mentre formalizza la sua teoria.",
-        "next_node": "formulate_theory",
-        "is_correct": true
-      },
-      {
-        "text": "Lancia un altro incantesimo per farlo scrivere più velocemente.",
-        "next_node": "fail_double_spell",
-        "is_correct": false
-      },
-      {
-        "text": "Suggeriscigli di chiamare subito la stampa per annunciare la scoperta.",
-        "next_node": "fail_premature_announcement",
-        "is_correct": false
-      },
-      {
-        "text": "Interrompilo per assicurarti che stia scrivendo le cose giuste.",
-        "next_node": "fail_interrupt",
-        "is_correct": false
-      }
-    ]
-  },
-  {
-    "node_id": "formulate_theory",
-    "description": "La teoria è completa. È un'opera di genio, elegante e rivoluzionaria. Ora, questo capolavoro deve uscire dal suo laboratorio e raggiungere la comunità scientifica per essere riconosciuto. È il momento della pubblicazione.",
-    "choices": [
-      {
-        "text": "Guidalo verso la scelta della rivista accademica più prestigiosa per la pubblicazione.",
-        "next_node": "publish_research",
-        "is_correct": true
-      },
-      {
-        "text": "Suggeriscigli di pubblicare la teoria su un blog per una diffusione più rapida.",
-        "next_node": "fail_publish_blog",
-        "is_correct": false
-      },
-      {
-        "text": "Consiglialo di vendere la sua ricerca a una grande azienda tecnologica.",
-        "next_node": "fail_sell_research",
-        "is_correct": false
-      },
-      {
-        "text": "Spingilo a tenere la teoria per sé per perfezionarla ancora per qualche anno.",
-        "next_node": "fail_wait_too_long",
-        "is_correct": false
-      }
-    ]
-  },
-  {
-    "node_id": "publish_research",
-    "description": "La ricerca è stata pubblicata e ha scatenato un terremoto nel mondo della fisica. Gli accademici di tutto il mondo discutono del 'Modello di Leo'. Il suo nome è sulla bocca di tutti e le voci di una possibile candidatura al Nobel si fanno sempre più insistenti.",
-    "choices": [
-      {
-        "text": "Attendi con fiducia il verdetto del comitato per il Nobel.",
-        "next_node": "win_nobel_prize",
-        "is_correct": true
-      },
-      {
-        "text": "Usa la magia per influenzare la decisione del comitato per il Nobel.",
-        "next_node": "fail_influence_nobel",
-        "is_correct": false
-      },
-      {
-        "text": "Inizia una massiccia campagna mediatica per promuovere Leo.",
-        "next_node": "fail_pr_campaign",
-        "is_correct": false
-      },
-      {
-        "text": "Spingi Leo a iniziare subito un nuovo progetto per dimostrare di non essere un 'one-hit wonder'.",
-        "next_node": "fail_next_project",
-        "is_correct": false
-      }
-    ]
-  },
-  {
-    "node_id": "win_nobel_prize",
-    "description": "La chiamata da Stoccolma è arrivata. Leo ha vinto il Premio Nobel per la Fisica. È salito sul palco, incredulo e felice, ringraziando una misteriosa 'musa' che lo ha guidato. Missione compiuta. L'Agenzia per il Potenziale Umano è molto soddisfatta di te.",
+    "node_id": "princess_awake",
+    "description": "Il tuo bacio spezza la maledizione. La Principessa Lira apre gli occhi e il regno di Fioralba è salvo. L'artefatto oscuro si sgretola in polvere e la luce torna a splendere nel castello. Missione compiuta.",
     "choices": []
   },
   {
-    "node_id": "fail_direct_intervention",
-    "description": "Rivelare la soluzione è un'infrazione gravissima del Regolamento Celeste. L'Agenzia ti revoca l'incarico e la mente di Leo, incapace di comprendere la provenienza dell'idea, collassa. Missione fallita.",
-=======
-    "node_id": "purify_dragon",
-    "description": "Con un atto di fede, posi la Fiamma Eterna sul Cuore d'Ombra. La luce calda avvolge il drago, frantumando l'artefatto oscuro in un lampo accecante. Glaurung scuote la testa, il suo sguardo torna saggio e antico. Le nubi si diradano e un timido raggio di sole tocca la neve. Hai salvato la Vallata di Argentea.",
-    "choices": []
-  },
-  {
-    "node_id": "fail_talk_elders_1",
-    "description": "Mentre perdi tempo prezioso a discutere con gli anziani, la tempesta si intensifica. Il potere del Cuore d'Ombra cresce a dismisura.",
+    "node_id": "fail_cut_thorns_1",
+    "description": "Colpisci i rovi con tutta la tua forza, ma per ogni spina che tagli, due ne ricrescono, più forti e velenose di prima. Le spine ti graffiano, iniettando un veleno che ti annebbia la vista e ti indebolisce.",
     "choices": [
       {
-        "text": "La tua esitazione ha avuto un costo.",
-        "next_node": "fail_talk_elders_2",
+        "text": "Continua a lottare",
+        "next_node": "fail_cut_thorns_2",
         "is_correct": false
       }
     ]
   },
   {
-    "node_id": "fail_talk_elders_2",
-    "description": "Quando finalmente decidi di agire, è troppo tardi. La maledizione è diventata irreversibile e la valle è condannata a un gelo eterno.",
->>>>>>> 23973b243322887357864d94ff5533f34c48748a
+    "node_id": "fail_cut_thorns_2",
+    "description": "I rovi ti avvolgono completamente, il loro veleno paralizza i tuoi muscoli. Cadi a terra, sconfitto, mentre il castello rimane inespugnabile. Hai fallito.",
     "choices": [
       {
         "text": "Riprova",
@@ -294,323 +59,19 @@
     ]
   },
   {
-<<<<<<< HEAD
-    "node_id": "fail_ignore_thorne",
-    "description": "Mentre ti concentri su Leo, Thorne riesce a rubare parte della sua ricerca e a pubblicarla con il suo nome. Leo è devastato dal tradimento e abbandona il progetto. Missione fallita.",
-=======
-    "node_id": "fail_no_flame_1",
-    "description": "Decidi di affrontare il gelo con le tue sole forze. La bufera ti sfinisce rapidamente e i guardiani di ghiaccio ti circondano.",
+    "node_id": "fail_destroy_artifact_1",
+    "description": "Avvicini la tua spada potenziata all'artefatto. Appena la lama lo tocca, l'oggetto rilascia un'ondata di energia oscura pura che ti scaraventa contro il muro della stanza, facendoti perdere i sensi.",
     "choices": [
       {
-        "text": "Senza la Fiamma, sei solo un altro intruso.",
-        "next_node": "fail_no_flame_2",
+        "text": "Cerca di rialzarti",
+        "next_node": "fail_destroy_artifact_2",
         "is_correct": false
       }
     ]
   },
   {
-    "node_id": "fail_no_flame_2",
-    "description": "Vieni sopraffatto dal freddo e dai guardiani. Il tuo corpo diventa un'altra statua di ghiaccio a monito per chiunque osi sfidare il drago.",
->>>>>>> 23973b243322887357864d94ff5533f34c48748a
-    "choices": [
-      {
-        "text": "Riprova",
-        "next_node": "game_over",
-        "is_correct": false
-      }
-    ]
-  },
-  {
-<<<<<<< HEAD
-    "node_id": "fail_change_field",
-    "description": "Leo segue il tuo consiglio e cambia campo, ma il suo genio rimane inespresso. Diventa un mediocre professore di fisica generale, perseguitato dal potenziale che non ha mai realizzato. Missione fallita.",
-=======
-    "node_id": "fail_melt_avalanche_1",
-    "description": "Avvicini la Fiamma Eterna all'immensa parete di neve e ghiaccio. La fiamma è potente, ma la valanga è un'opera di magia antica.",
-    "choices": [
-      {
-        "text": "La tua azione scatena una reazione imprevista.",
-        "next_node": "fail_melt_avalanche_2",
-        "is_correct": false
-      }
-    ]
-  },
-  {
-    "node_id": "fail_melt_avalanche_2",
-    "description": "Il calore destabilizza la massa di neve, che ti travolge seppellendoti sotto tonnellate di ghiaccio. La Fiamma Eterna si spegne con te.",
->>>>>>> 23973b243322887357864d94ff5533f34c48748a
-    "choices": [
-      {
-        "text": "Riprova",
-        "next_node": "game_over",
-        "is_correct": false
-      }
-    ]
-  },
-  {
-<<<<<<< HEAD
-    "node_id": "fail_expose_thorne",
-    "description": "La tua denuncia anonima scatena un'indagine, ma senza prove concrete si arena. Thorne, sospettando di Leo, intensifica il suo sabotaggio, rendendo impossibile ogni progresso. Missione fallita.",
-=======
-    "node_id": "fail_wait_night_1",
-    "description": "Aspetti il calar della notte, ma il gelo si fa ancora più intenso. I guardiani non si ritirano, anzi, il loro numero sembra aumentare.",
-    "choices": [
-      {
-        "text": "L'oscurità è alleata del tuo nemico.",
-        "next_node": "fail_wait_night_2",
-        "is_correct": false
-      }
-    ]
-  },
-  {
-    "node_id": "fail_wait_night_2",
-    "description": "Circondato e indebolito dal freddo, non hai scampo. I guardiani ti catturano, ponendo fine alla tua missione.",
->>>>>>> 23973b243322887357864d94ff5533f34c48748a
-    "choices": [
-      {
-        "text": "Riprova",
-        "next_node": "game_over",
-        "is_correct": false
-      }
-    ]
-  },
-  {
-<<<<<<< HEAD
-    "node_id": "fail_vacation",
-    "description": "La vacanza rilassa Leo, ma gli fa anche perdere il filo dei suoi pensieri. Al suo ritorno, non riesce più a ritrovare la concentrazione e il suo slancio creativo si esaurisce. Missione fallita.",
-=======
-    "node_id": "fail_jump_crevasse_1",
-    "description": "Prendi una lunga rincorsa e tenti di saltare il crepaccio più ampio. Il ghiaccio sul bordo cede sotto il tuo peso.",
-    "choices": [
-      {
-        "text": "La fretta è una cattiva consigliera.",
-        "next_node": "fail_jump_crevasse_2",
-        "is_correct": false
-      }
-    ]
-  },
-  {
-    "node_id": "fail_jump_crevasse_2",
-    "description": "Precipiti nell'oscurità gelida del crepaccio. Il tuo viaggio finisce qui, inghiottito dalle viscere della montagna.",
->>>>>>> 23973b243322887357864d94ff5533f34c48748a
-    "choices": [
-      {
-        "text": "Riprova",
-        "next_node": "game_over",
-        "is_correct": false
-      }
-    ]
-  },
-  {
-<<<<<<< HEAD
-    "node_id": "fail_wrong_spell",
-    "description": "L'ispirazione senza concentrazione crea solo confusione. Leo ha mille idee brillanti ma non riesce a focalizzarsi su nessuna, finendo per esaurirsi mentalmente. Missione fallita.",
-=======
-    "node_id": "fail_follow_lights_1",
-    "description": "Le luci blu danzano invitanti, promettendo una via sicura. Le segui, ma ti conducono sempre più in profondità nel labirinto.",
-    "choices": [
-      {
-        "text": "Le luci erano solo un'illusione.",
-        "next_node": "fail_follow_lights_2",
-        "is_correct": false
-      }
-    ]
-  },
-  {
-    "node_id": "fail_follow_lights_2",
-    "description": "Ti ritrovi intrappolato in un vicolo cieco, senza via d'uscita. Il freddo ti consuma mentre la speranza svanisce.",
->>>>>>> 23973b243322887357864d94ff5533f34c48748a
-    "choices": [
-      {
-        "text": "Riprova",
-        "next_node": "game_over",
-        "is_correct": false
-      }
-    ]
-  },
-  {
-<<<<<<< HEAD
-    "node_id": "fail_paradox",
-    "description": "Troppa magia concentrata in un unico punto scatena il 'Paradosso dell'Interferenza Arcana'. I dati di Leo vengono irrimediabilmente corrotti e il suo computer si fonde. Missione fallita.",
-=======
-    "node_id": "fail_attack_dragon_1",
-    "description": "Sguaini la tua arma e carichi contro il drago. Glaurung, pur sofferente, è ancora una forza della natura.",
-    "choices": [
-      {
-        "text": "La forza bruta non può spezzare una maledizione.",
-        "next_node": "fail_attack_dragon_2",
-        "is_correct": false
-      }
-    ]
-  },
-  {
-    "node_id": "fail_attack_dragon_2",
-    "description": "Con un solo soffio del suo respiro gelido, il drago ti congela all'istante, trasformandoti in una statua di ghiaccio perenne.",
->>>>>>> 23973b243322887357864d94ff5533f34c48748a
-    "choices": [
-      {
-        "text": "Riprova",
-        "next_node": "game_over",
-        "is_correct": false
-      }
-    ]
-  },
-  {
-<<<<<<< HEAD
-    "node_id": "fail_blame_software",
-    "description": "Leo passa settimane a cercare un bug inesistente, perdendo tempo prezioso. La sua frustrazione cresce e la sua sindrome dell'impostore si aggrava, convincendolo di non essere un buon programmatore. Missione fallita.",
-=======
-    "node_id": "fail_throw_flame_1",
-    "description": "Decidi di non rischiare e lanci la Fiamma Eterna verso il petto del drago. La distanza è troppa e la mira imprecisa.",
->>>>>>> 23973b243322887357864d94ff5533f34c48748a
-    "choices": [
-      {
-        "text": "Un atto di fede richiede vicinanza.",
-        "next_node": "fail_throw_flame_2",
-        "is_correct": false
-      }
-    ]
-  },
-  {
-<<<<<<< HEAD
-    "node_id": "fail_negotiate_gremlin",
-    "description": "Il Gremlin della Logica non è interessato a negoziare. Vede il tuo tentativo come un gioco e intensifica il caos, trasformando la ricerca di Leo in un'assurdità matematica. Missione fallita.",
-    "choices": [
-      {
-        "text": "Riprova",
-        "next_node": "game_over",
-        "is_correct": false
-      }
-    ]
-  },
-  {
-    "node_id": "fail_leave_book",
-    "description": "L'intervento è troppo diretto. Leo trova il libro, ma si sente un imbroglione per non averci pensato da solo. La sua sindrome dell'impostore prende il sopravvento e abbandona la ricerca. Missione fallita.",
-    "choices": [
-      {
-        "text": "Riprova",
-        "next_node": "game_over",
-        "is_correct": false
-      }
-    ]
-  },
-  {
-    "node_id": "fail_fake_prize",
-    "description": "Leo scopre che il premio era falso. L'umiliazione lo distrugge, erodendo la poca fiducia che gli era rimasta. Si chiude in se stesso, rifiutando ogni ulteriore aiuto. Missione fallita.",
-    "choices": [
-      {
-        "text": "Riprova",
-        "next_node": "game_over",
-        "is_correct": false
-      }
-    ]
-  },
-  {
-    "node_id": "fail_bad_timing_break",
-    "description": "Leo si prende una pausa proprio quando è sull'orlo della scoperta. Il delicato filo del suo ragionamento si spezza e non riesce più a ritrovarlo. L'opportunità è persa. Missione fallita.",
-    "choices": [
-      {
-        "text": "Riprova",
-        "next_node": "game_over",
-        "is_correct": false
-      }
-    ]
-  },
-  {
-    "node_id": "fail_double_spell",
-    "description": "L'eccesso di magia corrompe il processo creativo. Leo scrive una teoria incomprensibile, piena di salti logici indotti dalla magia. Viene deriso dalla comunità scientifica. Missione fallita.",
-    "choices": [
-      {
-        "text": "Riprova",
-        "next_node": "game_over",
-        "is_correct": false
-      }
-    ]
-  },
-  {
-    "node_id": "fail_premature_announcement",
-    "description": "L'annuncio prematuro attira l'attenzione di Thorne, che sfrutta l'incompletezza della teoria per demolirla pubblicamente. Leo viene etichettato come un ciarlatano. Missione fallita.",
-    "choices": [
-      {
-        "text": "Riprova",
-        "next_node": "game_over",
-        "is_correct": false
-      }
-    ]
-  },
-  {
-    "node_id": "fail_interrupt",
-    "description": "Interrompendolo, spezzi il suo flusso creativo. Leo perde l'intuizione e non riesce più a recuperarla. Il momento magico è svanito per sempre. Missione fallita.",
-    "choices": [
-      {
-        "text": "Riprova",
-        "next_node": "game_over",
-        "is_correct": false
-      }
-    ]
-  },
-  {
-    "node_id": "fail_publish_blog",
-    "description": "La pubblicazione sul blog viene ignorata dal mondo accademico. La teoria, pur brillante, non ottiene alcun riconoscimento ufficiale e viene presto dimenticata. Missione fallita.",
-    "choices": [
-      {
-        "text": "Riprova",
-        "next_node": "game_over",
-        "is_correct": false
-      }
-    ]
-  },
-  {
-    "node_id": "fail_sell_research",
-    "description": "La teoria viene secretata dall'azienda e usata per scopi commerciali. Il nome di Leo scompare e il progresso scientifico pubblico non ne beneficia. Hai tradito lo spirito della tua missione. Missione fallita.",
-    "choices": [
-      {
-        "text": "Riprova",
-        "next_node": "game_over",
-        "is_correct": false
-      }
-    ]
-  },
-  {
-    "node_id": "fail_wait_too_long",
-    "description": "Mentre Leo esita, un team di fisici svizzeri pubblica una teoria simile. Il suo lavoro diventa obsoleto prima ancora di essere pubblicato. Il tempismo è tutto. Missione fallita.",
-    "choices": [
-      {
-        "text": "Riprova",
-        "next_node": "game_over",
-        "is_correct": false
-      }
-    ]
-  },
-  {
-    "node_id": "fail_influence_nobel",
-    "description": "Influenzare il comitato del Nobel è il peccato capitale per un Fantagenitore. L'Agenzia ti intercetta e ti bandisce. Leo, senza la tua guida, non vince. Missione fallita catastroficamente.",
-    "choices": [
-      {
-        "text": "Riprova",
-        "next_node": "game_over",
-        "is_correct": false
-      }
-    ]
-  },
-  {
-    "node_id": "fail_pr_campaign",
-    "description": "La campagna mediatica risulta volgare e controproducente. Il comitato del Nobel apprezza la sostanza, non l'apparenza, e vede la mossa come un tentativo di influenzarli. Leo viene ignorato. Missione fallita.",
-    "choices": [
-      {
-        "text": "Riprova",
-        "next_node": "game_over",
-        "is_correct": false
-      }
-    ]
-  },
-  {
-    "node_id": "fail_next_project",
-    "description": "Spingendolo subito oltre, non gli permetti di godere del suo successo. La pressione di doversi ripetere lo schiaccia e non riesce a concludere il suo prossimo lavoro. Il Nobel non arriva. Missione fallita.",
-=======
-    "node_id": "fail_throw_flame_2",
-    "description": "La Fiamma cade nella neve e si spegne, consumando l'unica speranza della valle. Glaurung, infuriato dal tuo gesto, ti incenerisce con il suo gelo.",
->>>>>>> 23973b243322887357864d94ff5533f34c48748a
+    "node_id": "fail_destroy_artifact_2",
+    "description": "L'energia oscura è troppo potente. Invece di distruggere la maledizione, l'hai rafforzata. La stanza viene sigillata dalla magia e la principessa è persa per sempre. Hai fallito.",
     "choices": [
       {
         "text": "Riprova",
@@ -621,17 +82,10 @@
   },
   {
     "node_id": "game_over",
-<<<<<<< HEAD
-    "description": "La tua guida non è stata efficace. Leo non è riuscito a raggiungere il suo potenziale e la sua ricerca è caduta nell'oblio. Vuoi riprovare?",
+    "description": "Hai fallito. La Principessa Lira rimane prigioniera del suo sonno eterno e il regno sprofonda nell'oscurità. Vuoi riprovare?",
     "choices": [
       {
         "text": "Ricomincia dall'inizio",
-=======
-    "description": "Hai fallito. La Vallata di Argentea è persa in un inverno senza fine. Vuoi tentare di nuovo di riportare la luce?",
-    "choices": [
-      {
-        "text": "Ricomincia la missione",
->>>>>>> 23973b243322887357864d94ff5533f34c48748a
         "next_node": "start",
         "is_correct": true
       }

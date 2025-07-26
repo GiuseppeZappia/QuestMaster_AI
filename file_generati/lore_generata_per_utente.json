@@ -1,42 +1,25 @@
 {
   "lore_document": {
     "quest_description": {
-<<<<<<< HEAD
-      "title": "L'Equazione Fatata",
-      "initial_state": "Il tuo figlioccio, Leo, è un giovane e promettente fisico teorico sull'orlo di una crisi. È bloccato su un complesso problema di coerenza quantistica che potrebbe definire o distruggere la sua carriera. Tu, un Fantagenitore dell'Agenzia per il Potenziale Umano, sei stato appena assegnato al suo caso con il compito di sbloccare il suo genio.",
-      "goal": "Guidare Leo attraverso le sfide accademiche e personali, aiutandolo a formulare e pubblicare una teoria rivoluzionaria sulla fisica quantistica, vincere il prestigioso Premio Nobel e assicurargli un posto nell'olimpo della scienza.",
+      "title": "Il Patto dei Due Regni",
+      "initial_state": "I regni confinanti di Solara e Lunara sono sull'orlo di una guerra a causa di una misteriosa maledizione che sta inaridendo le loro terre. La Principessa Elara di Solara e il Principe Kael di Lunara, nonostante l'antica rivalità tra le loro famiglie, si incontrano in segreto al confine per trovare una soluzione.",
+      "goal": "Rompere la maledizione riunendo le due metà dell'Amuleto dell'Armonia. Ogni metà è custodita da una delle famiglie reali. I due eredi dovranno convincere i propri regnanti, superare i sospetti delle rispettive corti e viaggiare fino al Santuario dell'Equilibrio per compiere il rituale.",
       "obstacles": [
-        "Il Dr. Aris Thorne, un accademico rivale senza scrupoli, che cerca di sabotare o rubare la ricerca di Leo.",
-        "Il 'Paradosso dell'Interferenza Arcana': l'uso di magia su concetti scientifici complessi può generare effetti collaterali imprevedibili, come la corruzione dei dati o la creazione di anomalie logiche.",
-        "La profonda sindrome dell'impostore di Leo, che lo porta a dubitare delle sue capacità nei momenti più critici.",
-        "Un 'Gremlin della Logica', un'entità magica dispettosa attratta dalla fusione di magia e scienza, che sabota attivamente gli esperimenti e le simulazioni."
+        "La profonda sfiducia tra i Re di Solara e Lunara.",
+        "Lord Malakor, un consigliere di corte che trama nell'ombra per sabotare ogni tentativo di pace.",
+        "Le creature corrotte che infestano le Terre Contese, rese ostili dalla maledizione.",
+        "I guardiani ancestrali del Santuario dell'Equilibrio, che mettono alla prova la purezza di cuore di chiunque osi avvicinarsi."
       ],
-      "world_background": "Il mondo segreto dei Fantagenitori opera sotto l'egida dell' 'Agenzia per il Potenziale Umano'. La loro non è una magia di zucche e cavalli, ma di sottili interventi sul tessuto della realtà: incantesimi di ispirazione, colpi di fortuna orchestrati e potenziamenti della concentrazione. Un intervento troppo diretto è severamente proibito dal Regolamento Celeste, poiché può creare paradossi o allertare entità magiche rivali.",
-      "contextual_information": "Il mondo accademico è un campo di battaglia. Leo lavora in un'università prestigiosa ma con fondi cronicamente insufficienti. Il suo successo non solo gli garantirebbe fama eterna, ma potrebbe anche salvare il suo dipartimento dalla chiusura. La tua performance come Fantagenitore è costantemente monitorata e valutata dall'Agenzia: il successo di Leo è anche il tuo."
-    },
-    "branching_factor": {
-      "min_actions_per_state": 4,
-=======
-      "title": "Il Lamento del Drago di Ghiaccio",
-      "initial_state": "La Vallata di Argentea è avvolta da un inverno innaturale e perpetuo. Il drago di ghiaccio, Glaurung, che un tempo proteggeva la valle, ora scatena bufere di neve dal suo nido sul Picco Gelido. Un antico artefatto oscuro, il 'Cuore d'Ombra', ha corrotto il suo animo, trasformandolo in una bestia furiosa.",
-      "goal": "Raggiungere il nido del drago, purificare il 'Cuore d'Ombra' usando la 'Fiamma Eterna' custodita nel villaggio, e spezzare la maledizione per riportare l'equilibrio nella valle.",
-      "obstacles": [
-        "Una valanga perenne che blocca il sentiero principale per il Picco Gelido.",
-        "Guardiani di ghiaccio animati dalla magia corrotta del drago.",
-        "Un labirinto di crepacci ghiacciati che nasconde il vero ingresso al nido.",
-        "La furia di Glaurung, il cui respiro gelido può congelare un uomo all'istante."
-      ],
-      "world_background": "La Vallata di Argentea e il drago di ghiaccio Glaurung hanno un legame millenario. Il drago è il guardiano dell'equilibrio climatico della regione. La sua presenza garantiva inverni miti e estati fresche, essenziali per i rari raccolti della valle.",
-      "contextual_information": "Antiche leggende narrano di un'entità malvagia, il 'Divoratore di Luce', sigillata secoli fa nelle profondità della montagna. Si teme che il suo potere stia nuovamente emergendo, corrompendo le creature più potenti e antiche, a partire da Glaurung."
+      "world_background": "Solara, il Regno del Sole, è rinomato per i suoi cavalieri e i suoi campi dorati. Lunara, il Regno della Luna, è celebre per i suoi maghi e le sue antiche biblioteche. Un tempo alleati, un tradimento secolare ha generato un'ostilità che ora minaccia di distruggerli entrambi. La maledizione è la manifestazione fisica di questa antica discordia.",
+      "contextual_information": "La maledizione non solo affligge i raccolti, ma indebolisce anche le fonti magiche di entrambi i regni. Lord Malakor discende dalla casata che causò la rottura originale e mira a governare sulle ceneri di entrambi i regni."
     },
     "branching_factor": {
       "min_actions_per_state": 2,
->>>>>>> 23973b243322887357864d94ff5533f34c48748a
       "max_actions_per_state": 4
     },
     "depth_constraints": {
-      "min_steps_to_goal": 6,
-      "max_steps_to_goal": 9
+      "min_steps_to_goal": 4,
+      "max_steps_to_goal": 8
     }
   }
 }

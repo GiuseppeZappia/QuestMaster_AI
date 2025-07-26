@@ -1,5 +1,3 @@
-(raccogli-fiamma-eterna eroe1 fiamma-eterna villaggio)
-(supera-guardiani eroe1 villaggio crepacci-ghiacciati)
-(muovi eroe1 crepacci-ghiacciati picco-gelido)
-(purifica-drago eroe1 glaurung picco-gelido)
-; cost = 4 (unit cost)
+(prepare-sword-and-breach-thorns valerius spada-di-famiglia cancello-castello stanza-principessa)
+(wake-up-princess valerius lira stanza-principessa)
+; cost = 2 (unit cost)

@@ -120,6 +120,110 @@ st.markdown("""
         100% { transform: translateX(200%) skewX(-15deg); }
     }
     
+            
+    /* EFFETTI VITTORIA */
+    @keyframes victoryPulse {
+        0%, 100% { 
+            transform: scale(1); 
+            box-shadow: 0 0 30px rgba(255, 215, 0, 0.6);
+        }
+        50% { 
+            transform: scale(1.05); 
+            box-shadow: 0 0 60px rgba(255, 215, 0, 1), 0 0 100px rgba(255, 215, 0, 0.8);
+        }
+    }
+
+    @keyframes confetti {
+        0% { 
+            transform: translateY(-100vh) rotate(0deg); 
+            opacity: 1; 
+        }
+        100% { 
+            transform: translateY(100vh) rotate(720deg); 
+            opacity: 0; 
+        }
+    }
+
+    @keyframes victoryGlow {
+        0%, 100% { 
+            text-shadow: 0 0 20px rgba(255, 215, 0, 0.8);
+            color: #ffd700;
+        }
+        25% { 
+            text-shadow: 0 0 40px rgba(255, 65, 108, 1);
+            color: #ff416c;
+        }
+        50% { 
+            text-shadow: 0 0 40px rgba(116, 185, 255, 1);
+            color: #74b9ff;
+        }
+        75% { 
+            text-shadow: 0 0 40px rgba(0, 184, 148, 1);
+            color: #00b894;
+        }
+    }
+
+    .victory-container {
+        animation: victoryPulse 2s ease-in-out infinite;
+        position: relative;
+        overflow: hidden;
+    }
+
+    .victory-container::before {
+        content: '🎉✨🏆⭐🎊🌟💫🎁';
+        position: absolute;
+        top: -50px;
+        left: 0;
+        width: 100%;
+        font-size: 2rem;
+        animation: confetti 3s linear infinite;
+        pointer-events: none;
+        z-index: 10;
+    }
+
+    .victory-title {
+        animation: victoryGlow 3s ease-in-out infinite;
+        font-family: 'Cinzel', serif;
+        font-size: 2.5rem;
+        margin-bottom: 1.5rem;
+        text-transform: uppercase;
+        letter-spacing: 3px;
+    }
+
+    /* Fireworks effect */
+    .fireworks {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        pointer-events: none;
+        overflow: hidden;
+    }
+
+    .firework {
+        position: absolute;
+        width: 4px;
+        height: 4px;
+        border-radius: 50%;
+        animation: fireworkExplode 2s ease-out infinite;
+    }
+
+    @keyframes fireworkExplode {
+        0% {
+            transform: scale(0);
+            opacity: 1;
+        }
+        50% {
+            transform: scale(1);
+            opacity: 0.8;
+        }
+        100% {
+            transform: scale(2);
+            opacity: 0;
+        }
+    }
+            
     /* CONTENITORI PRINCIPALI RIDISEGNATI */
     
     .creation-container {
@@ -691,6 +795,8 @@ def initialize_app_state():
         st.session_state.choices_made = []
     if 'choice_order_seed' not in st.session_state:
         st.session_state.choice_order_seed = random.randint(1, 1000000)
+    if 'original_user_input' not in st.session_state:
+        st.session_state.original_user_input = ""
 
 def setup_llm():
     """Configura il modello LLM"""
@@ -832,6 +938,9 @@ def render_creation_phase():
                         status_text = st.empty()
                         
                         try:
+                            # Salva l'input originale dell'utente
+                            st.session_state.original_user_input = user_input
+                            
                             status_text.text("📜 Evocando gli spiriti della creatività...")
                             progress_bar.progress(25)
                             time.sleep(1)
@@ -1552,6 +1661,144 @@ def get_choice_icon(index: int) -> str:
     ]
     return icons[index % len(icons)]
 
+
+def save_adventure_log():
+    """Crea un log completo dell'avventura e lo salva in locale"""
+    from datetime import datetime
+    import json
+    
+    # Genera timestamp per il nome del file
+    timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
+    
+    # Raccoglie tutti i dati dell'avventura
+    adventure_data = {
+        "metadata": {
+            "timestamp": datetime.now().isoformat(),
+            "completion_date": datetime.now().strftime("%d/%m/%Y alle %H:%M"),
+            "total_choices": len(st.session_state.choices_made),
+            "final_outcome": "Vittoria" if st.session_state.current_node == 'victory' else "Game Over" if st.session_state.current_node == 'game_over' else "In corso"
+        },
+        "original_input": getattr(st.session_state, 'original_user_input', 'Input originale non disponibile'),
+        "generated_lore": st.session_state.generated_lore,
+        "story_path": st.session_state.choices_made,
+        "final_node": st.session_state.current_node
+    }
+    
+    # Carica la storia completa per i dettagli
+    try:
+        story_data = load_story()
+        adventure_data["story_details"] = story_data
+    except:
+        adventure_data["story_details"] = []
+    
+    # Crea il log in formato JSON
+    filename = f"avventura_{timestamp}.json"
+    filepath = Path("salvataggi") / filename
+    
+    # Crea la cartella se non esiste
+    filepath.parent.mkdir(exist_ok=True)
+    
+    with open(filepath, 'w', encoding='utf-8') as f:
+        json.dump(adventure_data, f, indent=2, ensure_ascii=False)
+    
+    return filepath, adventure_data
+
+def create_adventure_report(adventure_data):
+    """Crea un report leggibile dell'avventura"""
+    report_lines = []
+    
+    # Header del report
+    report_lines.append("🎭 CRONACHE DELLA LEGGENDA VISSUTA 🎭")
+    report_lines.append("=" * 60)
+    report_lines.append(f"📅 Completata il: {adventure_data['metadata']['completion_date']}")
+    report_lines.append(f"🎯 Esito finale: {adventure_data['metadata']['final_outcome']}")
+    report_lines.append(f"⚔️ Decisioni totali: {adventure_data['metadata']['total_choices']}")
+    report_lines.append("")
+    
+    # Input originale
+    report_lines.append("📝 LA TUA VISIONE ORIGINALE:")
+    report_lines.append("-" * 40)
+    report_lines.append(adventure_data['original_input'])
+    report_lines.append("")
+    
+    # Lore generata (estratto)
+    if adventure_data['generated_lore']:
+        lore_text = str(adventure_data['generated_lore'])
+        lore_preview = lore_text[:300] + "..." if len(lore_text) > 300 else lore_text
+        report_lines.append("🏰 MONDO CREATO:")
+        report_lines.append("-" * 40)
+        report_lines.append(lore_preview)
+        report_lines.append("")
+    
+    # Percorso delle scelte
+    report_lines.append("🛤️ IL TUO CAMMINO EROICO:")
+    report_lines.append("-" * 40)
+    
+    for i, choice in enumerate(adventure_data['story_path'], 1):
+        report_lines.append(f"⚡ Atto {i:2d}: {choice['choice']}")
+    
+    if not adventure_data['story_path']:
+        report_lines.append("Nessuna scelta registrata")
+    
+    report_lines.append("")
+    report_lines.append("✨ Fine delle Cronache ✨")
+    
+    return "\n".join(report_lines)
+
+def download_adventure_files(adventure_data, filepath):
+    """Prepara i file per il download"""
+    import zipfile
+    from io import BytesIO
+    
+    # Crea un archivio ZIP in memoria
+    zip_buffer = BytesIO()
+    
+    with zipfile.ZipFile(zip_buffer, 'w', zipfile.ZIP_DEFLATED) as zip_file:
+        # Aggiungi il file JSON completo
+        zip_file.writestr(f"{filepath.stem}.json", 
+                         json.dumps(adventure_data, indent=2, ensure_ascii=False))
+        
+        # Aggiungi il report leggibile
+        report_content = create_adventure_report(adventure_data)
+        zip_file.writestr(f"{filepath.stem}_report.txt", report_content)
+        
+        # Aggiungi un file markdown formattato
+        markdown_content = create_markdown_report(adventure_data)
+        zip_file.writestr(f"{filepath.stem}_report.md", markdown_content)
+    
+    zip_buffer.seek(0)
+    return zip_buffer.getvalue()
+
+def create_markdown_report(adventure_data):
+    """Crea un report in formato Markdown"""
+    md_lines = []
+    
+    md_lines.append("# 🎭 Cronache della Leggenda Vissuta")
+    md_lines.append("")
+    md_lines.append("## 📊 Informazioni Generali")
+    md_lines.append(f"- **Completata il**: {adventure_data['metadata']['completion_date']}")
+    md_lines.append(f"- **Esito finale**: {adventure_data['metadata']['final_outcome']}")
+    md_lines.append(f"- **Decisioni totali**: {adventure_data['metadata']['total_choices']}")
+    md_lines.append("")
+    
+    md_lines.append("## 📝 La Tua Visione Originale")
+    md_lines.append("```")
+    md_lines.append(adventure_data['original_input'])
+    md_lines.append("```")
+    md_lines.append("")
+    
+    if adventure_data['story_path']:
+        md_lines.append("## 🛤️ Il Tuo Cammino Eroico")
+        for i, choice in enumerate(adventure_data['story_path'], 1):
+            md_lines.append(f"{i}. **{choice['choice']}**")
+            md_lines.append(f"   - *Da: {choice['from_node']} → A: {choice['to_node']}*")
+            md_lines.append("")
+    
+    md_lines.append("---")
+    md_lines.append("*Generato dal Maestro delle Leggende*")
+    
+    return "\n".join(md_lines)
+
 # Renderizza la fase di gameplay
 
 def render_gameplay():
@@ -1634,6 +1881,37 @@ def render_gameplay():
         </div>
         """, unsafe_allow_html=True)
     
+        st.markdown("---")
+        
+        # Opzione di salvataggio in qualsiasi momento
+        if st.session_state.choices_made:  # Solo se ci sono scelte fatte
+            st.markdown("""
+            <div style="background: rgba(0, 184, 148, 0.15); border: 2px solid rgba(0, 184, 148, 0.4); border-radius: 15px; padding: 1.5rem; margin: 1rem 0; font-family: 'Crimson Text', serif;">
+                <h3 style="color: #00b894; font-family: 'Cinzel', serif; text-align: center; margin-bottom: 1rem; font-size: 1.2rem;">💾 SALVATAGGIO</h3>
+                <p style="text-align: center; color: #f0f0f0; font-size: 0.9rem; margin-bottom: 1rem;">
+                    Salva il progresso attuale della tua avventura
+                </p>
+            </div>
+            """, unsafe_allow_html=True)
+            
+            if st.button("💾 Salva Avventura", key="save_current_progress", use_container_width=True):
+                try:
+                    filepath, adventure_data = save_adventure_log()
+                    zip_data = download_adventure_files(adventure_data, filepath)
+                    
+                    st.success("✅ Avventura salvata!")
+                    
+                    st.download_button(
+                        label="📥 Scarica",
+                        data=zip_data,
+                        file_name=f"avventura_in_corso_{filepath.stem}.zip",
+                        mime="application/zip",
+                        use_container_width=True
+                    )
+                except Exception as e:
+                    st.error(f"❌ Errore: {e}")
+
+
     # Contenuto principale del gioco
     current_node = find_node_by_id(story_data, st.session_state.current_node)
     
@@ -1653,25 +1931,100 @@ def render_gameplay():
     
     if not choices:
         # Nodo finale (vittoria)
-        if st.session_state.current_node == 'finale':
-            st.markdown(f"""
-            <div style="background: linear-gradient(135deg, #00b894, #00cec9, #74b9ff, #a29bfe); background-size: 300% 300%; color: white; padding: 3rem; border-radius: 25px; text-align: center; margin: 2rem 0; animation: backgroundShift 3s ease-in-out infinite;">
-                <h2 style="font-family: 'Cinzel', serif; font-size: 2.5rem; margin-bottom: 1.5rem;">
-                    🏆 TRIONFO LEGGENDARIO! 🏆
-                </h2>
-                <p style="font-size: 1.3rem; margin-bottom: 1.5rem; font-weight: 600;">
-                    Hai conquistato l'immortalità attraverso questa epica odissea!
-                </p>
-                <p style="font-size: 1.1rem; color: rgba(255,255,255,0.95); margin-bottom: 1rem;">
-                    Con <strong style="color: #ffd700;">{len(st.session_state.choices_made)}</strong> decisioni magistrali hai forgiato il tuo destino di gloria.
-                </p>
-                <p style="font-size: 1rem; margin-top: 2rem; font-style: italic; color: rgba(255,255,255,0.9);">
-                    Il tuo nome risuonerà nell'eternità, Campione delle Scelte Sagge! 🌟
+        if not choices and st.session_state.current_node != 'game_over':
+            # Schermata di vittoria semplificata
+            st.balloons()  # Effetto palloncini di Streamlit
+                        
+                        # Messaggio finale
+            st.markdown("""
+            <div style="
+                background: linear-gradient(45deg, #ffd700, #ff6b6b);
+                color: white;
+                padding: 2rem;
+                border-radius: 20px;
+                text-align: center;
+                margin: 2rem 0;
+                border: 2px solid #ffffff;
+            ">
+                <h4 style="margin-bottom: 1rem; font-family: 'Cinzel', serif;">
+                    🏛️ IL TUO NOME NEGLI ANNALI DELL'ETERNITÀ 🏛️
+                </h4>
+                <p style="font-size: 1.1rem; font-style: italic;">
+                    "Nei tempi che verranno, i cantastorie narreranno delle tue gesta.<br>
+                    Il tuo coraggio risuonerà attraverso i secoli, Campione delle Scelte Sagge!"
                 </p>
             </div>
             """, unsafe_allow_html=True)
+            
+            # Emojis finali
+            st.markdown("""
+            <div style="text-align: center; font-size: 2rem; margin: 2rem 0;">
+                🎉 ✨ 🎊 ⭐ 🌟 💫 🏆 👑
+            </div>
+            """, unsafe_allow_html=True)
+
+            # Statistiche della vittoria
+            col1, col2, col3 = st.columns([1, 2, 1])
+            with col2:
+                st.markdown(f"""
+                <div style="
+                    background: rgba(255,255,255,0.9); 
+                    border-radius: 15px; 
+                    padding: 2rem; 
+                    margin: 2rem 0;
+                    color: #333333;
+                    text-align: center;
+                ">
+                    <h3 style="color: #ffd700; margin-bottom: 1rem; font-family: 'Cinzel', serif;">
+                        📊 STATISTICHE DELLA GLORIA 📊
+                    </h3>
+                    <p style="font-size: 1.2rem; margin-bottom: 0.5rem;">
+                        ⚔️ Decisioni Magistrali: <strong style="color: #ff6b6b; font-size: 1.4rem;">{len(st.session_state.choices_made)}</strong>
+                    </p>
+                    <p style="font-size: 1.2rem; margin-bottom: 0.5rem;">
+                        🎯 Tasso di Successo: <strong style="color: #00b894; font-size: 1.4rem;">100%</strong>
+                    </p>
+                    <p style="font-size: 1.2rem;">
+                        👑 Titolo Conquistato: <strong style="color: #a29bfe; font-size: 1.4rem;">LEGGENDA IMMORTALE</strong>
+                    </p>
+                </div>
+                """, unsafe_allow_html=True)
         
-        col1, col2, col3 = st.columns([1, 2, 1])
+        # Opzioni di gioco        
+        # Opzioni post-vittoria
+        st.markdown("---")
+        
+        col1, col2 = st.columns(2)
+        
+        with col1:
+            if st.button("💾 SALVA LE CRONACHE DELLA GLORIA", key="save_victory_adventure", use_container_width=True):
+                try:
+                    filepath, adventure_data = save_adventure_log()
+                    zip_data = download_adventure_files(adventure_data, filepath)
+                    
+                    st.markdown("""
+                    <div class="status-success">
+                        📚 Le tue gesta eroiche sono state immortalate negli annali!
+                    </div>
+                    """, unsafe_allow_html=True)
+                    
+                    # Bottone per il download
+                    st.download_button(
+                        label="📥 Scarica Archivio Completo",
+                        data=zip_data,
+                        file_name=f"cronache_vittoria_{filepath.stem}.zip",
+                        mime="application/zip",
+                        use_container_width=True
+                    )
+                    
+                    # Anteprima del report
+                    with st.expander("👁️ Anteprima delle Cronache", expanded=False):
+                        report_preview = create_adventure_report(adventure_data)
+                        st.text(report_preview[:1000] + "..." if len(report_preview) > 1000 else report_preview)
+                        
+                except Exception as e:
+                    st.error(f"⚠️ Errore nel salvataggio delle cronache: {e}")
+        
         with col2:
             if st.button("🌟 Forgia una Nuova Leggenda", key="play_again_victory", use_container_width=True):
                 reset_game()
@@ -1696,6 +2049,37 @@ def render_gameplay():
         </div>
         """, unsafe_allow_html=True)
         
+
+        # Opzioni di salvataggio anche per game over
+        st.markdown("---")
+        
+        col1, col2, col3 = st.columns([1, 2, 1])
+        with col2:
+            if st.button("💾 SALVA LE CRONACHE DEL TENTATIVO", key="save_gameover_adventure", use_container_width=True):
+                try:
+                    filepath, adventure_data = save_adventure_log()
+                    zip_data = download_adventure_files(adventure_data, filepath)
+                    
+                    st.markdown("""
+                    <div class="status-success">
+                        📚 Anche i tentativi coraggiosi meritano di essere ricordati!
+                    </div>
+                    """, unsafe_allow_html=True)
+                    
+                    # Bottone per il download
+                    st.download_button(
+                        label="📥 Scarica Archivio del Tentativo",
+                        data=zip_data,
+                        file_name=f"cronache_tentativo_{filepath.stem}.zip",
+                        mime="application/zip",
+                        use_container_width=True
+                    )
+                        
+                except Exception as e:
+                    st.error(f"⚠️ Errore nel salvataggio: {e}")
+        
+        st.markdown("---")
+
         # Mostra le scelte disponibili
         shuffled_choices = shuffle_choices(choices, st.session_state.choice_order_seed)
         
