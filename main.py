@@ -1,22 +1,23 @@
-from lore_generation import generate_lore
+from file_generation.lore_generation import generate_lore
 import os ,json
 from langchain_google_genai import ChatGoogleGenerativeAI
 from domain_generation import create_domain_pddl
-from problem_generation import create_problem_pddl
-from reflective_agent import run_correction_workflow,run_user_correction_pddl,update_lore_with_corrections
+from file_generation.problem_generation import create_problem_pddl
+from correction_and_validation.reflective_agent import run_correction_workflow,run_user_correction_pddl,update_lore_with_corrections
 # from pddl_validation import run_fastdownward_and_validate
-from pddl_validation import run_fastdownward_complete
+from correction_and_validation.pddl_validation import run_fastdownward_complete
 from dotenv import load_dotenv
 from utils import print_lore, print_plan
-from story_generation import generate_story
+from file_generation.story_generation import generate_story
 import subprocess
-from pddl_validation import validate_plan_with_val, get_validation_error_for_correction
+from correction_and_validation.pddl_validation import validate_plan_with_val, get_validation_error_for_correction
 
 load_dotenv() #Per la chiave API
 
 
 def main():
-    API_KEY=os.getenv("API_KEY2")
+    API_KEY=os.getenv("API_KEY")
+
     # Configurazione API key
     os.environ["GOOGLE_API_KEY"] = API_KEY
 
@@ -26,11 +27,11 @@ def main():
         temperature=0.6
     )
 
-    user_input= input("Inserisci la tua richiesta per generare la lore: ")
+    #user_input= input("Inserisci la tua richiesta per generare la lore: ")
     
     
     # crea e salva la lore 
-    generate_lore(user_input,llm)
+    #generate_lore(user_input,llm)
 
     # chiede all'utente se vuole modificare la lore generata
     print("Di seguito la lore generata:")
@@ -46,7 +47,6 @@ def main():
             update_lore_with_corrections(user_input,llm)
             print("Ecco la lore aggiornata:")
             print_lore()
-            print("Vuoi fare altre modifiche? (S/N)")
             continue
         else:
             print("Scelta non valida, riprova.")
@@ -65,7 +65,7 @@ def main():
     # Estrai i risultati finali
     pddl_validation_output = validation_final_results["pddl_output"]
     
-    # HUMAN IN THE LOOP PER VALIDARE IL PIANO GENERATO
+    # Human in the Loop (HITL) per la validazione del piano
     plan_accepted = False
     
     while not plan_accepted:
@@ -92,18 +92,8 @@ def main():
     generate_story(llm)
     subprocess.run(["streamlit", "run", "gui_solo_fase_2.py"])
 
+# Esegue la validazione completa PDDL con FastDownward e VAL
 def validate_pddl_complete(llm, max_attempts=100):
-    """
-    Esegue la validazione completa PDDL con FastDownward e VAL.
-    
-    Args:
-        llm: Modello di linguaggio per le correzioni
-        max_attempts: Numero massimo di tentativi per evitare loop infiniti
-    
-    Returns:
-        dict: Risultati della validazione finale
-    """
-    
     attempt = 0
     
     while attempt < max_attempts:
@@ -136,9 +126,7 @@ def validate_pddl_complete(llm, max_attempts=100):
         print("🔄 Correggendo il PDDL per VAL e riavviando da FastDownward...")
         
         error_message = get_validation_error_for_correction(validation_results)
-        print("Sono qui")
         print(f"Errore di validazione: {error_message}")
-        print("Ho finito")
         run_correction_workflow(error_message, llm)
         
         attempt += 1
@@ -152,9 +140,8 @@ def validate_pddl_complete(llm, max_attempts=100):
     }
 
 
-
+# Funzione per mostrare i risultati della validazione
 def show_validation_results(validation_results):
-    """Mostra i risultati della validazione in modo leggibile"""
     if validation_results["validation_successful"]:
         if validation_results["plan_valid"]:
             print("🎉 VALIDAZIONE COMPLETATA: Piano valido!")
@@ -186,12 +173,6 @@ def show_validation_results(validation_results):
 
 
 def human_plan_validation(actions_list):
-    """
-    Gestisce la validazione umana del piano utilizzando la lista di azioni.
-    
-    Args:
-        actions_list: Lista delle azioni del piano da sas_plan
-    """
     
     print("\n📋 PIANO GENERATO:")
     print("-" * 50)
@@ -205,8 +186,6 @@ def human_plan_validation(actions_list):
         # Mostra statistiche
         print(f"\n📊 Statistiche del piano:")
         print(f"   - Lunghezza: {len(actions_list)} azioni")
-        print(f"   - Prima azione: {actions_list[0] if actions_list else 'N/A'}")
-        print(f"   - Ultima azione: {actions_list[-1] if actions_list else 'N/A'}")
         
     else:
         print("❌ Nessuna azione trovata nel piano!")

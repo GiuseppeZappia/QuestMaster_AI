@@ -1,17 +1,7 @@
 from utils import load_example_json
 from utils import load_example_pddl
 import json
-
-# QUESTO POI DA TOGLIERE TANTO GLIELO PASSIAMO NOI NON SE LO DEVE CARICARE
-# with open("lore_generata_per_utente.json", 'r', encoding='utf-8') as f:
-#     user_lore_json=json.load(f)        
-
-# with open("loreDiProva.json", 'r', encoding='utf-8') as f:
-#     lore_esempio_json=json.load(f)    
-# 
-
-# INCLUDERE   - Rispetta i vincoli di branching factor e depth constraints della lore nelle istruzioni 
-
+ 
 def create_domain_pddl(llm):
     esempio_domain_pddl = load_example_pddl("file_esempio/domain.pddl")
 
@@ -76,14 +66,6 @@ def create_domain_pddl(llm):
             f.write(pddl_text)
         
         print(f"✅ Domain.pddl generato con successo e salvato in: {pddl_output_filename}")
-        
-        # Mostra anteprima
-        lines = pddl_text.split('\n')
-        print(f"\n🎯 Anteprima domain.pddl:")
-        for i, line in enumerate(lines[:10]):  # Mostra le prime 10 righe
-            print(f"{i+1:2d}: {line}")
-        if len(lines) > 10:
-            print(f"... e altre {len(lines)-10} righe")
         
     except Exception as e:
         print(f"❌ Errore nel salvataggio del domain.pddl: {e}")

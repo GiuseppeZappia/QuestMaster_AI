@@ -1,80 +1,134 @@
-;; domain.pddl - L'Equazione Fatata
-(define (domain equazione-fatata)
-  (:requirements :strips :typing :negative-preconditions) ;; Definisce i requisiti del linguaggio, inclusa la tipizzazione e le precondizioni negative
+(define (domain eco-silenzioso-titano)
+  (:requirements :strips :typing :equality) ; Aggiunto :equality per il controllo in assembla-codice
 
-  (:types ;; Definisce i tipi di oggetti nel mondo
-    personaggio ;; Un tipo generico per le persone
-    fantagenitore ;; Il giocatore/agente
-    fisico ;; Lo scienziato da aiutare, Leo
-    rivale ;; L'antagonista, Dr. Thorne
-    entita_magica ;; Il Gremlin della Logica
-    ricerca ;; Il lavoro scientifico di Leo
-    premio ;; Il Premio Nobel
+  (:types
+    personaggio ia luogo livello-accesso frammento-codice
   )
 
-  (:predicates ;; Definisce gli stati possibili del mondo
-    (bloccato ?f - fisico) ;; Lo stato in cui il fisico e' bloccato creativamente
-    (ha_sindrome_impostore ?f - fisico) ;; Lo stato in cui il fisico dubita di se'
-    (rivale_attivo ?rv - rivale) ;; Lo stato in cui il rivale sta sabotando la ricerca
-    (gremlin_presente ?g - entita_magica) ;; Lo stato in cui il gremlin sta causando problemi
-    (dati_corrotti ?r - ricerca) ;; Lo stato in cui i dati della ricerca sono corrotti dal gremlin
-    (teoria_formulata ?r - ricerca) ;; Lo stato in cui la teoria e' stata formulata con successo
-    (ricerca_pubblicata ?r - ricerca) ;; Lo stato in cui la ricerca e' stata pubblicata
-    (premio_vinto ?p - premio) ;; Lo stato finale in cui il premio e' stato vinto
+  (:predicates
+    ;; Posizione del personaggio e connettività dei luoghi
+    (at ?p - personaggio ?l - luogo)
+    (connessi ?from - luogo ?to - luogo)
+
+    ;; Stato degli ostacoli e dei sistemi
+    (porta-sigillata ?from - luogo ?to - luogo)
+    (richiede-accesso ?from - luogo ?to - luogo ?la - livello-accesso)
+    (perdita-refrigerante ?l - luogo)
+    (drone-minaccia ?l - luogo)
+    (helios-offline ?i - ia)
+    (nucleo-controllo ?l - luogo)
+    (supporto-vitale-ripristinato)
+
+    ;; Posizione degli oggetti nel mondo
+    (scheda-in ?la - livello-accesso ?l - luogo)
+    (frammento-in ?fc - frammento-codice ?l - luogo)
+
+    ;; Inventario del personaggio
+    (ha-scheda ?p - personaggio ?la - livello-accesso)
+    (ha-frammento ?p - personaggio ?fc - frammento-codice)
+    (codice-assemblato ?p - personaggio)
   )
 
-  ;; Azione per fornire ispirazione magica e sbloccare il fisico
-  (:action incantesimo-ispirazione
-    :parameters (?fg - fantagenitore ?f - fisico) ;; Parametri: il fantagenitore che agisce e il fisico che riceve
-    :precondition (and (bloccato ?f)) ;; Precondizione: il fisico deve essere bloccato
-    :effect (and (not (bloccato ?f))) ;; Effetto: il fisico non e' piu' bloccato
+  ;; AZIONI POSSIBILI
+
+  (:action muovi
+    :parameters (?p - personaggio ?from - luogo ?to - luogo)
+    :precondition (and
+        (at ?p ?from)
+        (connessi ?from ?to)
+        (not (porta-sigillata ?from ?to))
+        (not (perdita-refrigerante ?to))
+        (not (drone-minaccia ?to))
+    )
+    :effect (and
+        (not (at ?p ?from))
+        (at ?p ?to)
+    )
   )
 
-  ;; Azione per aumentare la fiducia del fisico e rimuovere la sindrome dell'impostore
-  (:action potenziamento-concentrazione
-    :parameters (?fg - fantagenitore ?f - fisico) ;; Parametri: il fantagenitore e il fisico
-    :precondition (and (ha_sindrome_impostore ?f)) ;; Precondizione: il fisico deve avere la sindrome dell'impostore
-    :effect (and (not (ha_sindrome_impostore ?f))) ;; Effetto: la sindrome dell'impostore viene rimossa
+  (:action prendi-scheda
+    :parameters (?p - personaggio ?la - livello-accesso ?l - luogo)
+    :precondition (and
+        (at ?p ?l)
+        (scheda-in ?la ?l)
+    )
+    :effect (and
+        (not (scheda-in ?la ?l))
+        (ha-scheda ?p ?la)
+    )
   )
 
-  ;; Azione per contrastare i tentativi di sabotaggio del rivale
-  (:action neutralizza-sabotaggio-rivale
-    :parameters (?fg - fantagenitore ?rv - rivale) ;; Parametri: il fantagenitore e il rivale da contrastare
-    :precondition (and (rivale_attivo ?rv)) ;; Precondizione: il rivale deve essere attivamente impegnato nel sabotaggio
-    :effect (and (not (rivale_attivo ?rv))) ;; Effetto: i tentativi del rivale sono sventati
+  (:action prendi-frammento
+    :parameters (?p - personaggio ?fc - frammento-codice ?l - luogo)
+    :precondition (and
+        (at ?p ?l)
+        (frammento-in ?fc ?l)
+    )
+    :effect (and
+        (not (frammento-in ?fc ?l))
+        (ha-frammento ?p ?fc)
+    )
   )
 
-  ;; Azione per scacciare il Gremlin della Logica e riparare i dati
-  (:action scaccia-gremlin-logica
-    :parameters (?fg - fantagenitore ?g - entita_magica ?r - ricerca) ;; Parametri: fantagenitore, gremlin e la ricerca interessata
-    :precondition (and (gremlin_presente ?g) (dati_corrotti ?r)) ;; Precondizione: il gremlin deve essere presente e i dati corrotti
-    :effect (and (not (gremlin_presente ?g)) (not (dati_corrotti ?r))) ;; Effetto: il gremlin viene scacciato e i dati vengono ripristinati
+  (:action sblocca-porta
+    :parameters (?p - personaggio ?la - livello-accesso ?from - luogo ?to - luogo)
+    :precondition (and
+        (at ?p ?from)
+        (porta-sigillata ?from ?to)
+        (richiede-accesso ?from ?to ?la)
+        (ha-scheda ?p ?la)
+    )
+    :effect (not (porta-sigillata ?from ?to))
+  )
+  
+  ;; NUOVA AZIONE: Ripara la perdita di refrigerante da un luogo adiacente.
+  (:action ripara-perdita-refrigerante
+    :parameters (?p - personaggio ?l_da_cui_ripara - luogo ?l_con_perdita - luogo)
+    :precondition (and
+        (at ?p ?l_da_cui_ripara)
+        (connessi ?l_da_cui_ripara ?l_con_perdita)
+        (perdita-refrigerante ?l_con_perdita)
+    )
+    :effect (not (perdita-refrigerante ?l_con_perdita))
   )
 
-  ;; Azione per permettere al fisico di formulare la sua teoria rivoluzionaria
-  (:action formulazione-teoria
-    :parameters (?f - fisico ?r - ricerca ?rv - rivale ?g - entita_magica) ;; Parametri: il fisico, la sua ricerca, il rivale e il gremlin
-    :precondition (and ;; Precondizioni: tutti gli ostacoli devono essere stati rimossi
-        (not (bloccato ?f)) ;; Il fisico non deve essere bloccato
-        (not (ha_sindrome_impostore ?f)) ;; Il fisico deve avere fiducia in se'
-        (not (rivale_attivo ?rv)) ;; Il rivale non deve sabotare
-        (not (gremlin_presente ?g)) ;; Il gremlin non deve interferire
-        (not (dati_corrotti ?r)) ;; I dati devono essere puliti
-      )
-    :effect (and (teoria_formulata ?r)) ;; Effetto: la teoria viene formulata con successo
+  ;; NUOVA AZIONE: Disattiva il drone da un luogo adiacente.
+  (:action disattiva-drone
+    :parameters (?p - personaggio ?l_da_cui_agisce - luogo ?l_con_drone - luogo)
+    :precondition (and
+        (at ?p ?l_da_cui_agisce)
+        (connessi ?l_da_cui_agisce ?l_con_drone)
+        (drone-minaccia ?l_con_drone)
+    )
+    :effect (not (drone-minaccia ?l_con_drone))
   )
 
-  ;; Azione per pubblicare la ricerca una volta che la teoria e' completa
-  (:action pubblicazione-ricerca
-    :parameters (?f - fisico ?r - ricerca) ;; Parametri: il fisico e la ricerca da pubblicare
-    :precondition (and (teoria_formulata ?r)) ;; Precondizione: la teoria deve essere stata formulata
-    :effect (and (ricerca_pubblicata ?r)) ;; Effetto: la ricerca viene pubblicata
+  ;; AZIONE CORRETTA: Assicura che i frammenti siano diversi e li consuma.
+  (:action assembla-codice
+    :parameters (?p - personaggio ?f1 - frammento-codice ?f2 - frammento-codice)
+    :precondition (and
+        (ha-frammento ?p ?f1)
+        (ha-frammento ?p ?f2)
+        (not (= ?f1 ?f2)) ; Assicura che i frammenti siano diversi
+    )
+    :effect (and
+        (codice-assemblato ?p)
+        (not (ha-frammento ?p ?f1)) ; Consuma i frammenti
+        (not (ha-frammento ?p ?f2))
+    )
   )
 
-  ;; Azione finale per vincere il Premio Nobel come risultato della pubblicazione
-  (:action vittoria-premio-nobel
-    :parameters (?f - fisico ?r - ricerca ?p - premio) ;; Parametri: il fisico, la ricerca e il premio
-    :precondition (and (ricerca_pubblicata ?r)) ;; Precondizione: la ricerca deve essere stata pubblicata
-    :effect (and (premio_vinto ?p)) ;; Effetto: il premio viene vinto, raggiungendo l'obiettivo finale
+  (:action riavvia-helios-e-supporto-vitale
+    :parameters (?p - personaggio ?i - ia ?l - luogo)
+    :precondition (and
+        (at ?p ?l)
+        (nucleo-controllo ?l)
+        (helios-offline ?i)
+        (codice-assemblato ?p)
+    )
+    :effect (and
+        (not (helios-offline ?i))
+        (supporto-vitale-ripristinato)
+    )
   )
 )

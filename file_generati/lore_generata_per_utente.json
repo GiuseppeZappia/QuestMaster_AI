@@ -1,6 +1,7 @@
 {
   "lore_document": {
     "quest_description": {
+<<<<<<< HEAD
       "title": "L'Equazione Fatata",
       "initial_state": "Il tuo figlioccio, Leo, è un giovane e promettente fisico teorico sull'orlo di una crisi. È bloccato su un complesso problema di coerenza quantistica che potrebbe definire o distruggere la sua carriera. Tu, un Fantagenitore dell'Agenzia per il Potenziale Umano, sei stato appena assegnato al suo caso con il compito di sbloccare il suo genio.",
       "goal": "Guidare Leo attraverso le sfide accademiche e personali, aiutandolo a formulare e pubblicare una teoria rivoluzionaria sulla fisica quantistica, vincere il prestigioso Premio Nobel e assicurargli un posto nell'olimpo della scienza.",
@@ -15,6 +16,22 @@
     },
     "branching_factor": {
       "min_actions_per_state": 4,
+=======
+      "title": "Il Lamento del Drago di Ghiaccio",
+      "initial_state": "La Vallata di Argentea è avvolta da un inverno innaturale e perpetuo. Il drago di ghiaccio, Glaurung, che un tempo proteggeva la valle, ora scatena bufere di neve dal suo nido sul Picco Gelido. Un antico artefatto oscuro, il 'Cuore d'Ombra', ha corrotto il suo animo, trasformandolo in una bestia furiosa.",
+      "goal": "Raggiungere il nido del drago, purificare il 'Cuore d'Ombra' usando la 'Fiamma Eterna' custodita nel villaggio, e spezzare la maledizione per riportare l'equilibrio nella valle.",
+      "obstacles": [
+        "Una valanga perenne che blocca il sentiero principale per il Picco Gelido.",
+        "Guardiani di ghiaccio animati dalla magia corrotta del drago.",
+        "Un labirinto di crepacci ghiacciati che nasconde il vero ingresso al nido.",
+        "La furia di Glaurung, il cui respiro gelido può congelare un uomo all'istante."
+      ],
+      "world_background": "La Vallata di Argentea e il drago di ghiaccio Glaurung hanno un legame millenario. Il drago è il guardiano dell'equilibrio climatico della regione. La sua presenza garantiva inverni miti e estati fresche, essenziali per i rari raccolti della valle.",
+      "contextual_information": "Antiche leggende narrano di un'entità malvagia, il 'Divoratore di Luce', sigillata secoli fa nelle profondità della montagna. Si teme che il suo potere stia nuovamente emergendo, corrompendo le creature più potenti e antiche, a partire da Glaurung."
+    },
+    "branching_factor": {
+      "min_actions_per_state": 2,
+>>>>>>> 23973b243322887357864d94ff5533f34c48748a
       "max_actions_per_state": 4
     },
     "depth_constraints": {

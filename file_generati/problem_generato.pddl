@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 ;; problem.pddl - L'Equazione Fatata
 (define (problem guida-a-leo)
   (:domain equazione-fatata) ;; Specifica il dominio di riferimento per questo problema
@@ -21,5 +22,39 @@
 
   (:goal (and
     (premio_vinto premio-nobel) ;; L'obiettivo finale e' far vincere il Premio Nobel a Leo
+=======
+;; problem.pddl
+(define (problem spezzare-maledizione-glaurung)
+  (:domain lamento-drago-ghiaccio)
+
+  (:objects
+    eroe1 - eroe
+    glaurung - drago
+    fiamma-eterna - artefatto
+    villaggio crepacci-ghiacciati picco-gelido - luogo
+  )
+
+  (:init
+    ;; Posizioni iniziali degli agenti e degli artefatti
+    (at eroe1 villaggio)
+    (at glaurung picco-gelido)
+    (at-artefatto fiamma-eterna villaggio)
+
+    ;; Stato iniziale del drago
+    (corrotto glaurung)
+
+    ;; Connessioni tra i luoghi (la mappa del mondo)
+    (connesso villaggio crepacci-ghiacciati)
+    (connesso crepacci-ghiacciati villaggio)
+    (connesso crepacci-ghiacciati picco-gelido)
+    (connesso picco-gelido crepacci-ghiacciati)
+
+    ;; Ostacoli presenti nel mondo
+    (guardato-da-guardiani crepacci-ghiacciati)
+  )
+
+  (:goal (and
+    (purificato glaurung)
+>>>>>>> 23973b243322887357864d94ff5533f34c48748a
   ))
 )

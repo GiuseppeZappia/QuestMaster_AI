@@ -1,16 +1,7 @@
-
 from utils import load_example_json
 from utils import load_example_pddl
 import json
 
-# QUESTO POI DA TOGLIERE TANTO GLIELO PASSIAMO NOI NON SE LO DEVE CARICARE
-# with open("lore_generata_per_utente.json", 'r', encoding='utf-8') as f:
-#     user_lore_json=json.load(f)        
-
-# with open("loreDiProva.json", 'r', encoding='utf-8') as f:
-#     lore_esempio_json=json.load(f)     
-
-# INCLUDERE: - Deve rispettare i vincoli di branching factor e depth constraints della lore
 
 def create_problem_pddl(llm):
 
@@ -56,7 +47,6 @@ def create_problem_pddl(llm):
 
 
     # Genera il problem.pddl
-    print("Generazione problem.pddl in corso...")
     problem_response = llm.invoke(problem_prompt)
 
     # Estrai e pulisci la risposta PROBLEM
@@ -82,20 +72,7 @@ def create_problem_pddl(llm):
             f.write(problem_text)
         
         print(f"✅ Problem.pddl generato con successo e salvato in: {problem_output_filename}")
-        
-        # Mostra anteprima
-        lines = problem_text.split('\n')
-        print(f"\n🎯 Anteprima problem.pddl:")
-        for i, line in enumerate(lines[:10]):  # Mostra le prime 10 righe
-            print(f"{i+1:2d}: {line}")
-        if len(lines) > 10:
-            print(f"... e altre {len(lines)-10} righe")
-        
-        print(f"\n GENERAZIONE COMPLETATA!")
-        print(f"File generati:")
-        print(f"   - lore_generata.json")
-        print(f"   - domain_generato.pddl") 
-        print(f"   - problem_generato.pddl")
+       
         
     except Exception as e:
         print(f"Errore nel salvataggio del problem.pddl: {e}")

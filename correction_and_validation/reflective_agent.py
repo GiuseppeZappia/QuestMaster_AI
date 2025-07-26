@@ -1,11 +1,9 @@
 from utils import load_example_pddl, load_example_json
 import json
 
-
+# Corregge problemi PDDL con human-in-the-loop
 def correct_pddl(pddl_problem, llm):
-    """
-    Corregge problemi PDDL con human-in-the-loop usando interrupt e resume.
-    """
+
     # Carica i file necessari
     lore = load_example_json("file_generati/lore_generata_per_utente.json")
     domain = load_example_pddl("file_generati/domain_generato.pddl")
@@ -87,19 +85,15 @@ def correct_pddl(pddl_problem, llm):
     
     # Prima controlla per le parole chiave esplicite nella risposta
     if "CORREZIONE: DOMAIN" in response_text.upper():
-        print("sono nel domain lettere maiuscole")
         is_domain_correction = True
     elif "CORREZIONE: PROBLEM" in response_text.upper():
-        print("sono nel problem lettere maiuscole")
         is_problem_correction = True
     else:
         # Fallback: cerca nelle prime righe della risposta per evitare falsi positivi
         first_lines = '\n'.join(response_text.split('\n')[:3]).upper()
         if "DOMAIN" in first_lines:
-            print("sono nel domain lettere sotto")
             is_domain_correction = True
         elif "PROBLEM" in first_lines:
-            print("sono nel problem lettere sotto")
             is_problem_correction = True
         else:
             print("sono alla fine non ho trovato nulla")
@@ -139,11 +133,10 @@ def correct_pddl(pddl_problem, llm):
     
     # Pulizia ulteriore da eventuali residui
     corrected_pddl = corrected_pddl.replace("correzione: problem", "").replace("CORREZIONE: PROBLEM", "").strip()
-
-# Se non è possibile determinare automaticamente il tipo, chiede all'utente 
-
+    
+    # Se non è possibile determinare automaticamente il tipo, chiede all'utente 
     if not is_domain_correction and not is_problem_correction:
-        print("---------------SONO QUI ----------------")
+
         # Prepara il messaggio per l'utente
         query_message = f"""⚠️  Non è possibile determinare automaticamente se si tratta di una correzione al domain o al problem
 
@@ -194,11 +187,9 @@ Si tratta di una correzione al DOMAIN o al PROBLEM? (D/P):"""
     
     return corrected_pddl, is_domain_correction, is_problem_correction
 
-
+# Esegue il workflow di correzione PDDL
 def run_correction_workflow(pddl_problem, llm):
-    """
-    Esegue il workflow di correzione PDDL con gestione di interrupt/resume.
-    """
+
     try:
         # Avvia il processo di correzione
         corrected_pddl, is_domain, is_problem = correct_pddl(pddl_problem, llm)
@@ -338,7 +329,6 @@ def run_user_correction_pddl(user_corrections, llm):
         """
 
         # Genera DOMAIN e PROBLEM in un'unica chiamata
-        print("🔄 Rigenerando domain.pddl e problem.pddl basandosi sui suggerimenti dell'utente...")
         unified_response = llm.invoke(unified_prompt)
         response_content = unified_response.content.strip()
         
@@ -371,19 +361,12 @@ def run_user_correction_pddl(user_corrections, llm):
                 # Estrai la sezione problem (da ===PROBLEM=== in poi)
                 problem_section = response_content[problem_start + len("===PROBLEM==="):].strip()
                 
-                print("STAMPA SEZIONE DOMAIN:")
-                print(domain_section)
-                print("STAMPA SEZIONE PROBLEM:")
-                print(problem_section)
                 
                 # Estrai il contenuto PDDL dai blocchi markdown
                 domain_content = extract_pddl_from_markdown(domain_section)
                 problem_content = extract_pddl_from_markdown(problem_section)
                 
-                print("------------------STAMPO DOMINIO ESTRATTO-----------------------")
-                print(domain_content)
-                print("------------------STAMPO PROBLEM ESTRATTO-----------------------")
-                print(problem_content)
+    
                 
                 # Verifica che il contenuto estratto sia valido
                 if not domain_content or not problem_content:
@@ -420,11 +403,9 @@ def run_user_correction_pddl(user_corrections, llm):
             "error": str(e)
         }
 
-
+# Esegue il workflow di rigenerazione PDDL unificata basato sui suggerimenti dell'utente.
 def run_user_correction_workflow(user_corrections, llm):
-    """
-    Esegue il workflow di rigenerazione PDDL unificata basato sui suggerimenti dell'utente.
-    """
+    
     try:
         # Avvia il processo di rigenerazione unificata
         result = run_user_correction_pddl(user_corrections, llm)

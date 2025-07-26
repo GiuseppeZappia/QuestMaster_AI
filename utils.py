@@ -1,4 +1,5 @@
 import json
+
 # Carica il JSON di esempio dalla stessa cartella
 def load_example_json(filename):
     try:
@@ -14,7 +15,6 @@ def load_example_json(filename):
 
 # Carica il file PDDL di esempio dalla stessa cartella
 def load_example_pddl(filename):
-    """Carica il file domain.pddl di esempio"""
     try:
         with open(filename, 'r', encoding='utf-8') as f:
             return f.read()
