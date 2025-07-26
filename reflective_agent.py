@@ -282,13 +282,11 @@ def update_lore_with_corrections(richieste_utente,llm):
 
 
 def run_user_correction_pddl(user_corrections, llm):
-    print("SONO PRIMA DEL TRY")
     try:
         # Carica i file necessari
         lore = load_example_json("file_generati/lore_generata_per_utente.json")
         domain = load_example_pddl("file_generati/domain_generato.pddl")
         problem = load_example_pddl("file_generati/problem_generato.pddl")
-        print("HO CARICATO TUTTO")
         
         # Carica la soluzione attuale
         solution = ""
@@ -343,8 +341,6 @@ def run_user_correction_pddl(user_corrections, llm):
         print("🔄 Rigenerando domain.pddl e problem.pddl basandosi sui suggerimenti dell'utente...")
         unified_response = llm.invoke(unified_prompt)
         response_content = unified_response.content.strip()
-        print("???????????????????????????????????????????????????????HO RICEVUTO LA RISPOSTA DALL'LLM???????????????????????????????????????????????????????")
-        print(response_content)
         
         # Funzione helper per estrarre contenuto dai blocchi markdown
         def extract_pddl_from_markdown(content):

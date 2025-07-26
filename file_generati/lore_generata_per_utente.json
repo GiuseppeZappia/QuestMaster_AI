@@ -1,31 +1,25 @@
 {
   "lore_document": {
     "quest_description": {
-      "title": "Fuga dalla Roccia",
-      "initial_state": "Sei il detenuto #AZ-1441, rinchiuso nel Blocco B di Alcatraz, la prigione di massima sicurezza da cui nessuno è mai fuggito. La tua cella è fredda, umida e la porta è chiusa a chiave. L'unica cosa che hai è la tua astuzia e un cucchiaio di metallo che hai affilato di nascosto.",
-      "goal": "Fuggire dall'isola di Alcatraz. Devi eludere la sorveglianza, creare una zattera improvvisata, attraversare le fredde acque della baia di San Francisco e raggiungere la terraferma prima che l'allarme generale ti condanni a una fine certa.",
+      "title": "L'Eco Silenzioso di Titano",
+      "initial_state": "Leo, un genio dodicenne, si trova a bordo della stazione di ricerca 'Astra' su Titano. Un'improvvisa eruzione solare ha causato un guasto catastrofico a tutti i sistemi, facendo precipitare la base nel silenzio e nel buio. L'IA centrale, HELIOS, è offline e il supporto vitale sta per esaurirsi.",
+      "goal": "Raggiungere il nucleo di controllo principale, riavviare l'IA HELIOS utilizzando un protocollo di emergenza manuale e ripristinare il supporto vitale prima che le riserve di ossigeno si esauriscano.",
       "obstacles": [
-        "Guardie inflessibili che pattugliano i corridoi a intervalli regolari.",
-        "Sistemi di chiusura complessi e porte d'acciaio.",
-        "Fari di ricerca che spazzano il cortile e le acque circostanti.",
-        "Le correnti gelide e pericolose della baia di San Francisco.",
-        "Informatori e prigionieri rivali pronti a tradirti per un favore.",
-        "La necessità di creare strumenti di evasione con materiali di fortuna.",
-        "Il rischio di ipotermia progressiva una volta in acqua.",
-        "La fitta nebbia della baia, che può disorientare ma anche offrire copertura.",
-        "La sirena della prigione che può scattare al minimo errore, allertando tutta l'isola.",
-        "La pressione psicologica e la paura costante di essere scoperti."
+        "Porte di sicurezza sigillate che richiedono diversi livelli di accesso.",
+        "Un drone di manutenzione difettoso che identifica ogni forma di vita come una minaccia.",
+        "Una perdita di refrigerante nel settore ingegneristico che rende l'area pericolosa.",
+        "La necessità di trovare e assemblare i frammenti del codice di riavvio manuale, sparsi nei terminali della stazione."
       ],
-      "world_background": "Alcatraz, conosciuta come 'La Roccia', è un'isola-fortezza nella baia di San Francisco. Dal 1934 al 1963 è stata la prigione federale più temuta d'America, ospitando criminali come Al Capone. La sua fama di inespugnabilità è leggendaria, costruita sulla sorveglianza spietata e l'isolamento naturale.",
-      "contextual_information": "Sei stato condannato ingiustamente per una rapina che non hai commesso. Ogni appello è stato respinto. La tua unica speranza di riabbracciare la tua famiglia e dimostrare la tua innocenza è tentare l'impossibile: l'evasione. Hai passato mesi a osservare le routine delle guardie e a studiare i punti deboli della struttura, pianificando ogni mossa."
+      "world_background": "La stazione 'Astra' su Titano è l'avamposto di ricerca più avanzato dell'umanità, costruito per studiare i laghi di metano della luna. È gestita dall'IA HELIOS, considerata l'apice dell'intelligenza artificiale. Leo si trova lì come parte di un programma speciale per giovani dotati.",
+      "contextual_information": "La stazione è stata costruita con protocolli di sicurezza estremamente complessi dopo un precedente tentativo fallito di colonizzazione su Marte. Questo rende un riavvio manuale un'impresa quasi impossibile. I genitori di Leo sono stati i principali architetti di HELIOS, e il ragazzo possiede una comprensione unica e quasi intuitiva dei suoi sistemi."
     },
     "branching_factor": {
       "min_actions_per_state": 2,
-      "max_actions_per_state": 4
+      "max_actions_per_state": 3
     },
     "depth_constraints": {
-      "min_steps_to_goal": 6,
-      "max_steps_to_goal": 6
+      "min_steps_to_goal": 4,
+      "max_steps_to_goal": 8
     }
   }
 }

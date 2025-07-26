@@ -16,11 +16,11 @@ load_dotenv() #Per la chiave API
 
 
 def main():
-    API_KEY=os.getenv("API_KEY")
+    API_KEY=os.getenv("API_KEY2")
     # Configurazione API key
     os.environ["GOOGLE_API_KEY"] = API_KEY
 
-    # Inizializza il modello Gemini 2.0 Flash
+    # Inizializza il modello Gemini 
     llm = ChatGoogleGenerativeAI(
         model="gemini-2.5-pro",
         temperature=0.6
@@ -64,7 +64,6 @@ def main():
     
     # Estrai i risultati finali
     pddl_validation_output = validation_final_results["pddl_output"]
-    validation_results = validation_final_results["val_results"]
     
     # HUMAN IN THE LOOP PER VALIDARE IL PIANO GENERATO
     plan_accepted = False
@@ -88,12 +87,12 @@ def main():
             continue
         
         pddl_validation_output = validation_final_results["pddl_output"]
-        validation_results = validation_final_results["val_results"]
- 
+        
+    print("Generando la storia...")
     generate_story(llm)
-    subprocess.run(["streamlit", "run", "prova.py"])
+    subprocess.run(["streamlit", "run", "gui_solo_fase_2.py"])
 
-def validate_pddl_complete(llm, max_attempts=12):
+def validate_pddl_complete(llm, max_attempts=100):
     """
     Esegue la validazione completa PDDL con FastDownward e VAL.
     

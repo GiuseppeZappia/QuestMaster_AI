@@ -43,10 +43,11 @@ def generate_story(llm):
         - `description`: testo immersivo e coerente con il mondo della storia
         - `choices`: tante quanto serve per rispettare branching_factor della lore
     - Solo una scelta è corretta (`is_correct: true`) e segue il piano
-    - Le scelte errate portano a 1 o 2 nodi intermedi e poi a un nodo `game_over`
+    - Le scelte errate portano a 1 nodo intermedio e poi a un nodo `game_over`
+    - PER OGNI SCELTA IN "choices" il rispettivo "next_node" deve essere creato ed esistere con la sua funzionalita (nodo di fallimento o meno che sia) 
 
     2. **Percorsi Sbagliati**:
-    - Ogni scelta errata deve sfociare in un ramo di fallimento 2 nodi intermedi. 
+    - Ogni scelta errata deve sfociare in un ramo di fallimento con 2 nodi intermedi. 
 
     3. **Scelte**:
     - Ogni nodo deve avere tra tante opzioni coerente con `min_actions_per_state` e `max_actions_per_state` della lore
@@ -99,7 +100,6 @@ def generate_story(llm):
     try:
         # Converti in dizionario per validare
         lore_data = json.loads(json_text)
-        print(lore_data)
         # Salva la lore generata
         output_filename = "file_generati/storia_generata.json"
         with open(output_filename, 'w', encoding='utf-8') as f:

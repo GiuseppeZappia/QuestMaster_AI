@@ -292,7 +292,7 @@ def validate_plan_with_val():
                 print("❌ Piano non valido!")
             else:
                 # Analisi più dettagliata dell'output
-                if "Error" in validation_output or "error" in validation_output or "ERROR" in validation_output:
+                if "Error" in validation_output or "error" in validation_output or "ERROR" in validation_output or "Bad" in validation_output:
                     results["plan_valid"] = False
                     print("❌ Errori rilevati durante la validazione!")
                 else:
