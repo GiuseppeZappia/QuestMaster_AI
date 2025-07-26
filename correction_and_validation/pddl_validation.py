@@ -7,8 +7,6 @@ def run_fastdownward_planning():
     domain_file = load_example_pddl("file_generati/domain_generato.pddl")
     problem_file = load_example_pddl("file_generati/problem_generato.pddl")
     
-    # domain_file = load_example_pddl("file_esempio/domain.pddl")
-    # problem_file = load_example_pddl("file_esempio/problem.pddl")
 
     results = {
         "planning_success": False,
@@ -98,7 +96,7 @@ def get_fastdownward_solution():
     }
     
     try:
-        print("Recupero della soluzione da sas_plan...")
+    
         
         # Comando per leggere il file sas_plan
         command_str = "cat sas_plan"
@@ -119,10 +117,6 @@ def get_fastdownward_solution():
             # Parsea l'output del sas_plan
             solution_content = result.stdout.strip()
             
-            print("Output di sas_plan:")
-            print("-" * 50)
-            print(solution_content)
-            print("-" * 50)
             
             # Processa le azioni (ogni linea del sas_plan rappresenta un'azione)
             lines = solution_content.split('\n')
@@ -137,16 +131,6 @@ def get_fastdownward_solution():
             results["solution_retrieved"] = True
             results["solution_path"] = "sas_plan"  # Punta al file originale
             results["actions"] = actions
-            
-            print(f"Soluzione letta da: sas_plan")
-            print(f"Numero totale di azioni: {len(actions)}")
-            
-            # Mostra anteprima della soluzione
-            print("\nPrime azioni della soluzione:")
-            for i, action in enumerate(actions[:5]):
-                print(f"  {i+1}. {action}")
-            if len(actions) > 5:
-                print(f"  ... e altre {len(actions) - 5} azioni")
                 
         else:
             results["error_message"] = "File sas_plan non trovato o vuoto"
@@ -184,7 +168,7 @@ def run_fastdownward_complete():
     
     # Fase 2: Recupero soluzione
     print("\n" + "="*60)
-    print("FASE 2: RECUPERO SOLUZIONE")
+    print("FASE 2: VALIDAZIONE")
     print("="*60)
     
     solution_results = get_fastdownward_solution()
@@ -201,24 +185,12 @@ def run_fastdownward_complete():
         "solution_results": solution_results
     }
     
-    print("\n" + "="*60)
-    print("RISULTATI FINALI")
-    print("="*60)
-    print(f"Pianificazione: {'SUCCESS' if planning_results['planning_success'] else 'FAILED'}")
-    print(f"Recupero soluzione: {'SUCCESS' if solution_results['solution_retrieved'] else 'FAILED'}")
-    print(f"Processo completo: {'SUCCESS' if overall_success else 'FAILED'}")
     
     return final_results
 
 
-
+# Valida il piano generato (sas_plan) utilizzando il validatore VAL.
 def validate_plan_with_val():
-    """
-    Valida il piano generato (sas_plan) utilizzando il validatore VAL.
-    
-    Returns:
-        dict: Risultato della validazione con informazioni dettagliate
-    """
     
     results = {
         "validation_successful": False,
@@ -316,17 +288,9 @@ def validate_plan_with_val():
     
     return results
 
-
+# Analizza l'output di VAL per estrarre informazioni dettagliate; riceve come parametro l'output completo di VAL.
 def parse_val_output(output):
-    """
-    Analizza l'output di VAL per estrarre informazioni dettagliate.
-    
-    Args:
-        output (str): Output completo di VAL
-        
-    Returns:
-        dict: Dettagli parsed dall'output
-    """
+ 
     details = {
         "goals_achieved": [],
         "preconditions_satisfied": True,
@@ -363,11 +327,9 @@ def parse_val_output(output):
     
     return details
 
+#Restituisce gli errori di validazione in un formato utilizzabile per la correzione PDDL. Include sia il codice di errore che la descrizione completa.
 def get_validation_error_for_correction(validation_results):
-    """
-    Restituisce gli errori di validazione in un formato utilizzabile per la correzione PDDL.
-    Include sia il codice di errore che la descrizione completa.
-    """
+   
     if validation_results["validation_successful"]:
         return "Non ci sono errori di validazione. Il piano è valido."
 

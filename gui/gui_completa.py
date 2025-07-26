@@ -7,14 +7,14 @@ import random
 import os
 import subprocess
 from dotenv import load_dotenv
-from lore_generation import generate_lore
+from file_generation.lore_generation import generate_lore
 from langchain_google_genai import ChatGoogleGenerativeAI
 from domain_generation import create_domain_pddl
-from problem_generation import create_problem_pddl
-from reflective_agent import run_correction_workflow, run_user_correction_pddl, update_lore_with_corrections
-from pddl_validation import run_fastdownward_complete, validate_plan_with_val, get_validation_error_for_correction
+from file_generation.problem_generation import create_problem_pddl
+from correction_and_validation.reflective_agent import run_correction_workflow, run_user_correction_pddl, update_lore_with_corrections
+from correction_and_validation.pddl_validation import run_fastdownward_complete, validate_plan_with_val, get_validation_error_for_correction
 from utils import print_lore, print_plan, load_example_json
-from story_generation import generate_story
+from file_generation.story_generation import generate_story
 
 
 # Configurazione della pagina
@@ -1539,8 +1539,8 @@ def display_progress_bar():
         </div>
         """, unsafe_allow_html=True)
 
+# Restituisce un'icona diversa per ogni scelta
 def get_choice_icon(index: int) -> str:
-    """Restituisce un'icona diversa per ogni scelta"""
     icons = [
         "⚔️", "🛡️", "🏃‍♂️", "🧠", "💎", "🗝️", "🔍", "💀", 
         "🌟", "🔥", "❄️", "⚡", "🌙", "☀️", "🌊", "🍃",
@@ -1548,8 +1548,9 @@ def get_choice_icon(index: int) -> str:
     ]
     return icons[index % len(icons)]
 
+# Renderizza la fase di gameplay
+
 def render_gameplay():
-    """Renderizza la fase di gameplay (mantenuta identica)"""
     # Carica i dati della storia
     story_data = load_story()
     if not story_data:
@@ -1736,7 +1737,7 @@ def render_gameplay():
     """, unsafe_allow_html=True)
 
 def main():
-    """Funzione principale dell'applicazione"""
+
     initialize_app_state()
     
     # Header principale

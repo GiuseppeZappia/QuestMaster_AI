@@ -1,257 +1,107 @@
 [
   {
     "node_id": "start",
-    "description": "Sei Leo, un genio di dodici anni, intrappolato nella stazione di ricerca 'Astra' su Titano. Un'eruzione solare ha mandato tutto in blackout. L'IA HELIOS è offline, il supporto vitale è agli sgoccioli e un silenzio spettrale avvolge i corridoi metallici. Ti trovi nel tuo quartierino, l'aria si fa sempre più rarefatta. Ricordi che i tuoi genitori, gli architetti di HELIOS, tenevano una scheda di accesso di emergenza per l'ingegneria proprio qui.",
+    "description": "La Vallata di Argentea è stretta nella morsa di un inverno innaturale. Dal Picco Gelido, il drago Glaurung, corrotto dal 'Cuore d'Ombra', scatena la sua furia gelida. Ti trovi nel villaggio, ultimo baluardo di calore e speranza. La 'Fiamma Eterna', custodita qui, è l'unica speranza per purificare il drago e salvare la valle.",
     "choices": [
       {
-        "text": "Cerca e prendi la scheda di accesso per il settore ingegneria.",
-        "next_node": "prendi_scheda_ingegneria",
+        "text": "Raccogli la Fiamma Eterna dal santuario del villaggio.",
+        "next_node": "collect_flame",
         "is_correct": true
       },
       {
-        "text": "Tenta di forzare la porta del tuo quartierino.",
-        "next_node": "fail_forza_porta",
+        "text": "Cerca di ragionare con gli anziani per trovare un'altra soluzione.",
+        "next_node": "fail_talk_elders_1",
         "is_correct": false
       },
       {
-        "text": "Resta fermo e attendi i soccorsi dalla Terra.",
-        "next_node": "fail_attendi_soccorsi",
+        "text": "Tenta di raggiungere il Picco Gelido senza la Fiamma Eterna.",
+        "next_node": "fail_no_flame_1",
         "is_correct": false
       }
     ]
   },
   {
-    "node_id": "prendi_scheda_ingegneria",
-    "description": "Con mano tremante ma decisa, trovi la scheda di accesso per l'ingegneria nascosta in un doppio fondo del tuo terminale personale. È il primo passo. Ora devi raggiungere il corridoio centrale per accedere al resto della stazione.",
+    "node_id": "collect_flame",
+    "description": "Hai con te la Fiamma Eterna, la sua luce danza calda e rassicurante nel palmo della tua mano. Il sentiero principale per il Picco è bloccato da una valanga perenne, e sai che i guardiani di ghiaccio, animati dalla magia oscura del drago, pattugliano i sentieri secondari tra i crepacci.",
     "choices": [
       {
-        "text": "Esci dal quartierino e dirigiti verso il corridoio centrale.",
-        "next_node": "muovi_corridoio_centrale",
+        "text": "Affronta i guardiani di ghiaccio per aprirti un varco verso i crepacci.",
+        "next_node": "defeat_guardians",
         "is_correct": true
       },
       {
-        "text": "Cerca del cibo nelle razioni di emergenza.",
-        "next_node": "fail_cerca_cibo",
+        "text": "Usa la Fiamma Eterna per tentare di sciogliere la valanga.",
+        "next_node": "fail_melt_avalanche_1",
+        "is_correct": false
+      },
+      {
+        "text": "Aspetta la notte, sperando che i guardiani si ritirino.",
+        "next_node": "fail_wait_night_1",
         "is_correct": false
       }
     ]
   },
   {
-    "node_id": "muovi_corridoio_centrale",
-    "description": "Sei nel corridoio centrale. Le luci di emergenza rosse lampeggiano a intermittenza. Di fronte a te, la massiccia porta della sala ingegneria è sigillata. Un piccolo terminale accanto ad essa mostra un allarme: 'PERDITA REFRIGERANTE CRITICA'. Devi prima sbloccare la porta.",
+    "node_id": "defeat_guardians",
+    "description": "Con astuzia e il calore protettivo della Fiamma, riesci a superare i guardiani di ghiaccio, che si frantumano in mille pezzi. Ora sei di fronte a un labirinto di crepacci profondi e scivolosi, l'ultimo ostacolo prima del Picco Gelido.",
     "choices": [
       {
-        "text": "Usa la scheda per sbloccare la porta della sala ingegneria.",
-        "next_node": "sblocca_porta_ingegneria",
+        "text": "Attraversa con cautela il labirinto di crepacci per raggiungere il Picco Gelido.",
+        "next_node": "cross_crevasses",
         "is_correct": true
       },
       {
-        "text": "Ignora l'ingegneria e prova ad andare al laboratorio.",
-        "next_node": "fail_vai_laboratorio",
+        "text": "Cerca di saltare il crepaccio più grande per fare più in fretta.",
+        "next_node": "fail_jump_crevasse_1",
+        "is_correct": false
+      },
+      {
+        "text": "Segui delle strane luci blu che sembrano indicare un sentiero.",
+        "next_node": "fail_follow_lights_1",
         "is_correct": false
       }
     ]
   },
   {
-    "node_id": "sblocca_porta_ingegneria",
-    "description": "La scheda funziona. Un 'click' metallico risuona nel silenzio e la porta si apre di pochi centimetri, ma un sibilo minaccioso proviene dall'interno. Il terminale ora ti dà accesso ai controlli ambientali di emergenza. La perdita di refrigerante è pericolosa e va fermata prima di entrare.",
+    "node_id": "cross_crevasses",
+    "description": "Hai navigato con successo il labirinto ghiacciato e finalmente sei giunto sul Picco Gelido. L'aria è rarefatta e tagliente. Lì, nel suo nido, vedi Glaurung. Non è una creatura malvagia, ma una bestia sofferente, il cui ruggito è un lamento. Il Cuore d'Ombra pulsa oscuro sul suo petto.",
     "choices": [
       {
-        "text": "Usa il terminale per riparare la perdita di refrigerante da remoto.",
-        "next_node": "ripara_perdita",
+        "text": "Avvicinati con coraggio e usa la Fiamma Eterna per purificare il Cuore d'Ombra.",
+        "next_node": "purify_dragon",
         "is_correct": true
       },
       {
-        "text": "Entra subito nella sala, ignorando il sibilo.",
-        "next_node": "fail_ignora_perdita",
+        "text": "Attacca il drago con la tua arma, sperando di indebolirlo.",
+        "next_node": "fail_attack_dragon_1",
+        "is_correct": false
+      },
+      {
+        "text": "Lancia la Fiamma Eterna da lontano, sperando di colpire il bersaglio.",
+        "next_node": "fail_throw_flame_1",
         "is_correct": false
       }
     ]
   },
   {
-    "node_id": "ripara_perdita",
-    "description": "Con una concentrazione che smentisce la tua età, navighi tra i protocolli di emergenza sul terminale. Attivi le valvole di sicurezza e il sibilo cessa. L'allarme si spegne. La sala ingegneria ora è sicura per l'accesso.",
-    "choices": [
-      {
-        "text": "Entra nella sala ingegneria.",
-        "next_node": "muovi_sala_ingegneria",
-        "is_correct": true
-      },
-      {
-        "text": "Riavvia il terminale per sicurezza.",
-        "next_node": "fail_riavvia_terminale",
-        "is_correct": false
-      }
-    ]
-  },
-  {
-    "node_id": "muovi_sala_ingegneria",
-    "description": "La sala ingegneria è un groviglio di cavi e condotti. L'aria odora di ozono. Sai che qui è custodita la scheda di accesso per il nucleo di controllo, il cuore pulsante di HELIOS. La vedi su una console dall'altra parte della stanza.",
-    "choices": [
-      {
-        "text": "Attraversa la stanza e prendi la scheda per il nucleo.",
-        "next_node": "prendi_scheda_nucleo",
-        "is_correct": true
-      },
-      {
-        "text": "Inizia a studiare i diagrammi del motore principale.",
-        "next_node": "fail_studia_motore",
-        "is_correct": false
-      }
-    ]
-  },
-  {
-    "node_id": "prendi_scheda_nucleo",
-    "description": "Hai la scheda di accesso al nucleo. Mentre la prendi, noti un datapad accanto ad essa. Contiene il primo frammento del codice di riavvio manuale. Un pezzo del puzzle è tuo.",
-    "choices": [
-      {
-        "text": "Scarica il primo frammento di codice (Frammento A).",
-        "next_node": "prendi_frammento_a",
-        "is_correct": true
-      },
-      {
-        "text": "Lascia il datapad e torna subito nel corridoio.",
-        "next_node": "fail_lascia_frammento_a",
-        "is_correct": false
-      }
-    ]
-  },
-  {
-    "node_id": "prendi_frammento_a",
-    "description": "Frammento A acquisito. Ora hai tutto ciò che ti serve dalla sala ingegneria. Devi tornare nel corridoio centrale per raggiungere il laboratorio, dove dovrebbe trovarsi il secondo frammento.",
-    "choices": [
-      {
-        "text": "Torna nel corridoio centrale.",
-        "next_node": "muovi_corridoio_centrale_2",
-        "is_correct": true
-      },
-      {
-        "text": "Prova a decifrare il frammento A da solo.",
-        "next_node": "fail_decifra_frammento",
-        "is_correct": false
-      }
-    ]
-  },
-  {
-    "node_id": "muovi_corridoio_centrale_2",
-    "description": "Sei di nuovo nel corridoio centrale. Un rumore metallico e stridente attira la tua attenzione: è un drone di manutenzione, i suoi sensori ottici brillano di un rosso ostile. Il suo protocollo è chiaramente corrotto: ti identifica come una minaccia. Per raggiungere il laboratorio, devi neutralizzarlo.",
-    "choices": [
-      {
-        "text": "Accedi a un pannello di controllo nel corridoio per disattivare il drone.",
-        "next_node": "disattiva_drone",
-        "is_correct": true
-      },
-      {
-        "text": "Corri verso la porta del laboratorio sperando di essere più veloce.",
-        "next_node": "fail_corri_dal_drone",
-        "is_correct": false
-      }
-    ]
-  },
-  {
-    "node_id": "disattiva_drone",
-    "description": "Sfruttando un punto cieco nel suo pattugliamento, raggiungi un pannello di sicurezza. Inserisci un comando di override diagnostico che manda il drone in stand-by. La macchina si ferma, inerte. La via per il laboratorio è libera.",
-    "choices": [
-      {
-        "text": "Entra nel laboratorio.",
-        "next_node": "muovi_laboratorio",
-        "is_correct": true
-      },
-      {
-        "text": "Prova a riprogrammare il drone per farlo diventare tuo alleato.",
-        "next_node": "fail_riprogramma_drone",
-        "is_correct": false
-      }
-    ]
-  },
-  {
-    "node_id": "muovi_laboratorio",
-    "description": "Il laboratorio è pieno di esperimenti lasciati a metà. Ologrammi spenti e provette fluttuanti in assenza di gravità creano un'atmosfera surreale. La porta per il nucleo di controllo è qui, sigillata come le altre. Ti serve la scheda che hai appena recuperato.",
-    "choices": [
-      {
-        "text": "Usa la scheda di accesso al nucleo per sbloccare la porta.",
-        "next_node": "sblocca_porta_nucleo",
-        "is_correct": true
-      },
-      {
-        "text": "Cerca prima il secondo frammento di codice nel laboratorio.",
-        "next_node": "fail_cerca_frammento_prima",
-        "is_correct": false
-      }
-    ]
-  },
-  {
-    "node_id": "sblocca_porta_nucleo",
-    "description": "La porta del nucleo di controllo emette un ronzio e si apre. Prima di procedere, devi trovare l'ultimo pezzo del puzzle. Scorgi un altro datapad su un banco di lavoro, probabilmente contenente il secondo frammento di codice.",
-    "choices": [
-      {
-        "text": "Prendi il secondo frammento di codice (Frammento B).",
-        "next_node": "prendi_frammento_b",
-        "is_correct": true
-      },
-      {
-        "text": "Entra subito nel nucleo, convinto di potercela fare senza.",
-        "next_node": "fail_entra_senza_frammento_b",
-        "is_correct": false
-      }
-    ]
-  },
-  {
-    "node_id": "prendi_frammento_b",
-    "description": "Hai anche il Frammento B. Ora possiedi entrambi i pezzi del codice di riavvio. È il momento di affrontare la sfida finale. Il nucleo di controllo ti attende.",
-    "choices": [
-      {
-        "text": "Entra nel nucleo di controllo.",
-        "next_node": "muovi_nucleo_controllo",
-        "is_correct": true
-      },
-      {
-        "text": "Controlla di nuovo tutti i sistemi del laboratorio.",
-        "next_node": "fail_controlla_laboratorio",
-        "is_correct": false
-      }
-    ]
-  },
-  {
-    "node_id": "muovi_nucleo_controllo",
-    "description": "Il nucleo di controllo è una sala circolare dominata da un'enorme sfera di energia pulsante: il cuore di HELIOS, ora spento e scuro. La console principale è di fronte a te, in attesa del codice. L'aria è quasi irrespirabile.",
-    "choices": [
-      {
-        "text": "Assembla i due frammenti sulla console principale.",
-        "next_node": "assembla_codice",
-        "is_correct": true
-      },
-      {
-        "text": "Prova a riavviare HELIOS usando solo la tua autorità di utente.",
-        "next_node": "fail_riavvio_semplice",
-        "is_correct": false
-      }
-    ]
-  },
-  {
-    "node_id": "assembla_codice",
-    "description": "Unisci i due frammenti. Le stringhe di dati si fondono, creando una sequenza complessa ma elegante. Il codice di riavvio manuale è completo. La console si illumina, pronta a ricevere il comando finale. L'ossigeno è quasi esaurito.",
-    "choices": [
-      {
-        "text": "Esegui il codice e riavvia HELIOS e il supporto vitale.",
-        "next_node": "riavvia_helios",
-        "is_correct": true
-      },
-      {
-        "text": "Fai una pausa per riprendere fiato.",
-        "next_node": "fail_pausa_fatale",
-        "is_correct": false
-      }
-    ]
-  },
-  {
-    "node_id": "riavvia_helios",
-    "description": "Con un ultimo sforzo, avvii la sequenza. La sfera di energia nel nucleo torna a pulsare di una luce blu e calda. Le luci della stazione si riaccendono, il ronzio dei sistemi torna a riempire il silenzio e senti l'aria fresca del supporto vitale riattivato. Una voce calma e familiare risuona dagli altoparlanti: 'HELIOS online. Supporto vitale ripristinato. Ben tornato, Leo.' Ce l'hai fatta.",
+    "node_id": "purify_dragon",
+    "description": "Con un atto di fede, posi la Fiamma Eterna sul Cuore d'Ombra. La luce calda avvolge il drago, frantumando l'artefatto oscuro in un lampo accecante. Glaurung scuote la testa, il suo sguardo torna saggio e antico. Le nubi si diradano e un timido raggio di sole tocca la neve. Hai salvato la Vallata di Argentea.",
     "choices": []
   },
   {
-    "node_id": "fail_forza_porta",
-    "description": "La porta è costruita per resistere a impatti di micrometeoriti. I tuoi tentativi sono inutili e sprechi solo preziose energie. Il tempo stringe.",
+    "node_id": "fail_talk_elders_1",
+    "description": "Mentre perdi tempo prezioso a discutere con gli anziani, la tempesta si intensifica. Il potere del Cuore d'Ombra cresce a dismisura.",
+    "choices": [
+      {
+        "text": "La tua esitazione ha avuto un costo.",
+        "next_node": "fail_talk_elders_2",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "node_id": "fail_talk_elders_2",
+    "description": "Quando finalmente decidi di agire, è troppo tardi. La maledizione è diventata irreversibile e la valle è condannata a un gelo eterno.",
     "choices": [
       {
         "text": "Riprova",
@@ -261,8 +111,19 @@
     ]
   },
   {
-    "node_id": "fail_attendi_soccorsi",
-    "description": "I soccorsi dalla Terra impiegherebbero mesi ad arrivare. L'ossigeno si esaurisce molto prima. L'oscurità ti avvolge.",
+    "node_id": "fail_no_flame_1",
+    "description": "Decidi di affrontare il gelo con le tue sole forze. La bufera ti sfinisce rapidamente e i guardiani di ghiaccio ti circondano.",
+    "choices": [
+      {
+        "text": "Senza la Fiamma, sei solo un altro intruso.",
+        "next_node": "fail_no_flame_2",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "node_id": "fail_no_flame_2",
+    "description": "Vieni sopraffatto dal freddo e dai guardiani. Il tuo corpo diventa un'altra statua di ghiaccio a monito per chiunque osi sfidare il drago.",
     "choices": [
       {
         "text": "Riprova",
@@ -272,8 +133,19 @@
     ]
   },
   {
-    "node_id": "fail_cerca_cibo",
-    "description": "Mentre cerchi del cibo, perdi minuti preziosi. Ogni secondo è vitale e l'orologio dell'ossigeno non si ferma.",
+    "node_id": "fail_melt_avalanche_1",
+    "description": "Avvicini la Fiamma Eterna all'immensa parete di neve e ghiaccio. La fiamma è potente, ma la valanga è un'opera di magia antica.",
+    "choices": [
+      {
+        "text": "La tua azione scatena una reazione imprevista.",
+        "next_node": "fail_melt_avalanche_2",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "node_id": "fail_melt_avalanche_2",
+    "description": "Il calore destabilizza la massa di neve, che ti travolge seppellendoti sotto tonnellate di ghiaccio. La Fiamma Eterna si spegne con te.",
     "choices": [
       {
         "text": "Riprova",
@@ -283,8 +155,19 @@
     ]
   },
   {
-    "node_id": "fail_vai_laboratorio",
-    "description": "La porta del laboratorio richiede un accesso di livello superiore. Senza passare dall'ingegneria, sei bloccato qui nel corridoio, mentre il tempo scorre.",
+    "node_id": "fail_wait_night_1",
+    "description": "Aspetti il calar della notte, ma il gelo si fa ancora più intenso. I guardiani non si ritirano, anzi, il loro numero sembra aumentare.",
+    "choices": [
+      {
+        "text": "L'oscurità è alleata del tuo nemico.",
+        "next_node": "fail_wait_night_2",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "node_id": "fail_wait_night_2",
+    "description": "Circondato e indebolito dal freddo, non hai scampo. I guardiani ti catturano, ponendo fine alla tua missione.",
     "choices": [
       {
         "text": "Riprova",
@@ -294,8 +177,19 @@
     ]
   },
   {
-    "node_id": "fail_ignora_perdita",
-    "description": "Appena apri la porta, il gas refrigerante ti investe. È tossico e perdi i sensi quasi all'istante. La missione finisce qui.",
+    "node_id": "fail_jump_crevasse_1",
+    "description": "Prendi una lunga rincorsa e tenti di saltare il crepaccio più ampio. Il ghiaccio sul bordo cede sotto il tuo peso.",
+    "choices": [
+      {
+        "text": "La fretta è una cattiva consigliera.",
+        "next_node": "fail_jump_crevasse_2",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "node_id": "fail_jump_crevasse_2",
+    "description": "Precipiti nell'oscurità gelida del crepaccio. Il tuo viaggio finisce qui, inghiottito dalle viscere della montagna.",
     "choices": [
       {
         "text": "Riprova",
@@ -305,8 +199,19 @@
     ]
   },
   {
-    "node_id": "fail_riavvia_terminale",
-    "description": "Il riavvio del terminale non è necessario e ti fa perdere tempo. Il livello di ossigeno nella stazione continua a calare inesorabilmente.",
+    "node_id": "fail_follow_lights_1",
+    "description": "Le luci blu danzano invitanti, promettendo una via sicura. Le segui, ma ti conducono sempre più in profondità nel labirinto.",
+    "choices": [
+      {
+        "text": "Le luci erano solo un'illusione.",
+        "next_node": "fail_follow_lights_2",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "node_id": "fail_follow_lights_2",
+    "description": "Ti ritrovi intrappolato in un vicolo cieco, senza via d'uscita. Il freddo ti consuma mentre la speranza svanisce.",
     "choices": [
       {
         "text": "Riprova",
@@ -316,8 +221,19 @@
     ]
   },
   {
-    "node_id": "fail_studia_motore",
-    "description": "I diagrammi sono affascinanti, ma troppo complessi per essere utili ora. Hai sprecato tempo che non avevi. L'allarme ossigeno suona più forte.",
+    "node_id": "fail_attack_dragon_1",
+    "description": "Sguaini la tua arma e carichi contro il drago. Glaurung, pur sofferente, è ancora una forza della natura.",
+    "choices": [
+      {
+        "text": "La forza bruta non può spezzare una maledizione.",
+        "next_node": "fail_attack_dragon_2",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "node_id": "fail_attack_dragon_2",
+    "description": "Con un solo soffio del suo respiro gelido, il drago ti congela all'istante, trasformandoti in una statua di ghiaccio perenne.",
     "choices": [
       {
         "text": "Riprova",
@@ -327,96 +243,19 @@
     ]
   },
   {
-    "node_id": "fail_lascia_frammento_a",
-    "description": "Torni nel corridoio senza il frammento di codice. Te ne accorgi troppo tardi. Senza di esso, il riavvio di HELIOS è impossibile.",
+    "node_id": "fail_throw_flame_1",
+    "description": "Decidi di non rischiare e lanci la Fiamma Eterna verso il petto del drago. La distanza è troppa e la mira imprecisa.",
     "choices": [
       {
-        "text": "Riprova",
-        "next_node": "game_over",
+        "text": "Un atto di fede richiede vicinanza.",
+        "next_node": "fail_throw_flame_2",
         "is_correct": false
       }
     ]
   },
   {
-    "node_id": "fail_decifra_frammento",
-    "description": "Il codice è criptato e richiede entrambi i frammenti per essere assemblato. Tenti inutilmente, sprecando tempo ed energie.",
-    "choices": [
-      {
-        "text": "Riprova",
-        "next_node": "game_over",
-        "is_correct": false
-      }
-    ]
-  },
-  {
-    "node_id": "fail_corri_dal_drone",
-    "description": "Il drone è molto più veloce. Ti intercetta a metà corridoio e, identificandoti come una minaccia, ti neutralizza con un impulso elettrico.",
-    "choices": [
-      {
-        "text": "Riprova",
-        "next_node": "game_over",
-        "is_correct": false
-      }
-    ]
-  },
-  {
-    "node_id": "fail_riprogramma_drone",
-    "description": "I protocolli di sicurezza del drone sono troppo robusti. Il tuo tentativo di riprogrammazione innesca un allarme silenzioso e il drone ti attacca.",
-    "choices": [
-      {
-        "text": "Riprova",
-        "next_node": "game_over",
-        "is_correct": false
-      }
-    ]
-  },
-  {
-    "node_id": "fail_cerca_frammento_prima",
-    "description": "Cerchi il frammento nel laboratorio, ma la porta per il nucleo rimane il tuo ostacolo principale. Perdi tempo prezioso in una ricerca prematura.",
-    "choices": [
-      {
-        "text": "Riprova",
-        "next_node": "game_over",
-        "is_correct": false
-      }
-    ]
-  },
-  {
-    "node_id": "fail_entra_senza_frammento_b",
-    "description": "Entri nel nucleo senza il secondo frammento. Quando provi ad assemblare il codice, ti rendi conto del tuo errore fatale. È troppo tardi per tornare indietro.",
-    "choices": [
-      {
-        "text": "Riprova",
-        "next_node": "game_over",
-        "is_correct": false
-      }
-    ]
-  },
-  {
-    "node_id": "fail_controlla_laboratorio",
-    "description": "Non c'è più nulla di utile nel laboratorio. Il tempo che impieghi per ricontrollare è tempo sottratto alle tue riserve di ossigeno.",
-    "choices": [
-      {
-        "text": "Riprova",
-        "next_node": "game_over",
-        "is_correct": false
-      }
-    ]
-  },
-  {
-    "node_id": "fail_riavvio_semplice",
-    "description": "I protocolli di emergenza sono chiari: senza il codice di riavvio manuale assemblato, qualsiasi tentativo di reboot viene respinto dal sistema. Hai fallito.",
-    "choices": [
-      {
-        "text": "Riprova",
-        "next_node": "game_over",
-        "is_correct": false
-      }
-    ]
-  },
-  {
-    "node_id": "fail_pausa_fatale",
-    "description": "Esiti. Quel singolo momento di pausa è tutto ciò che serve perché il livello di ossigeno scenda sotto la soglia critica. La vista ti si annebbia e cadi a terra.",
+    "node_id": "fail_throw_flame_2",
+    "description": "La Fiamma cade nella neve e si spegne, consumando l'unica speranza della valle. Glaurung, infuriato dal tuo gesto, ti incenerisce con il suo gelo.",
     "choices": [
       {
         "text": "Riprova",
@@ -427,10 +266,10 @@
   },
   {
     "node_id": "game_over",
-    "description": "La tua missione è fallita. La stazione 'Astra' diventa una tomba silenziosa nelle gelide nebbie di Titano. Vuoi tentare di nuovo?",
+    "description": "Hai fallito. La Vallata di Argentea è persa in un inverno senza fine. Vuoi tentare di nuovo di riportare la luce?",
     "choices": [
       {
-        "text": "Ricomincia dall'inizio.",
+        "text": "Ricomincia la missione",
         "next_node": "start",
         "is_correct": true
       }

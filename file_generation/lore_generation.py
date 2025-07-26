@@ -5,22 +5,9 @@ import os
 import json
 from utils import load_example_json
 
-# API_KEY=os.getenv("API_KEY")
-# # Configurazione API key
-# os.environ["GOOGLE_API_KEY"] = API_KEY
-
-# # Inizializza il modello Gemini 2.0 Flash
-# llm = ChatGoogleGenerativeAI(
-#     model="gemini-2.0-flash",
-#     temperature=0.6
-# )
-
 
 # Carica l'esempio JSON 
 example_json = load_example_json("file_esempio/loreDiProva.json") 
-
-# user_input=input("Inserisci la richiesta per la lore della quest: ")
-
 
 def generate_lore(user_input,llm):
     # Prompt personalizzato
@@ -57,9 +44,6 @@ def generate_lore(user_input,llm):
     except Exception as e:
         print(f"❌ Errore durante la generazione della lore: {e}")
         
-
-
-
     # Estrai e pulisci la risposta
     response_text = response.content.strip()
 
@@ -90,10 +74,6 @@ def generate_lore(user_input,llm):
         
         print(f"✅ Lore generata con successo e salvata in: {output_filename}")
         
-        # # Mostra anteprima
-        # if "quest_description" in lore_data:
-        #     print(f"\n📖 Titolo: {lore_data['quest_description'].get('title', 'N/A')}")
-        #     print(f"📝 Descrizione: {lore_data['quest_description'].get('description', 'N/A')[:150]}...")
         
     except json.JSONDecodeError as e:
         print(f"❌ Errore nel parsing JSON: {e}")

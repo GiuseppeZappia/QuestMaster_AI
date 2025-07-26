@@ -5,8 +5,6 @@ import os
 import json
 from utils import load_example_json, load_example_pddl
 
-
-
 def generate_story(llm):
     example_story_json = load_example_json("file_esempio/json_storia_esempio.json") 
     
@@ -19,6 +17,7 @@ def generate_story(llm):
 
     with open('sas_plan', 'r') as f:
         piano_da_usare = f.read()
+        
     # Prompt personalizzato
     prompt = f"""Sei un assistente esperto in progettazione di storie interattive guidate da pianificazione automatica (AI Planning) e narrazione ramificata.
     Ti fornisco i seguenti file:

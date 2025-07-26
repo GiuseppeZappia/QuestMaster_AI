@@ -1,21 +1,21 @@
 {
   "lore_document": {
     "quest_description": {
-      "title": "L'Eco Silenzioso di Titano",
-      "initial_state": "Leo, un genio dodicenne, si trova a bordo della stazione di ricerca 'Astra' su Titano. Un'improvvisa eruzione solare ha causato un guasto catastrofico a tutti i sistemi, facendo precipitare la base nel silenzio e nel buio. L'IA centrale, HELIOS, è offline e il supporto vitale sta per esaurirsi.",
-      "goal": "Raggiungere il nucleo di controllo principale, riavviare l'IA HELIOS utilizzando un protocollo di emergenza manuale e ripristinare il supporto vitale prima che le riserve di ossigeno si esauriscano.",
+      "title": "Il Lamento del Drago di Ghiaccio",
+      "initial_state": "La Vallata di Argentea è avvolta da un inverno innaturale e perpetuo. Il drago di ghiaccio, Glaurung, che un tempo proteggeva la valle, ora scatena bufere di neve dal suo nido sul Picco Gelido. Un antico artefatto oscuro, il 'Cuore d'Ombra', ha corrotto il suo animo, trasformandolo in una bestia furiosa.",
+      "goal": "Raggiungere il nido del drago, purificare il 'Cuore d'Ombra' usando la 'Fiamma Eterna' custodita nel villaggio, e spezzare la maledizione per riportare l'equilibrio nella valle.",
       "obstacles": [
-        "Porte di sicurezza sigillate che richiedono diversi livelli di accesso.",
-        "Un drone di manutenzione difettoso che identifica ogni forma di vita come una minaccia.",
-        "Una perdita di refrigerante nel settore ingegneristico che rende l'area pericolosa.",
-        "La necessità di trovare e assemblare i frammenti del codice di riavvio manuale, sparsi nei terminali della stazione."
+        "Una valanga perenne che blocca il sentiero principale per il Picco Gelido.",
+        "Guardiani di ghiaccio animati dalla magia corrotta del drago.",
+        "Un labirinto di crepacci ghiacciati che nasconde il vero ingresso al nido.",
+        "La furia di Glaurung, il cui respiro gelido può congelare un uomo all'istante."
       ],
-      "world_background": "La stazione 'Astra' su Titano è l'avamposto di ricerca più avanzato dell'umanità, costruito per studiare i laghi di metano della luna. È gestita dall'IA HELIOS, considerata l'apice dell'intelligenza artificiale. Leo si trova lì come parte di un programma speciale per giovani dotati.",
-      "contextual_information": "La stazione è stata costruita con protocolli di sicurezza estremamente complessi dopo un precedente tentativo fallito di colonizzazione su Marte. Questo rende un riavvio manuale un'impresa quasi impossibile. I genitori di Leo sono stati i principali architetti di HELIOS, e il ragazzo possiede una comprensione unica e quasi intuitiva dei suoi sistemi."
+      "world_background": "La Vallata di Argentea e il drago di ghiaccio Glaurung hanno un legame millenario. Il drago è il guardiano dell'equilibrio climatico della regione. La sua presenza garantiva inverni miti e estati fresche, essenziali per i rari raccolti della valle.",
+      "contextual_information": "Antiche leggende narrano di un'entità malvagia, il 'Divoratore di Luce', sigillata secoli fa nelle profondità della montagna. Si teme che il suo potere stia nuovamente emergendo, corrompendo le creature più potenti e antiche, a partire da Glaurung."
     },
     "branching_factor": {
       "min_actions_per_state": 2,
-      "max_actions_per_state": 3
+      "max_actions_per_state": 4
     },
     "depth_constraints": {
       "min_steps_to_goal": 4,
