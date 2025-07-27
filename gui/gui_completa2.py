@@ -8,7 +8,6 @@ from typing import Dict, List, Any
 import time
 import random
 import os
-import subprocess
 from dotenv import load_dotenv
 from file_generation.lore_generation import generate_lore
 from langchain_google_genai import ChatGoogleGenerativeAI
@@ -18,7 +17,20 @@ from correction_and_validation.reflective_agent import run_correction_workflow, 
 from correction_and_validation.pddl_validation import run_fastdownward_complete, validate_plan_with_val, get_validation_error_for_correction
 from utils import print_lore, print_plan, load_example_json
 from file_generation.story_generation import generate_story
+import base64
+import re
+from io import BytesIO
+try:
+    from gtts import gTTS
+    GTTS_AVAILABLE = True
+except ImportError:
+    GTTS_AVAILABLE = False
 
+try:
+    import pyttsx3
+    PYTTSX3_AVAILABLE = True
+except ImportError:
+    PYTTSX3_AVAILABLE = False
 
 # Configurazione della pagina
 st.set_page_config(
@@ -762,7 +774,7 @@ st.markdown("""
 </style>
 """, unsafe_allow_html=True)
 
-# Enumera gli stati dell'applicazione
+# Enumero gli stati dell'applicazione
 class AppState:
     CREATION = "creation"
     LORE_REVIEW = "lore_review"
@@ -797,6 +809,257 @@ def initialize_app_state():
         st.session_state.choice_order_seed = random.randint(1, 1000000)
     if 'original_user_input' not in st.session_state:
         st.session_state.original_user_input = ""
+
+def detect_lore_tone(lore_text):
+    """
+    Analizza il tono della lore per adattare la voce TTS
+    """
+    if not lore_text:
+        return "neutral"
+    
+    text_lower = str(lore_text).lower()
+    
+    # Parole chiave per diversi toni
+    dark_words = ['oscuro', 'tenebre', 'morte', 'sangue', 'demone', 'diavolo', 'inferno', 'maledizione', 'vendetta', 'ombra', 'paura', 'terrore']
+    epic_words = ['eroe', 'leggenda', 'gloria', 'onore', 'vittoria', 'trionfo', 'destino', 'regno', 'impero', 'battaglia', 'guerra', 'coraggio']
+    mystical_words = ['magia', 'incantesimo', 'mago', 'strega', 'cristallo', 'pozione', 'spirito', 'antico', 'mistico', 'arcano', 'elementale']
+    adventure_words = ['avventura', 'esplorazione', 'tesoro', 'mappa', 'viaggio', 'scoperta', 'ricerca', 'quest', 'dungeon', 'labirinto']
+    
+    # Conteggio occorrenze
+    dark_count = sum(1 for word in dark_words if word in text_lower)
+    epic_count = sum(1 for word in epic_words if word in text_lower)
+    mystical_count = sum(1 for word in mystical_words if word in text_lower)
+    adventure_count = sum(1 for word in adventure_words if word in text_lower)
+    
+    # Determina il tono dominante
+    max_count = max(dark_count, epic_count, mystical_count, adventure_count)
+    
+    if max_count == 0 or max_count < 2:
+        return "neutral"
+    elif dark_count == max_count:
+        return "dark"
+    elif epic_count == max_count:
+        return "epic"
+    elif mystical_count == max_count:
+        return "mystical"
+    else:
+        return "adventure"
+
+
+def clean_text_for_tts(text):
+    """
+    Pulisce il testo per il TTS rimuovendo emoji, caratteri speciali e formattazione
+    """
+    if not text:
+        return ""
+    
+    # Converte in stringa se è un dizionario/oggetto
+    if not isinstance(text, str):
+        text = str(text)
+    
+    # Rimuove tutte le emoji usando regex Unicode
+    emoji_pattern = re.compile(
+        "["
+        "\U0001F600-\U0001F64F"  # emoticons
+        "\U0001F300-\U0001F5FF"  # symbols & pictographs
+        "\U0001F680-\U0001F6FF"  # transport & map symbols
+        "\U0001F1E0-\U0001F1FF"  # flags (iOS)
+        "\U0001F900-\U0001F9FF"  # supplemental symbols
+        "\U00002600-\U000027BF"  # misc symbols
+        "\U000024C2-\U0001F251"  # enclosed characters
+        "\U0001F170-\U0001F251"  # enclosed alphanumeric supplement
+        "]+", 
+        flags=re.UNICODE
+    )
+    text = emoji_pattern.sub('', text)
+    
+    # Rimuove caratteri markdown e formattazione
+    text = re.sub(r'[*_`#]', '', text)
+    text = re.sub(r'\[.*?\]', '', text)
+    text = re.sub(r'http[s]?://\S+', '', text)
+    
+    # Rimuove caratteri speciali comuni nelle liste
+    text = re.sub(r'[•◦▪▫▸▹‣⁃]', '', text)
+    
+    # Sostituisce i pattern di struttura con testo più naturale per TTS
+    text = re.sub(r'\*\*(.*?):\*\*', r'\1:', text)  # **Titolo:** -> Titolo:
+    text = re.sub(r'Min:\s*(\d+)\s*\|\s*Max:\s*(\d+)', r'da \1 a \2', text)  # Min: 1 | Max: 3 -> da 1 a 3
+    
+    # Pulisce caratteri speciali rimanenti
+    text = re.sub(r'[|\[\]{}]', '', text)
+    
+    # Sostituisce i bullet points con "punto" per una lettura più naturale
+    text = re.sub(r'^\s*\*\s*', 'Punto: ', text, flags=re.MULTILINE)
+    
+    # Pulisce spazi multipli e caratteri di controllo
+    text = re.sub(r'\s+', ' ', text)
+    text = re.sub(r'[\n\r\t]+', ' ', text)
+    
+    # Rimuove spazi prima e dopo i due punti
+    text = re.sub(r'\s*:\s*', ': ', text)
+    
+    # Limita la lunghezza per evitare timeout (aumentato il limite)
+    if len(text) > 1500:
+        # Trova l'ultimo punto prima del limite per non tagliare a metà frase
+        last_period = text.rfind('.', 0, 1500)
+        if last_period > 1000:  # Se troviamo un punto ragionevole
+            text = text[:last_period + 1]
+        else:
+            text = text[:1500] + "..."
+    
+    return text.strip()
+
+
+def generate_tts_audio(text, tone="neutral"):
+    """
+    Genera audio TTS con Google TTS o fallback su pyttsx3
+    """
+    if not text:
+        return None
+    
+    cleaned_text = clean_text_for_tts(text)
+    if not cleaned_text:
+        return None
+    
+    audio_data = None
+    
+    # Prova prima con Google TTS
+    if GTTS_AVAILABLE:
+        try:
+            # Seleziona parametri basati sul tono
+            if tone == "dark":
+                lang = 'it'
+                slow = True
+            elif tone == "epic":
+                lang = 'it'
+                slow = False
+            elif tone == "mystical":
+                lang = 'it'
+                slow = True
+            else:  # neutral, adventure
+                lang = 'it'
+                slow = False
+            
+            tts = gTTS(text=cleaned_text, lang=lang, slow=slow)
+            
+            # Salva in memoria
+            audio_buffer = BytesIO()
+            tts.write_to_fp(audio_buffer)
+            audio_buffer.seek(0)
+            audio_data = audio_buffer.getvalue()
+            
+        except Exception as e:
+            print(f"Errore Google TTS: {e}")
+            audio_data = None
+    
+    # Fallback su pyttsx3 (offline)
+    if audio_data is None and PYTTSX3_AVAILABLE:
+        try:
+            engine = pyttsx3.init()
+            
+            # Configura voce basata sul tono
+            voices = engine.getProperty('voices')
+            if voices:
+                # Seleziona voce femminile per mistico, maschile per epico
+                if tone == "mystical" and len(voices) > 1:
+                    engine.setProperty('voice', voices[1].id)
+                elif tone in ["epic", "dark"] and len(voices) > 0:
+                    engine.setProperty('voice', voices[0].id)
+            
+            # Configura velocità e volume
+            rate = engine.getProperty('rate')
+            if tone == "dark":
+                engine.setProperty('rate', rate - 50)
+            elif tone == "epic":
+                engine.setProperty('rate', rate + 20)
+            else:
+                engine.setProperty('rate', rate)
+            
+            # Salva in file temporaneo
+            temp_file = "temp_audio.wav"
+            engine.save_to_file(cleaned_text, temp_file)
+            engine.runAndWait()
+            
+            # Leggi il file
+            try:
+                with open(temp_file, 'rb') as f:
+                    audio_data = f.read()
+                os.remove(temp_file)  # Pulisci il file temporaneo
+            except:
+                pass
+                
+        except Exception as e:
+            print(f"Errore pyttsx3: {e}")
+            audio_data = None
+    
+    return audio_data
+
+def create_audio_player(audio_data, tone="neutral"):
+    """
+    Crea un player audio HTML5 con styling personalizzato
+    """
+    if not audio_data:
+        return ""
+    
+    # Converti in base64
+    audio_base64 = base64.b64encode(audio_data).decode()
+    
+    # Colori basati sul tono
+    if tone == "dark":
+        bg_color = "rgba(139, 69, 19, 0.3)"
+        accent_color = "#8B4513"
+    elif tone == "epic":
+        bg_color = "rgba(255, 215, 0, 0.3)"
+        accent_color = "#FFD700"
+    elif tone == "mystical":
+        bg_color = "rgba(138, 43, 226, 0.3)"
+        accent_color = "#8A2BE2"
+    else:  # neutral, adventure
+        bg_color = "rgba(74, 144, 226, 0.3)"
+        accent_color = "#4A90E2"
+    
+    return f"""
+    <div style="
+        background: {bg_color};
+        border: 2px solid {accent_color};
+        border-radius: 15px;
+        padding: 1.5rem;
+        margin: 1.5rem 0;
+        text-align: center;
+        backdrop-filter: blur(10px);
+    ">
+        <h4 style="
+            color: {accent_color};
+            font-family: 'Cinzel', serif;
+            margin-bottom: 1rem;
+            font-size: 1.2rem;
+        ">
+            🎵 NARRATORE MAGICO 🎵
+        </h4>
+        <audio controls style="
+            width: 100%;
+            max-width: 400px;
+            height: 40px;
+            border-radius: 20px;
+            outline: none;
+        ">
+            <source src="data:audio/wav;base64,{audio_base64}" type="audio/wav">
+            <source src="data:audio/mpeg;base64,{audio_base64}" type="audio/mpeg">
+            Il tuo browser non supporta l'audio HTML5.
+        </audio>
+        <p style="
+            color: #f0f0f0;
+            font-size: 0.9rem;
+            margin-top: 0.8rem;
+            font-style: italic;
+        ">
+            🎭 Tono: <strong style="color: {accent_color};">{tone.title()}</strong> | 
+            🔊 Ascolta la tua leggenda prendere vita!
+        </p>
+    </div>
+    """
+
+
 
 def setup_llm():
     """Configura il modello LLM"""
@@ -974,7 +1237,7 @@ def render_creation_phase():
     st.markdown('</div>', unsafe_allow_html=True)
 
 def render_lore_review():
-    """Renderizza la fase di revisione della lore"""
+    """Renderizza la fase di revisione della lore con TTS"""
     st.markdown('<div class="creation-container fade-in">', unsafe_allow_html=True)
     
     st.markdown("""
@@ -1003,15 +1266,56 @@ def render_lore_review():
         </div>
         """, unsafe_allow_html=True)
         
+        # AGGIUNTA TTS: Genera e mostra il player audio
+        lore_text = print_lore()
+        
+        # Controlla se TTS è disponibile
+        if GTTS_AVAILABLE or PYTTSX3_AVAILABLE:
+            # Genera audio se non esiste o se la lore è cambiata
+            if ('lore_audio' not in st.session_state or 
+                'last_lore_text' not in st.session_state or 
+                st.session_state.last_lore_text != lore_text):
+                
+                with st.spinner("🎵 Il narratore sta preparando la sua voce magica... ✨"):
+                    tone = detect_lore_tone(lore_text)
+                    audio_data = generate_tts_audio(lore_text, tone)
+                    
+                    if audio_data:
+                        st.session_state.lore_audio = audio_data
+                        st.session_state.lore_tone = tone
+                        st.session_state.last_lore_text = lore_text
+                        st.success("🎭 Il narratore è pronto a dare voce alla tua leggenda!")
+                    else:
+                        st.warning("⚠️ Il narratore magico è temporaneamente indisponibile. Puoi comunque leggere la tua leggenda qui sotto.")
+            
+            # Mostra il player se l'audio è disponibile
+            if hasattr(st.session_state, 'lore_audio') and st.session_state.lore_audio:
+                audio_player = create_audio_player(
+                    st.session_state.lore_audio, 
+                    getattr(st.session_state, 'lore_tone', 'neutral')
+                )
+                st.markdown(audio_player, unsafe_allow_html=True)
+        else:
+            # Messaggio se TTS non è disponibile
+            st.markdown("""
+            <div style="background: rgba(255, 165, 0, 0.1); border: 2px solid rgba(255, 165, 0, 0.3); border-radius: 15px; padding: 1.5rem; margin: 1.5rem 0; text-align: center;">
+                <p style="color: #ffa500; font-family: 'Crimson Text', serif; font-size: 1rem; margin: 0;">
+                    🔇 <strong>Narratore Magico non disponibile</strong><br>
+                    <em style="color: #f0f0f0; font-size: 0.9rem;">Per attivare la lettura audio, installa: pip install gtts pyttsx3</em>
+                </p>
+            </div>
+            """, unsafe_allow_html=True)
+        
+        # Mostra il testo della lore (come prima)
         st.markdown(f"""
         <div class="lore-display">
-            {print_lore()}
+            {lore_text}
         </div>
         """, unsafe_allow_html=True)
         
         st.markdown("---")
         
-        # Sezione di controllo migliorata
+        # Sezione di controllo migliorata (resto della funzione rimane uguale)
         st.markdown("""
         <div style="background: rgba(162, 155, 254, 0.1); border: 2px solid rgba(162, 155, 254, 0.3); border-radius: 20px; padding: 2rem; margin: 2rem 0;">
             <h4 style="color: #a29bfe; font-family: 'Cinzel', serif; text-align: center; margin-bottom: 1.5rem; font-size: 1.4rem;">
@@ -1082,6 +1386,12 @@ def render_lore_review():
                                 
                                 update_lore_with_corrections(modification_request, st.session_state.llm)
                                 st.session_state.generated_lore = load_example_json("file_generati/lore_generata_per_utente.json")
+                                
+                                # AGGIUNTA TTS: Cancella l'audio precedente per rigenerarlo
+                                if 'lore_audio' in st.session_state:
+                                    del st.session_state.lore_audio
+                                if 'last_lore_text' in st.session_state:
+                                    del st.session_state.last_lore_text
                                 
                                 progress_bar.progress(100)
                                 status_text.text("✨ Modifiche completate con maestria!")

@@ -1,29 +1,45 @@
-;; problem.pddl
-;; Questo file definisce l'istanza specifica del problema per la lore "Il Risveglio della Rosa".
-(define (problem risveglio-lira)
-  (:domain risveglio-della-rosa) ; Specifica il dominio di riferimento per questo problema
+;; problem.pddl per la quest "L'Eco della Savana"
+(define (problem salvataggio-principessa-cleope) ; definisce il nome del problema specifico
+  (:domain eco-savana) ; fa riferimento al dominio eco-savana precedentemente definito
 
-  ;; Oggetti: Definisce le entita' specifiche presenti in questa istanza del mondo
-  (:objects
-    valerius - principe ; Il principe protagonista della storia, Valerius
-    lira - principessa ; La principessa caduta nel sonno incantato, Lira
-    spada-di-famiglia - spada ; La lama che il principe deve incantare
-    cancello-castello - luogo ; Il punto di partenza, fuori dal castello dove si trovano i rovi e la fontana
-    stanza-principessa - luogo ; Il luogo dove la principessa e' imprigionata nel sonno
+  (:objects ; definisce gli oggetti specifici di questa istanza del problema
+    franciscus - principe ; il protagonista, Principe Franciscus
+    cleope - principessa ; la principessa da salvare, Cleope
+    kael - sciamano ; l'antagonista, lo sciamano Kael
+    coccodrillo-guardiano - guardiano ; il guardiano primordiale dell'oasi
+    terre-selvagge pianure-iene canyon-ombre luogo-baobab - luogo ; i luoghi generici della savana
+    oasi-perduta - oasi ; il luogo finale, che e' un tipo speciale di luogo
   )
 
-  ;; Stato Iniziale: Descrive la configurazione del mondo all'inizio della quest
-  (:init
-    (at valerius cancello-castello) ; Il principe Valerius si trova al cancello del castello
-    (is-in lira stanza-principessa) ; La principessa Lira si trova nella sua stanza
-    (asleep lira) ; La principessa Lira e' addormentata a causa della maledizione
-    (has-weapon valerius spada-di-famiglia) ; Il principe Valerius possiede la sua spada di famiglia
-    (fountain-is-at cancello-castello) ; La Fontana della Luna si trova al cancello del castello, accessibile al principe
-    (thorns-are-blocking cancello-castello stanza-principessa) ; I rovi incantati bloccano il passaggio dal cancello alla stanza
+  (:init ; definisce lo stato iniziale del mondo basato sulla lore
+    ;; Posizioni iniziali dei personaggi
+    (at franciscus terre-selvagge) ; il Principe Franciscus inizia la sua missione nelle terre selvagge
+    (at kael oasi-perduta) ; lo sciamano Kael si trova nell'Oasi Perduta
+    (principessa-imprigionata cleope oasi-perduta) ; la Principessa Cleope e' tenuta prigioniera nell'oasi
+
+    ;; Stato iniziale dei nemici
+    (vivo kael) ; lo sciamano Kael e' vivo all'inizio della quest
+    (guardiano-vivo coccodrillo-guardiano) ; il guardiano coccodrillo e' vivo
+    (guardiano-protegge-oasi coccodrillo-guardiano oasi-perduta) ; il guardiano sta proteggendo l'accesso all'oasi
+
+    ;; Stato iniziale degli ostacoli ambientali
+    (iene-pattugliano pianure-iene) ; gli uomini-iena pattugliano le pianure, bloccando il passaggio
+    (canyon-indecifrabile) ; l'enigma del Canyon delle Ombre Mute non e' ancora stato risolto
+    (sentiero-nascosto) ; il sentiero che conduce all'Oasi Perduta e' nascosto
+
+    ;; Definizione della mappa del mondo (connessioni tra luoghi)
+    (connesso terre-selvagge pianure-iene) ; e' possibile viaggiare dalle terre selvagge alle pianure
+    (connesso pianure-iene terre-selvagge) ; il percorso e' bidirezionale
+    (connesso pianure-iene canyon-ombre) ; e' possibile viaggiare dalle pianure al canyon
+    (connesso canyon-ombre pianure-iene) ; il percorso e' bidirezionale
+    (connesso canyon-ombre luogo-baobab) ; e' possibile viaggiare dal canyon al luogo dei baobab
+    (connesso luogo-baobab canyon-ombre) ; il percorso e' bidirezionale
+    (connesso luogo-baobab oasi-perduta) ; e' possibile viaggiare dal luogo dei baobab all'oasi
+    (connesso oasi-perduta luogo-baobab) ; il percorso e' bidirezionale
   )
 
-  ;; Obiettivo: Definisce la condizione che il piano deve raggiungere per essere considerato un successo
-  (:goal (and ; L'obiettivo e' una congiunzione di condizioni da soddisfare
-    (not (asleep lira)) ; La condizione finale e' che la principessa Lira non sia piu' addormentata
+  (:goal (and ; definisce l'obiettivo finale che il piano deve raggiungere
+    (not (vivo kael)) ; l'obiettivo e' sconfiggere lo sciamano Kael
+    (not (principessa-imprigionata cleope oasi-perduta)) ; e liberare la Principessa Cleope dalla sua prigionia
   ))
 )

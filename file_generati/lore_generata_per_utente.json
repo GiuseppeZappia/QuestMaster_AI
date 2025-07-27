@@ -1,21 +1,21 @@
 {
   "lore_document": {
     "quest_description": {
-      "title": "Il Patto dei Due Regni",
-      "initial_state": "I regni confinanti di Solara e Lunara sono sull'orlo di una guerra a causa di una misteriosa maledizione che sta inaridendo le loro terre. La Principessa Elara di Solara e il Principe Kael di Lunara, nonostante l'antica rivalità tra le loro famiglie, si incontrano in segreto al confine per trovare una soluzione.",
-      "goal": "Rompere la maledizione riunendo le due metà dell'Amuleto dell'Armonia. Ogni metà è custodita da una delle famiglie reali. I due eredi dovranno convincere i propri regnanti, superare i sospetti delle rispettive corti e viaggiare fino al Santuario dell'Equilibrio per compiere il rituale.",
+      "title": "L'Eco della Savana",
+      "initial_state": "Nel vibrante Regno di Zafara, la Principessa Cleope è stata rapita dal perfido sciamano Kael, che l'ha imprigionata nell'Oasi Perduta, un luogo avvolto da antiche magie. Il Principe Franciscus, coraggioso esploratore e suo promesso sposo, è l'unico che osa avventurarsi nelle terre selvagge per salvarla.",
+      "goal": "Attraversare le insidiose terre della savana, decifrare gli indizi degli antichi spiriti e trovare l'Oasi Perduta per sconfiggere Kael e liberare la Principessa Cleope.",
       "obstacles": [
-        "La profonda sfiducia tra i Re di Solara e Lunara.",
-        "Lord Malakor, un consigliere di corte che trama nell'ombra per sabotare ogni tentativo di pace.",
-        "Le creature corrotte che infestano le Terre Contese, rese ostili dalla maledizione.",
-        "I guardiani ancestrali del Santuario dell'Equilibrio, che mettono alla prova la purezza di cuore di chiunque osi avvicinarsi."
+        "Le Tribù degli Uomini-Iena, fedeli servitori dello sciamano che pattugliano le pianure.",
+        "Il Canyon delle Ombre Mute, un labirinto roccioso dove ogni suono viene annullato, rendendo l'orientamento quasi impossibile.",
+        "L'enigma dei Baobab Sacri, le cui posizioni devono essere allineate con le costellazioni per rivelare il sentiero nascosto.",
+        "Il Guardiano dell'Oasi, un colossale coccodrillo primordiale animato dalla magia oscura di Kael."
       ],
-      "world_background": "Solara, il Regno del Sole, è rinomato per i suoi cavalieri e i suoi campi dorati. Lunara, il Regno della Luna, è celebre per i suoi maghi e le sue antiche biblioteche. Un tempo alleati, un tradimento secolare ha generato un'ostilità che ora minaccia di distruggerli entrambi. La maledizione è la manifestazione fisica di questa antica discordia.",
-      "contextual_information": "La maledizione non solo affligge i raccolti, ma indebolisce anche le fonti magiche di entrambi i regni. Lord Malakor discende dalla casata che causò la rottura originale e mira a governare sulle ceneri di entrambi i regni."
+      "world_background": "Zafara è un regno la cui vita dipende dal Grande Fiume che attraversa la savana. L'unione tra Franciscus, principe delle tribù delle pianure, e Cleope, principessa delle tribù del fiume, è destinata a garantire un'era di pace e prosperità. Kael, uno sciamano esiliato da una tribù dimenticata, vuole controllare il potere del fiume per dominare l'intera regione.",
+      "contextual_information": "Il rapimento di Cleope è solo il primo passo del piano di Kael. Lo sciamano sta usando la sua magia per prosciugare il Grande Fiume, minacciando il regno con una terribile siccità e carestia. La missione di Franciscus non è solo per amore, ma è una corsa contro il tempo per salvare il suo popolo dalla distruzione."
     },
     "branching_factor": {
       "min_actions_per_state": 2,
-      "max_actions_per_state": 4
+      "max_actions_per_state": 3
     },
     "depth_constraints": {
       "min_steps_to_goal": 4,
