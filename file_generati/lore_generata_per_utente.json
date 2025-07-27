@@ -1,21 +1,21 @@
 {
   "lore_document": {
     "quest_description": {
-      "title": "L'Eco della Savana",
-      "initial_state": "Nel vibrante Regno di Zafara, la Principessa Cleope è stata rapita dal perfido sciamano Kael, che l'ha imprigionata nell'Oasi Perduta, un luogo avvolto da antiche magie. Il Principe Franciscus, coraggioso esploratore e suo promesso sposo, è l'unico che osa avventurarsi nelle terre selvagge per salvarla.",
-      "goal": "Attraversare le insidiose terre della savana, decifrare gli indizi degli antichi spiriti e trovare l'Oasi Perduta per sconfiggere Kael e liberare la Principessa Cleope.",
+      "title": "Il Sorriso Perduto di Pipo",
+      "initial_state": "Nel magico Circus Aeturnum, il pagliaccio Pipo ha perso il suo 'tocco comico'. Le sue battute non fanno più ridere, i suoi scherzi falliscono e la gioia che alimentava la magia del circo sta svanendo. Il tendone principale è diventato grigio e il pubblico è sempre più scarso.",
+      "goal": "Aiutare Pipo a ritrovare la sua capacità di far ridere, recuperando il leggendario 'Fiore che Ride', un fiore magico che sboccia solo nel cuore della Foresta Sussurrante. Solo così potrà salvare il Circus Aeturnum dal dissolversi nel nulla.",
       "obstacles": [
-        "Le Tribù degli Uomini-Iena, fedeli servitori dello sciamano che pattugliano le pianure.",
-        "Il Canyon delle Ombre Mute, un labirinto roccioso dove ogni suono viene annullato, rendendo l'orientamento quasi impossibile.",
-        "L'enigma dei Baobab Sacri, le cui posizioni devono essere allineate con le costellazioni per rivelare il sentiero nascosto.",
-        "Il Guardiano dell'Oasi, un colossale coccodrillo primordiale animato dalla magia oscura di Kael."
+        "Il Guardiano Brontolone del Ponte di Caramello, che permette il passaggio solo a chi riesce a strappargli un sorriso.",
+        "Il Labirinto degli Specchi Deformanti, che confonde il percorso e riflette le paure e i dubbi di Pipo.",
+        "Il Mimo Silente, un rivale invidioso che cercherà di sabotare la ricerca di Pipo con trappole silenziose e ingannevoli.",
+        "La Melodia Malinconica del Carillon Dimenticato, un incantesimo che induce tristezza e fa dimenticare lo scopo della missione."
       ],
-      "world_background": "Zafara è un regno la cui vita dipende dal Grande Fiume che attraversa la savana. L'unione tra Franciscus, principe delle tribù delle pianure, e Cleope, principessa delle tribù del fiume, è destinata a garantire un'era di pace e prosperità. Kael, uno sciamano esiliato da una tribù dimenticata, vuole controllare il potere del fiume per dominare l'intera regione.",
-      "contextual_information": "Il rapimento di Cleope è solo il primo passo del piano di Kael. Lo sciamano sta usando la sua magia per prosciugare il Grande Fiume, minacciando il regno con una terribile siccità e carestia. La missione di Franciscus non è solo per amore, ma è una corsa contro il tempo per salvare il suo popolo dalla distruzione."
+      "world_background": "Il Circus Aeturnum non è un circo comune. È un'entità semi-senziente che viaggia tra i mondi, alimentata dalla pura gioia e meraviglia del suo pubblico. I suoi artisti non sono semplici performer, ma custodi di antiche arti magiche legate alle emozioni.",
+      "contextual_information": "La famiglia di Pipo ha guidato il circo per generazioni. La sua perdita del 'tocco' non è solo una crisi personale, ma una minaccia esistenziale per l'eredità della sua famiglia e per tutti gli abitanti magici del circo, come l'uomo cannone e la donna volante, la cui magia dipende dalla felicità collettiva."
     },
     "branching_factor": {
       "min_actions_per_state": 2,
-      "max_actions_per_state": 3
+      "max_actions_per_state": 4
     },
     "depth_constraints": {
       "min_steps_to_goal": 4,

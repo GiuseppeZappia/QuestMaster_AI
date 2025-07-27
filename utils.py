@@ -28,12 +28,12 @@ def load_example_pddl(filename):
 
 def print_lore():
     lore_data = load_example_json("file_generati/lore_generata_per_utente.json")
-    # Estrai le sezioni
+    # Estrae le sezioni
     quest = lore_data["lore_document"]["quest_description"]
     branching = lore_data["lore_document"]["branching_factor"]
     depth = lore_data["lore_document"]["depth_constraints"]
     
-    # Componi la narrazione in Markdown compatto
+    # Compone la narrazione in Markdown compatto
     narrative = f"""
 ### 🗝️ Titolo della Missione:
 **{quest["title"]}**

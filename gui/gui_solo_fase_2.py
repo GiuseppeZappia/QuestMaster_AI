@@ -13,7 +13,7 @@ st.set_page_config(
     initial_sidebar_state="expanded"
 )
 
-# CSS personalizzato per un design ancora più accattivante
+# CSS personalizzato 
 st.markdown("""
 <style>
     @import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Crimson+Text:ital,wght@0,400;0,600;1,400&family=Creepster&display=swap');
@@ -634,7 +634,7 @@ def shuffle_choices(choices: List[Dict], seed: int) -> List[Dict]:
 
 def make_choice(next_node: str, choice_text: str):
     """Gestisce la scelta dell'utente"""
-    # Aggiungi la scelta alla cronologia
+    # Aggiunge la scelta alla cronologia
     st.session_state.choices_made.append({
         'from_node': st.session_state.current_node,
         'choice': choice_text,
@@ -692,8 +692,7 @@ def main():
         
         st.markdown("---")
         
-        # Mostra la cronologia delle scelte con design ultra-migliorato
-        # AGGIUNTA: Controllo se ci sono effettivamente scelte per mostrare il progresso
+        # Mostra la cronologia delle scelte e Controllo se ci sono effettivamente scelte per mostrare il progresso
         if st.session_state.choices_made:
             st.markdown("""
             <div class="sidebar-content">
@@ -714,7 +713,7 @@ def main():
                     </div>
                     """, unsafe_allow_html=True)
         else:
-            # AGGIUNTA: Mostra un messaggio quando non ci sono ancora scelte
+            # Mostra un messaggio quando non ci sono ancora scelte
             st.markdown("""
             <div class="sidebar-content">
                 <h3 class="compact-sidebar-message">
@@ -728,7 +727,7 @@ def main():
         
         st.markdown("---")
         
-        # Istruzioni con design ultra-migliorato e compatto
+        # Istruzioni 
         st.markdown("""
         <div class="instructions">
             <h3>🗡️ REGOLE</h3>
@@ -756,7 +755,7 @@ def main():
     st.markdown(f'<div class="story-text">{current_node.get("description", "")}</div>', 
                 unsafe_allow_html=True)
     
-    # Gestisci i diversi tipi di nodi
+    # Gestisce i diversi tipi di nodi
     choices = current_node.get('choices', [])
     
     if not choices:
@@ -765,7 +764,6 @@ def main():
             # Schermata di vittoria semplificata
             st.balloons()  # Effetto palloncini di Streamlit
                         
-                        # Messaggio finale
             st.markdown("""
             <div style="
                 background: linear-gradient(45deg, #ffd700, #ff6b6b);
@@ -877,7 +875,7 @@ def main():
         for i, choice in enumerate(shuffled_choices):
             icon = get_choice_icon(i)
             
-            # Aggiungi una breve pausa tra i bottoni per effetto drammatico
+            # Aggiunge una breve pausa tra i bottoni per effetto drammatico
             time.sleep(0.05)
             
             if st.button(f"{icon} {choice['text']}", key=f"choice_{st.session_state.current_node}_{i}", use_container_width=True):

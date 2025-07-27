@@ -77,7 +77,7 @@ def generate_story(llm):
     except Exception as e:
         print(f"❌ Errore durante la generazione della lore: {e}")
         
-    # Estrai e pulisci la risposta
+    # Estrae e pulisci la risposta
     response_text = response.content.strip()
 
     # Prova a estrarre il JSON dalla risposta
@@ -97,7 +97,7 @@ def generate_story(llm):
             json_text = response_text
 
     try:
-        # Converti in dizionario per validare
+        # Converte in dizionario per validare
         lore_data = json.loads(json_text)
         # Salva la lore generata
         output_filename = "file_generati/storia_generata.json"

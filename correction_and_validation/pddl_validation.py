@@ -27,7 +27,7 @@ def run_fastdownward_planning():
 
         print(f"Avvio Fast Downward via WSL...")
         
-        # Leggi le variabili d'ambiente WSL
+        # Legge le variabili d'ambiente WSL
         domain_wsl = os.getenv('WSL_DOMAIN_PATH')
         problem_wsl = os.getenv('WSL_PROBLEM_PATH')
         fd_path = os.getenv('WSL_DOWNWARD_PATH')
@@ -41,7 +41,7 @@ def run_fastdownward_planning():
         # Crea il comando per Fast Downward (solo pianificazione)
         command_str = f'python3 "{fd_path}" "{domain_wsl}" "{problem_wsl}" --search "astar(blind())"'
         
-        # Esegui Fast Downward via WSL
+        # Esegue Fast Downward via WSL
         result = subprocess.run(
             [
                 "wsl",
@@ -114,11 +114,11 @@ def get_fastdownward_solution():
         )
         
         if result.returncode == 0 and result.stdout.strip():
-            # Parsea l'output del sas_plan
+            # Parsing dell'output del sas_plan
             solution_content = result.stdout.strip()
             
             
-            # Processa le azioni (ogni linea del sas_plan rappresenta un'azione)
+            # Processing dele azioni (ogni linea del sas_plan rappresenta un'azione)
             lines = solution_content.split('\n')
             actions = []
             
@@ -201,7 +201,7 @@ def validate_plan_with_val():
     }
     
     try:
-        # Leggi le variabili d'ambiente WSL
+        # Legge le variabili d'ambiente WSL
         domain_wsl = os.getenv('WSL_DOMAIN_PATH')
         problem_wsl = os.getenv('WSL_PROBLEM_PATH')
         val_path = os.getenv('WSL_VAL_PATH')
@@ -232,7 +232,7 @@ def validate_plan_with_val():
         # Validate usa: validate <domain> <problem> <plan>
         command_str = f'"{val_path}" "{domain_wsl}" "{problem_wsl}" "{sas_plan_wsl}"'
         
-        # Esegui VAL
+        # Esegue VAL
         result = subprocess.run(
             [
                 "wsl", "-d", "Ubuntu",
@@ -275,7 +275,7 @@ def validate_plan_with_val():
             results["error_message"] = f"VAL ha restituito codice di errore: {result.returncode}"
             print(f"❌ Errore nell'esecuzione di VAL: {result.returncode}")
         
-        # Estrai dettagli aggiuntivi dall'output
+        # Estrazione dettagli aggiuntivi dall'output
         results["validation_details"] = parse_val_output(validation_output)
         
     except subprocess.TimeoutExpired:
@@ -334,18 +334,18 @@ def get_validation_error_for_correction(validation_results):
         return "Non ci sono errori di validazione. Il piano è valido."
 
     if not validation_results["validation_successful"]:
-        # Costruisci un messaggio di errore più dettagliato
+        # Costruisco un messaggio di errore più dettagliato
         error_message = "ERRORI DI VALIDAZIONE VAL:\n"
         
-        # Includi l'output completo di validazione se disponibile
+        # Includo l'output completo di validazione se disponibile
         if "validation_output" in validation_results and validation_results["validation_output"]:
             error_message += f"Output VAL:\n{validation_results['validation_output']}\n\n"
         
-        # Includi il messaggio di errore base
+        # Includo il messaggio di errore base
         if "error_message" in validation_results:
             error_message += f"Errore: {validation_results['error_message']}\n"
         
-        # Includi dettagli aggiuntivi se disponibili
+        # Includo dettagli aggiuntivi se disponibili
         if "validation_details" in validation_results:
             details = validation_results["validation_details"]
             if details.get("execution_errors"):
@@ -363,10 +363,10 @@ def get_validation_error_for_correction(validation_results):
     if validation_results.get("plan_valid"):
         return None  # Nessun errore
     
-    # Costruisci un messaggio di errore dettagliato per piani non validi
+    # Costruisco un messaggio di errore dettagliato per piani non validi
     error_message = "ERRORI DI VALIDAZIONE VAL:\n"
     
-    # Includi l'output completo di validazione (codice + descrizione)
+    # Includo l'output completo di validazione (codice + descrizione)
     if "validation_output" in validation_results and validation_results["validation_output"]:
         error_message += f"Output VAL:\n{validation_results['validation_output']}\n"
     

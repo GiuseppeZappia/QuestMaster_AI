@@ -1,45 +1,50 @@
-;; problem.pddl per la quest "L'Eco della Savana"
-(define (problem salvataggio-principessa-cleope) ; definisce il nome del problema specifico
-  (:domain eco-savana) ; fa riferimento al dominio eco-savana precedentemente definito
+;; problem.pddl
+;; File di problema per la quest "Il Sorriso Perduto di Pipo".
+;; Definisce lo stato iniziale del mondo e l'obiettivo finale della missione.
 
-  (:objects ; definisce gli oggetti specifici di questa istanza del problema
-    franciscus - principe ; il protagonista, Principe Franciscus
-    cleope - principessa ; la principessa da salvare, Cleope
-    kael - sciamano ; l'antagonista, lo sciamano Kael
-    coccodrillo-guardiano - guardiano ; il guardiano primordiale dell'oasi
-    terre-selvagge pianure-iene canyon-ombre luogo-baobab - luogo ; i luoghi generici della savana
-    oasi-perduta - oasi ; il luogo finale, che e' un tipo speciale di luogo
+(define (problem ritrovare-il-sorriso-di-pipo)
+  (:domain sorriso-perduto-di-pipo) ;; Specifica il dominio di riferimento per questo problema
+
+  ;; --- OGGETTI ---
+  ;; Definizione degli oggetti specifici presenti in questa istanza del mondo.
+  (:objects
+    pipo1 - pipo ;; Il nostro eroe, il pagliaccio Pipo
+    fiore-che-ride - fiore ;; L'oggetto magico da recuperare
+
+    circus-aeturnum - luogo ;; Il punto di partenza e di arrivo della quest
+    ponte-caramello - luogo ;; Il luogo dove si trova il Guardiano Brontolone
+    labirinto-specchi - luogo ;; Il luogo dove si trova il labirinto e il mimo
+    foresta-sussurrante - luogo ;; Il luogo dove si trova il fiore e la melodia
   )
 
-  (:init ; definisce lo stato iniziale del mondo basato sulla lore
-    ;; Posizioni iniziali dei personaggi
-    (at franciscus terre-selvagge) ; il Principe Franciscus inizia la sua missione nelle terre selvagge
-    (at kael oasi-perduta) ; lo sciamano Kael si trova nell'Oasi Perduta
-    (principessa-imprigionata cleope oasi-perduta) ; la Principessa Cleope e' tenuta prigioniera nell'oasi
+  ;; --- STATO INIZIALE ---
+  ;; Descrizione dello stato del mondo all'inizio della quest.
+  (:init
+    ;; Posizioni iniziali dei personaggi e degli oggetti
+    (at pipo1 circus-aeturnum) ;; Pipo parte dal tendone del circo
+    (flower-at fiore-che-ride foresta-sussurrante) ;; Il Fiore che Ride si trova nella foresta
 
-    ;; Stato iniziale dei nemici
-    (vivo kael) ; lo sciamano Kael e' vivo all'inizio della quest
-    (guardiano-vivo coccodrillo-guardiano) ; il guardiano coccodrillo e' vivo
-    (guardiano-protegge-oasi coccodrillo-guardiano oasi-perduta) ; il guardiano sta proteggendo l'accesso all'oasi
+    ;; Stato iniziale di Pipo e del circo
+    (pipo-has-lost-touch) ;; Pipo ha perso la sua comicita, il problema principale
 
-    ;; Stato iniziale degli ostacoli ambientali
-    (iene-pattugliano pianure-iene) ; gli uomini-iena pattugliano le pianure, bloccando il passaggio
-    (canyon-indecifrabile) ; l'enigma del Canyon delle Ombre Mute non e' ancora stato risolto
-    (sentiero-nascosto) ; il sentiero che conduce all'Oasi Perduta e' nascosto
+    ;; Ostacoli attivi nel mondo
+    (guardian-blocks-bridge) ;; Il Guardiano Brontolone blocca il passaggio sul ponte
+    (labyrinth-is-confusing) ;; Il labirinto degli specchi e un ostacolo attivo
+    (mime-is-sabotaging) ;; Il Mimo Silente sta attivamente sabotando la missione
+    (melody-is-sad) ;; La Melodia Malinconica e attiva e induce tristezza
 
-    ;; Definizione della mappa del mondo (connessioni tra luoghi)
-    (connesso terre-selvagge pianure-iene) ; e' possibile viaggiare dalle terre selvagge alle pianure
-    (connesso pianure-iene terre-selvagge) ; il percorso e' bidirezionale
-    (connesso pianure-iene canyon-ombre) ; e' possibile viaggiare dalle pianure al canyon
-    (connesso canyon-ombre pianure-iene) ; il percorso e' bidirezionale
-    (connesso canyon-ombre luogo-baobab) ; e' possibile viaggiare dal canyon al luogo dei baobab
-    (connesso luogo-baobab canyon-ombre) ; il percorso e' bidirezionale
-    (connesso luogo-baobab oasi-perduta) ; e' possibile viaggiare dal luogo dei baobab all'oasi
-    (connesso oasi-perduta luogo-baobab) ; il percorso e' bidirezionale
+    ;; Definizione dei percorsi percorribili tra i luoghi
+    (path-is-clear circus-aeturnum ponte-caramello) ;; Si puo viaggiare dal circo al ponte
+    (path-is-clear ponte-caramello circus-aeturnum) ;; Si puo tornare dal ponte al circo
+    (path-is-clear ponte-caramello labirinto-specchi) ;; Si puo viaggiare dal ponte al labirinto
+    (path-is-clear labirinto-specchi ponte-caramello) ;; Si puo tornare dal labirinto al ponte
+    (path-is-clear labirinto-specchi foresta-sussurrante) ;; Si puo viaggiare dal labirinto alla foresta
+    (path-is-clear foresta-sussurrante labirinto-specchi) ;; Si puo tornare dalla foresta al labirinto
   )
 
-  (:goal (and ; definisce l'obiettivo finale che il piano deve raggiungere
-    (not (vivo kael)) ; l'obiettivo e' sconfiggere lo sciamano Kael
-    (not (principessa-imprigionata cleope oasi-perduta)) ; e liberare la Principessa Cleope dalla sua prigionia
+  ;; --- OBIETTIVO ---
+  ;; Le condizioni che devono essere vere per considerare il problema risolto.
+  (:goal (and
+    (circus-is-saved) ;; L'obiettivo finale e salvare il Circus Aeturnum
   ))
 )
