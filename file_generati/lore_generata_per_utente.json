@@ -2,25 +2,23 @@
   "lore_document": {
     "quest_description": {
       "title": "Il Silenzio del Loto Nero",
-      "initial_state": "Il Dominio dell'Alba Nascente è caduto. Lo Shogun giace avvelenato da una tossina sconosciuta, e il Castello Imperiale è stato conquistato dal Clan del Loto Nero, un gruppo di assassini ritenuto estinto. Tu sei Kaito, l'ultimo membro superstite della Guardia Shinobi dello Shogun, e ti nascondi nelle ombre della capitale occupata.",
-      "goal": "Infiltrarti nel Castello Imperiale, trovare la formula e gli ingredienti per l'antidoto che salverà lo Shogun, sconfiggere il leader del Clan del Loto Nero e liberare il Dominio dalla sua morsa oscura.",
+      "initial_state": "Il regno di Kageyama è caduto. Lo Shogun giace avvelenato nel suo palazzo, vittima di un complotto ordito dal rivale Clan della Tigre di Ferro, che ora pattuglia le strade della capitale. Tu sei Kael, l'ultimo ninja del Clan del Loto Silente, e ti trovi nel tuo dojo segreto ai margini della città, con il compito di vendicare il tuo maestro e salvare il regno.",
+      "goal": "Infiltrarti nel palazzo dello Shogun, recuperare gli ingredienti per l'antidoto al veleno 'Sonno di Giada', smascherare il tradimento del Generale Takeda e sconfiggere il leader del Clan della Tigre di Ferro per ripristinare l'ordine.",
       "obstacles": [
-        "Le ronde di samurai corrotti e shinobi del Loto Nero che pattugliano ogni strada.",
-        "Il Castello Imperiale, ora trasformato in una fortezza piena di trappole e allarmi magici.",
-        "Generale Onimaru, il brutale braccio destro del leader nemico, che presidia il cortile interno.",
-        "Un antico spirito guardiano evocato dal Loto Nero per proteggere la sala del trono.",
-        "Gli ingredienti rari per l'antidoto, custoditi in luoghi pericolosi e sorvegliati da creature corrotte dall'alchimia oscura.",
-        "La diffidenza dei cittadini, terrorizzati dal Loto Nero e pronti a tradirti per salvarsi la vita."
+        "Le pattuglie di samurai del Clan della Tigre di Ferro che sorvegliano la città.",
+        "Il Generale Takeda, un abile stratega che ha tradito lo Shogun.",
+        "Antiche trappole magiche a protezione delle stanze del palazzo.",
+        "La necessità di muoversi nell'ombra, poiché un allarme generale renderebbe la missione impossibile."
       ],
-      "world_background": "Il Dominio dell'Alba Nascente è una terra feudale dove l'onore dei samurai e l'arte segreta degli shinobi hanno mantenuto la pace per secoli. Il Clan del Loto Nero era un gruppo eretico che praticava il ninjutsu proibito e l'alchimia oscura, bandito secoli fa dopo una sanguinosa guerra civile.",
-      "contextual_information": "La conquista non è solo un atto di potere. Il leader del Loto Nero sta cercando di completare un rituale durante la prossima luna di sangue per ottenere l'immortalità, usando l'energia vitale dello Shogun. Il tempo stringe."
+      "world_background": "Il regno di Kageyama è una terra isolata tra montagne impervie, governata da secoli da uno Shogun saggio. La pace è mantenuta da un delicato equilibrio tra i clan ninja. Il Clan del Loto Silente è da sempre la guardia segreta dello Shogun, mentre il Clan della Tigre di Ferro è noto per la sua ambizione e la sua spietata abilità in combattimento.",
+      "contextual_information": "Un recente trattato di pace tra i clan è stato infranto con l'avvelenamento dello Shogun. Il tuo maestro è caduto nel tentativo di proteggerlo, lasciandoti come unica speranza. Si mormora che il Clan della Tigre di Ferro abbia stretto un patto con entità oscure per ottenere il potere."
     },
     "branching_factor": {
-      "min_actions_per_state": 3,
+      "min_actions_per_state": 2,
       "max_actions_per_state": 4
     },
     "depth_constraints": {
-      "min_steps_to_goal": 6,
+      "min_steps_to_goal": 4,
       "max_steps_to_goal": 8
     }
   }

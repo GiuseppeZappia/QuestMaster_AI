@@ -1,43 +1,64 @@
-;; problem.pddl - Istanza della quest "Il Silenzio del Loto Nero"
-(define (problem silenzio-loto-nero-quest)
-  (:domain silenzio-loto-nero) ; ; Specifica il dominio di riferimento per questo problema
+;; problem.pddl
+;; Nome del problema: Vendetta del Loto Silente
+;; Descrizione: File di problema per la quest "Il Silenzio del Loto Nero".
+;;              Rappresenta lo stato iniziale del mondo e l'obiettivo finale
+;;              del ninja Kael per salvare il regno di Kageyama.
 
-  ;; Definizione degli oggetti specifici per questa istanza della lore
+(define (problem vendetta-loto-silente)
+  (:domain silenzio-loto-nero) ;; Riferimento al file di dominio corrispondente
+
   (:objects
-    kaito - eroe ; ; Il protagonista, ultimo della Guardia Shinobi
-    shogun-takeda - shogun ; ; Lo Shogun avvelenato
-    generale-onimaru - nemico ; ; Il generale nemico nel cortile
-    leader-loto-nero - nemico ; ; Il capo del Clan del Loto Nero
-    vicoli-capitale - luogo ; ; Il punto di partenza di Kaito
-    cortile-interno - luogo ; ; Luogo presidiato dal Generale Onimaru
-    biblioteca-proibita - luogo ; ; Luogo dove si trova la formula
-    giardino-avvelenato - luogo ; ; Luogo dove si trova un ingrediente raro
-    sala-del-trono - luogo ; ; Luogo finale dove si trovano lo Shogun e il leader nemico
-    fiore-di-luna - ingrediente ; ; Primo ingrediente per l'antidoto
-    radice-ombra - ingrediente ; ; Secondo ingrediente per l'antidoto
-    formula-antidoto - formula ; ; La formula per creare l'antidoto
+    ;; Definizione dei personaggi specifici di questa storia
+    kael - ninja ;; Il protagonista, ultimo del suo clan
+    shogun-kageyama - shogun ;; Il sovrano avvelenato del regno
+    takeda - generale ;; Il generale traditore
+    leader-tigre - leader ;; Il capo del clan rivale, la Tigre di Ferro
+
+    ;; Definizione degli ingredienti necessari per l'antidoto
+    erba-luna - ingrediente ;; Primo ingrediente per l'antidoto "Sonno di Giada"
+    radice-ombra - ingrediente ;; Secondo ingrediente per l'antidoto
+
+    ;; Definizione dei luoghi chiave della missione
+    dojo-segreto - luogo ;; Il punto di partenza di Kael, ai margini della citta
+    strade-capitale - luogo ;; Le strade della citta, pattugliate dal nemico
+    ingresso-palazzo - luogo ;; L'entrata principale del palazzo dello Shogun
+    stanze-interne - luogo ;; Le stanze interne del palazzo, protette da trappole
+    sala-trono - luogo ;; Il cuore del palazzo, dove si trova lo Shogun
   )
 
-  ;; Definizione dello stato iniziale del mondo basato sulla lore
   (:init
-    (at kaito vicoli-capitale) ; ; Kaito inizia la sua missione nascosto nei vicoli della capitale
-    (at shogun-takeda sala-del-trono) ; ; Lo Shogun e' prigioniero nella sala del trono
-    (at generale-onimaru cortile-interno) ; ; Il Generale Onimaru si trova nel cortile interno
-    (at leader-loto-nero sala-del-trono) ; ; Il leader del clan e' nella sala del trono
-    (at-item formula-antidoto biblioteca-proibita) ; ; La formula dell'antidoto e' nella biblioteca
-    (at-item fiore-di-luna giardino-avvelenato) ; ; Il Fiore di Luna si trova nel giardino avvelenato
-    (at-item radice-ombra biblioteca-proibita) ; ; La Radice Ombra si trova anch'essa nella biblioteca
-    (shogun-avvelenato shogun-takeda) ; ; Lo Shogun e' stato avvelenato
-    (nemico-vivo generale-onimaru) ; ; Il Generale Onimaru e' vivo e rappresenta una minaccia
-    (nemico-vivo leader-loto-nero) ; ; Il leader del Loto Nero e' vivo
-    (pattugliato cortile-interno) ; ; Il cortile interno e' pattugliato da samurai corrotti
-    (trappola-attiva cortile-interno) ; ; Ci sono trappole nel cortile per impedire l'accesso
-    (spirito-guardiano-attivo sala-del-trono) ; ; Uno spirito protegge la sala del trono
+    ;; Stato iniziale del mondo basato sulla lore
+
+    ;; Posizione iniziale dei personaggi
+    (at kael dojo-segreto) ;; Kael inizia la sua missione dal suo dojo segreto
+    (at shogun-kageyama sala-trono) ;; Lo Shogun giace avvelenato nella sala del trono
+    (at takeda sala-trono) ;; Il Generale Takeda si trova con lo Shogun, fingendosi leale
+    (at leader-tigre sala-trono) ;; Il leader della Tigre di Ferro ha preso controllo del palazzo
+
+    ;; Posizione iniziale degli ingredienti per l'antidoto
+    (at-ingrediente erba-luna ingresso-palazzo) ;; L'Erba Luna si trova vicino all'ingresso del palazzo
+    (at-ingrediente radice-ombra stanze-interne) ;; La Radice Ombra e' nascosta nelle stanze interne
+
+    ;; Connessioni tra i luoghi (percorsi possibili)
+    (connesso dojo-segreto strade-capitale) ;; Dal dojo si puo raggiungere la citta
+    (connesso strade-capitale dojo-segreto) ;; E' possibile tornare al dojo dalla citta
+    (connesso strade-capitale ingresso-palazzo) ;; Dalle strade si puo arrivare all'ingresso del palazzo
+    (connesso ingresso-palazzo strade-capitale) ;; E' possibile tornare in citta dal palazzo
+    (connesso ingresso-palazzo stanze-interne) ;; Dall'ingresso si accede alle stanze interne
+    (connesso stanze-interne ingresso-palazzo) ;; Si puo tornare all'ingresso dalle stanze interne
+    (connesso stanze-interne sala-trono) ;; Dalle stanze interne si raggiunge la sala del trono
+    (connesso sala-trono stanze-interne) ;; E' possibile lasciare la sala del trono verso le stanze
+
+    ;; Stato degli ostacoli e della quest
+    (shogun-avvelenato shogun-kageyama) ;; Lo Shogun e' attualmente avvelenato
+    (pattugliato strade-capitale) ;; Le strade della capitale sono sorvegliate dal Clan della Tigre
+    (trappola-attiva stanze-interne) ;; Le stanze interne del palazzo sono protette da trappole magiche
   )
 
-  ;; Definizione dell'obiettivo finale della quest
   (:goal (and
-    (shogun-salvato shogun-takeda) ; ; L'obiettivo primario e' salvare la vita dello Shogun
-    (castello-liberato) ; ; L'obiettivo secondario e' liberare il castello sconfiggendo il leader
+    ;; Condizioni che devono essere vere per completare la missione
+    (shogun-salvato shogun-kageyama) ;; Obiettivo primario: lo Shogun deve essere curato e salvato
+    (takeda-traditore-svelato) ;; Obiettivo secondario: il tradimento di Takeda deve essere smascherato
+    (leader-tigre-sconfitto) ;; Obiettivo finale: il leader del clan nemico deve essere sconfitto per ripristinare l'ordine
   ))
 )
