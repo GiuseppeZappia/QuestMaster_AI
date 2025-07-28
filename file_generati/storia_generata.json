@@ -1,364 +1,257 @@
 [
   {
     "node_id": "start",
-    "description": "Le ombre avvolgono la capitale del Dominio dell'Alba Nascente. Lo Shogun è avvelenato, il Castello Imperiale è caduto nelle mani del Clan del Loto Nero. Tu sei Kaito, l'ultimo Shinobi della Guardia Imperiale, un fantasma tra i vicoli. Il tempo stringe: la luna di sangue si avvicina e con essa il rituale oscuro del nemico. Devi agire.",
+    "description": "Sei Kael, l'ultimo ninja del Clan del Loto Silente. Il tuo dojo segreto ai margini della capitale è l'ultimo baluardo di speranza. Lo Shogun Kageyama giace avvelenato nel suo palazzo, vittima del Clan della Tigre di Ferro. Devi agire nell'ombra per vendicare il tuo maestro e salvare il regno.",
     "choices": [
       {
-        "text": "Muoversi furtivamente tra i tetti verso la Biblioteca Proibita, dove sono custoditi i segreti alchemici.",
-        "next_node": "move_to_library",
+        "text": "Muoviti tra le ombre delle strade della capitale.",
+        "next_node": "move_to_streets",
         "is_correct": true
       },
       {
-        "text": "Tentare un assalto frontale al cancello del castello.",
-        "next_node": "fail_frontal_assault",
+        "text": "Medita per cercare la guida degli antenati.",
+        "next_node": "fail_meditate",
         "is_correct": false
       },
       {
-        "text": "Cercare di radunare i cittadini terrorizzati per una rivolta.",
-        "next_node": "fail_rally_citizens",
-        "is_correct": false
-      },
-      {
-        "text": "Fuggire dal dominio per salvare la tua vita.",
-        "next_node": "fail_flee",
+        "text": "Attacca frontalmente la prima pattuglia della Tigre di Ferro che vedi.",
+        "next_node": "fail_direct_attack",
         "is_correct": false
       }
     ]
   },
   {
-    "node_id": "move_to_library",
-    "description": "Sei arrivato alla Biblioteca Proibita, un luogo antico e silente, carico di pergamene e segreti. Le ronde del Loto Nero la ignorano, credendola inutile. Qui troverai la conoscenza per contrastarli. Devi trovare sia la formula dell'antidoto che i suoi rari ingredienti.",
+    "node_id": "move_to_streets",
+    "description": "Scivoli sui tetti come un fantasma, eludendo le pattuglie nemiche. Le strade della capitale sono irriconoscibili, oppresse dalla presenza della Tigre di Ferro. In lontananza, vedi il palazzo dello Shogun, il tuo obiettivo.",
     "choices": [
       {
-        "text": "Cercare la Radice d'Ombra, un ingrediente leggendario che cresce solo in luoghi intrisi di sapere antico.",
-        "next_node": "collect_ingredient",
+        "text": "Avvicinati furtivamente all'ingresso del palazzo.",
+        "next_node": "move_to_palace_entrance",
         "is_correct": true
       },
       {
-        "text": "Ignorare gli ingredienti e cercare subito la formula, sperando di trovare i componenti altrove.",
-        "next_node": "fail_formula_only",
+        "text": "Crea un diversivo nel mercato per allontanare le guardie.",
+        "next_node": "fail_diversion",
         "is_correct": false
       },
       {
-        "text": "Dare fuoco alla biblioteca per creare un diversivo e attirare le guardie del castello.",
-        "next_node": "fail_fire_distraction",
+        "text": "Prova a corrompere una guardia per ottenere informazioni.",
+        "next_node": "fail_bribe",
         "is_correct": false
       }
     ]
   },
   {
-    "node_id": "collect_ingredient",
-    "description": "Dopo un'attenta ricerca, trovi la Radice d'Ombra, le cui venature pulsano di una debole luce. L'ingrediente è assicurato. Ora ti serve la pergamena con la formula per l'antidoto.",
+    "node_id": "move_to_palace_entrance",
+    "description": "Sei nascosto nei giardini ornamentali del palazzo. Le guardie sono ovunque. Tra la vegetazione, noti una pianta rara dalle foglie argentate: l'Erba-Luna, un ingrediente essenziale per l'antidoto 'Sonno di Giada'.",
     "choices": [
       {
-        "text": "Consultare gli archivi alchemici per trovare la formula dell'antidoto.",
-        "next_node": "find_formula",
+        "text": "Raccogli l'Erba-Luna e cerca un passaggio per entrare.",
+        "next_node": "gather_ingredient",
         "is_correct": true
       },
       {
-        "text": "Provare a preparare un antidoto basandoti sulla tua intuizione e la Radice d'Ombra.",
-        "next_node": "fail_instinct_brew",
-        "is_correct": false
-      },
-      {
-        "text": "Uscire subito dalla biblioteca, credendo che la radice da sola sia sufficiente.",
-        "next_node": "fail_leave_early",
+        "text": "Ignora l'erba e tenta di scavalcare le mura del palazzo.",
+        "next_node": "fail_climb_walls",
         "is_correct": false
       }
     ]
   },
   {
-    "node_id": "find_formula",
-    "description": "Hai trovato la formula! Una pergamena fragile descrive il complesso processo per neutralizzare il veleno del Loto Nero. Con la Radice d'Ombra e la conoscenza, sei pronto a procedere. La destinazione è la Sala del Trono, dove lo Shogun è prigioniero.",
+    "node_id": "gather_ingredient",
+    "description": "Con l'Erba-Luna al sicuro, individui un condotto d'acqua nascosto dietro una cascata. È la tua via d'accesso. Ti infili nel passaggio buio, dirigendoti verso le stanze interne del palazzo.",
     "choices": [
       {
-        "text": "Muoversi attraverso i passaggi segreti del castello per raggiungere la Sala del Trono.",
+        "text": "Naviga i corridoi interni fino alla Sala del Trono.",
         "next_node": "move_to_throne_room",
         "is_correct": true
       },
       {
-        "text": "Dirigersi verso il cortile interno per affrontare il Generale Onimaru.",
-        "next_node": "fail_face_onimaru",
+        "text": "Esplora le cucine in cerca di altri ingredienti.",
+        "next_node": "fail_explore_kitchens",
         "is_correct": false
       },
       {
-        "text": "Tornare sui tetti per studiare meglio i movimenti delle pattuglie.",
-        "next_node": "fail_wait_on_roofs",
+        "text": "Cerca di disattivare le trappole magiche che percepisci.",
+        "next_node": "fail_disarm_traps",
         "is_correct": false
       }
     ]
   },
   {
     "node_id": "move_to_throne_room",
-    "description": "Sei giunto all'ingresso della Sala del Trono. L'aria è gelida e innaturale. A bloccare il passaggio non c'è una guardia, ma un antico Spirito Guardiano, evocato con la magia oscura del Loto Nero. La sua armatura fluttua minacciosamente.",
+    "description": "Dopo aver evitato trappole e sentinelle, sei giunto davanti alla Sala del Trono. All'interno, lo Shogun giace immobile. Il Generale Takeda, il traditore, è al suo fianco, fingendo preoccupazione. È il momento di agire.",
     "choices": [
       {
-        "text": "Affrontare lo spirito usando le tue arti shinobi per colpire i suoi punti deboli.",
-        "next_node": "defeat_spirit",
+        "text": "Prepara l'antidoto e somministralo allo Shogun.",
+        "next_node": "create_and_cure",
         "is_correct": true
       },
       {
-        "text": "Cercare di aggirarlo passando per le travi del soffitto.",
-        "next_node": "fail_bypass_spirit",
+        "text": "Lancia un fumogeno e attacca Takeda.",
+        "next_node": "fail_attack_takeda_early",
         "is_correct": false
       },
       {
-        "text": "Provare a parlargli, sperando di placare la sua furia.",
-        "next_node": "fail_reason_spirit",
+        "text": "Aspetta nell'ombra che Takeda se ne vada.",
+        "next_node": "fail_wait_takeda",
         "is_correct": false
       }
     ]
   },
   {
-    "node_id": "defeat_spirit",
-    "description": "Con agilità e precisione, hai sconfitto lo Spirito Guardiano, che si dissolve in un sussurro. La via è libera. All'interno della sala, vedi lo Shogun Takeda, incosciente sul trono. È il momento di agire.",
+    "node_id": "create_and_cure",
+    "description": "Ti avvicini silenziosamente. Mentre Takeda è distratto, mescoli l'Erba-Luna e crei l'antidoto. Lo somministri allo Shogun, che tossisce e riapre lentamente gli occhi. La prima parte della missione è compiuta.",
     "choices": [
       {
-        "text": "Usare la Radice d'Ombra e la formula per creare rapidamente l'antidoto.",
-        "next_node": "create_antidoto",
+        "text": "Rivela il tradimento di Takeda allo Shogun risvegliato.",
+        "next_node": "expose_takeda",
         "is_correct": true
       },
       {
-        "text": "Somministrare la Radice d'Ombra direttamente allo Shogun.",
-        "next_node": "fail_raw_ingredient",
-        "is_correct": false
-      },
-      {
-        "text": "Nascondersi e attendere l'arrivo del leader del Loto Nero.",
-        "next_node": "fail_wait_for_leader",
+        "text": "Accusa Takeda ad alta voce senza prove concrete.",
+        "next_node": "fail_no_proof",
         "is_correct": false
       }
     ]
   },
   {
-    "node_id": "create_antidoto",
-    "description": "In pochi istanti, la tua abilità alchemica trasforma gli ingredienti in un siero luminescente. L'antidoto è pronto. Lo Shogun è a pochi passi da te, il suo respiro sempre più debole.",
+    "node_id": "expose_takeda",
+    "description": "Lo Shogun è debole ma cosciente. Gli mostri la fiala di veleno che hai trovato sulla guardia di Takeda. Il Generale, smascherato, fa un segnale. Il leader del Clan della Tigre di Ferro emerge dall'ombra, pronto a combattere.",
     "choices": [
       {
-        "text": "Somministrare l'antidoto allo Shogun Takeda.",
-        "next_node": "cure_shogun",
+        "text": "Affronta il leader della Tigre di Ferro in un duello mortale.",
+        "next_node": "defeat_leader",
         "is_correct": true
       },
       {
-        "text": "Bere tu stesso l'antidoto, pensando possa darti potere.",
-        "next_node": "fail_drink_antidote",
-        "is_correct": false
-      },
-      {
-        "text": "Lanciare l'antidoto sul trono come trappola per il leader nemico.",
-        "next_node": "fail_trap_antidote",
+        "text": "Cerca di fuggire con lo Shogun.",
+        "next_node": "fail_flee_with_shogun",
         "is_correct": false
       }
     ]
   },
   {
-    "node_id": "cure_shogun",
-    "description": "L'antidoto funziona. Lo Shogun riapre gli occhi, debole ma vivo. In quel momento, il leader del Loto Nero entra nella sala, la sua maschera cela un'espressione di furia. 'Hai interferito per l'ultima volta, ombra'. La battaglia finale è inevitabile.",
-    "choices": [
-      {
-        "text": "Combattere il leader del Loto Nero con l'aiuto dello Shogun per liberare il castello.",
-        "next_node": "final_victory",
-        "is_correct": true
-      },
-      {
-        "text": "Cercare di fuggire con lo Shogun.",
-        "next_node": "fail_escape_with_shogun",
-        "is_correct": false
-      },
-      {
-        "text": "Chiedere la resa al leader del Loto Nero.",
-        "next_node": "fail_surrender",
-        "is_correct": false
-      }
-    ]
-  },
-  {
-    "node_id": "final_victory",
-    "description": "Insieme, tu e lo Shogun Takeda sconfiggete il leader del Loto Nero. Con la sua caduta, il controllo del clan sul castello si spezza. Il Dominio dell'Alba Nascente è salvo grazie al tuo coraggio e alla tua lealtà. Hai onorato il tuo ruolo di Shinobi. Missione compiuta.",
+    "node_id": "defeat_leader",
+    "description": "Lo scontro è inevitabile. Le vostre lame danzano nell'aria. Con le tecniche segrete del Loto Silente, trovi un'apertura e sferri il colpo decisivo. Il leader cade, Takeda viene catturato dalle guardie leali. La missione è un successo.",
     "choices": []
   },
   {
-    "node_id": "fail_frontal_assault",
-    "description": "Il tuo assalto solitario è suicida. Le guardie del Loto Nero, allertate e superiori in numero, ti sopraffanno prima ancora che tu possa raggiungere le mura interne.",
+    "node_id": "fail_meditate",
+    "description": "Mentre la tua mente vaga nel piano astrale, i tuoi nemici agiscono nel mondo reale. Le forze della Tigre di Ferro scoprono il tuo dojo e ti circondano. La tua missione finisce prima ancora di iniziare.",
     "choices": [
       {
-        "text": "Riprova",
+        "text": "Accetta il tuo fallimento.",
         "next_node": "game_over",
         "is_correct": false
       }
     ]
   },
   {
-    "node_id": "fail_rally_citizens",
-    "description": "I cittadini sono troppo spaventati. Le tue parole cadono nel vuoto, e qualcuno, per paura o per una ricompensa, rivela la tua posizione al Loto Nero. Sei caduto in un'imboscata.",
+    "node_id": "fail_direct_attack",
+    "description": "Il tuo coraggio è ammirevole, ma avventato. La pattuglia, addestrata e in superiorità numerica, respinge il tuo attacco e ti sopraffà. Un ninja non agisce mai alla luce del sole.",
     "choices": [
       {
-        "text": "Riprova",
+        "text": "Accetta il tuo fallimento.",
         "next_node": "game_over",
         "is_correct": false
       }
     ]
   },
   {
-    "node_id": "fail_flee",
-    "description": "Mentre fuggi, la luna di sangue sorge. Il rituale del Loto Nero ha successo, e il dominio cade in un'oscurità eterna. Il tuo fallimento perseguiterà te e il mondo.",
+    "node_id": "fail_diversion",
+    "description": "Il diversivo attira troppa attenzione. Invece di sviare le guardie, ne attiri un numero ancora maggiore sulla tua posizione. La tua copertura è saltata e sei costretto a una fuga disperata.",
     "choices": [
       {
-        "text": "Riprova",
+        "text": "Accetta il tuo fallimento.",
         "next_node": "game_over",
         "is_correct": false
       }
     ]
   },
   {
-    "node_id": "fail_formula_only",
-    "description": "Trovi la formula, ma senza la Radice d'Ombra è inutile. Quando torni a cercarla, scopri che le guardie hanno finalmente perquisito la biblioteca, distruggendo tutto.",
+    "node_id": "fail_bribe",
+    "description": "Il samurai a cui offri del denaro si rivela un fanatico fedele alla Tigre di Ferro. Dà l'allarme e in pochi istanti sei circondato. La lealtà non sempre ha un prezzo.",
     "choices": [
       {
-        "text": "Riprova",
+        "text": "Accetta il tuo fallimento.",
         "next_node": "game_over",
         "is_correct": false
       }
     ]
   },
   {
-    "node_id": "fail_fire_distraction",
-    "description": "L'incendio distrugge pergamene di valore inestimabile, inclusa la formula dell'antidoto. Hai perso l'unica speranza di salvare lo Shogun.",
+    "node_id": "fail_climb_walls",
+    "description": "Le mura del palazzo sono protette da sigilli magici. Non appena le tocchi, un'ondata di energia ti respinge e allerta le guardie più vicine. Sei stato scoperto.",
     "choices": [
       {
-        "text": "Riprova",
+        "text": "Accetta il tuo fallimento.",
         "next_node": "game_over",
         "is_correct": false
       }
     ]
   },
   {
-    "node_id": "fail_instinct_brew",
-    "description": "Il tuo tentativo di creare un antidoto senza formula produce solo un veleno più potente. Hai sprecato l'unico ingrediente capace di salvare lo Shogun.",
+    "node_id": "fail_explore_kitchens",
+    "description": "Perdi tempo prezioso nelle cucine. Mentre cerchi ingredienti inutili, lo stato dello Shogun peggiora irrimediabilmente. Quando arrivi, è troppo tardi.",
     "choices": [
       {
-        "text": "Riprova",
+        "text": "Accetta il tuo fallimento.",
         "next_node": "game_over",
         "is_correct": false
       }
     ]
   },
   {
-    "node_id": "fail_leave_early",
-    "description": "Senza la formula, la Radice d'Ombra è solo una pianta curiosa. Non hai modo di preparare l'antidoto e il tempo per salvare lo Shogun scade.",
+    "node_id": "fail_disarm_traps",
+    "description": "Tenti di disinnescare una trappola magica, ma la sua antica fattura è superiore alle tue conoscenze. La trappola scatta, sigillando il corridoio e allertando l'intero palazzo.",
     "choices": [
       {
-        "text": "Riprova",
+        "text": "Accetta il tuo fallimento.",
         "next_node": "game_over",
         "is_correct": false
       }
     ]
   },
   {
-    "node_id": "fail_face_onimaru",
-    "description": "Il Generale Onimaru è un guerriero formidabile. In un combattimento diretto nel cortile, la sua forza bruta ha la meglio sulla tua furtività. Vieni sconfitto.",
+    "node_id": "fail_attack_takeda_early",
+    "description": "Attacchi Takeda senza preavviso. Per le guardie presenti, sei solo un assassino che attacca un generale leale. Vengono in sua difesa e ti sopraffanno.",
     "choices": [
       {
-        "text": "Riprova",
+        "text": "Accetta il tuo fallimento.",
         "next_node": "game_over",
         "is_correct": false
       }
     ]
   },
   {
-    "node_id": "fail_wait_on_roofs",
-    "description": "Mentre aspetti, perdi tempo prezioso. Il leader del Loto Nero accelera il rituale e, quando finalmente decidi di agire, è troppo tardi. Lo Shogun è perduto.",
+    "node_id": "fail_wait_takeda",
+    "description": "Aspetti troppo a lungo. Takeda, vedendo lo Shogun ancora vivo, estrae una fiala e gli somministra il colpo di grazia, mascherandolo come una medicina. Hai perso la tua occasione.",
     "choices": [
       {
-        "text": "Riprova",
+        "text": "Accetta il tuo fallimento.",
         "next_node": "game_over",
         "is_correct": false
       }
     ]
   },
   {
-    "node_id": "fail_bypass_spirit",
-    "description": "Lo spirito non è legato solo al pavimento. Appena ti avvicini alle travi, esso si materializza di fronte a te, scagliandoti nel vuoto.",
+    "node_id": "fail_no_proof",
+    "description": "Le tue accuse sono veementi, ma senza prove. Per lo Shogun, ancora confuso dal veleno, la tua è solo la parola di un'ombra contro quella del suo generale. Ordina alle guardie di arrestarti.",
     "choices": [
       {
-        "text": "Riprova",
+        "text": "Accetta il tuo fallimento.",
         "next_node": "game_over",
         "is_correct": false
       }
     ]
   },
   {
-    "node_id": "fail_reason_spirit",
-    "description": "Lo spirito è un guardiano vincolato dalla magia oscura, incapace di ragionare. Il tuo tentativo di comunicare ti lascia scoperto a un attacco devastante.",
+    "node_id": "fail_flee_with_shogun",
+    "description": "Tentare la fuga con lo Shogun indebolito è una mossa disperata. Siete lenti e prevedibili. Il leader della Tigre di Ferro vi raggiunge e vi sconfigge senza difficoltà.",
     "choices": [
       {
-        "text": "Riprova",
-        "next_node": "game_over",
-        "is_correct": false
-      }
-    ]
-  },
-  {
-    "node_id": "fail_raw_ingredient",
-    "description": "La Radice d'Ombra grezza è tossica. Invece di curarlo, acceleri la morte dello Shogun. Il tuo errore è fatale.",
-    "choices": [
-      {
-        "text": "Riprova",
-        "next_node": "game_over",
-        "is_correct": false
-      }
-    ]
-  },
-  {
-    "node_id": "fail_wait_for_leader",
-    "description": "Attendi troppo a lungo. Il leader del Loto Nero arriva e completa il rituale prima che tu possa intervenire, usando l'energia vitale dello Shogun per i suoi scopi oscuri.",
-    "choices": [
-      {
-        "text": "Riprova",
-        "next_node": "game_over",
-        "is_correct": false
-      }
-    ]
-  },
-  {
-    "node_id": "fail_drink_antidote",
-    "description": "L'antidoto non ha alcun effetto su di te, che non sei avvelenato. Mentre sei confuso, il leader del Loto Nero ti coglie di sorpresa e ti uccide. Hai sprecato l'unica cura.",
-    "choices": [
-      {
-        "text": "Riprova",
-        "next_node": "game_over",
-        "is_correct": false
-      }
-    ]
-  },
-  {
-    "node_id": "fail_trap_antidote",
-    "description": "Il leader nemico percepisce la tua trappola. La ignora, ti attacca e finisce lo Shogun. Il tuo piano era troppo complicato e ti è costato la vittoria.",
-    "choices": [
-      {
-        "text": "Riprova",
-        "next_node": "game_over",
-        "is_correct": false
-      }
-    ]
-  },
-  {
-    "node_id": "fail_escape_with_shogun",
-    "description": "Lo Shogun è troppo debole per muoversi velocemente. Il leader del Loto Nero e le sue guardie vi raggiungono facilmente e vi eliminano entrambi.",
-    "choices": [
-      {
-        "text": "Riprova",
-        "next_node": "game_over",
-        "is_correct": false
-      }
-    ]
-  },
-  {
-    "node_id": "fail_surrender",
-    "description": "Il leader del Loto Nero non accetta rese. Ti deride per la tua ingenuità prima di darti il colpo di grazia. La speranza del Dominio muore con te.",
-    "choices": [
-      {
-        "text": "Riprova",
+        "text": "Accetta il tuo fallimento.",
         "next_node": "game_over",
         "is_correct": false
       }
@@ -366,10 +259,10 @@
   },
   {
     "node_id": "game_over",
-    "description": "Hai fallito. L'ombra del Loto Nero si è estesa senza più ostacoli. Il Dominio è caduto. Vuoi tentare di nuovo di cambiare il destino?",
+    "description": "Hai fallito. Il Clan della Tigre di Ferro ha consolidato il suo potere e il regno di Kageyama è caduto nell'oscurità. Il Loto Silente è stato estirpato. Vuoi riprovare?",
     "choices": [
       {
-        "text": "Ricomincia la missione.",
+        "text": "Ricomincia dall'inizio",
         "next_node": "start",
         "is_correct": true
       }
