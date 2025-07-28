@@ -1439,7 +1439,7 @@ def main():
     
     st.markdown('</div>', unsafe_allow_html=True)
     
-    # Footer ultra-elegante
+    # Footer elegante
     st.markdown("""
     <div class="footer fade-in">
         <p style="font-size: 1.2rem; margin-bottom: 1rem;">⭐ Che la saggezza illumini il tuo cammino, Maestro del Destino! ⭐</p>

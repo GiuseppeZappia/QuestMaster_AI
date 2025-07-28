@@ -52,7 +52,7 @@ st.markdown("""
         position: relative;
     }
     
-    /* Effetto stelle animate di sfondo migliorato */
+    /* Effetto stelle animate di sfondo */
     .stApp::before {
         content: '';
         position: fixed;
@@ -236,7 +236,7 @@ st.markdown("""
         }
     }
             
-    /* CONTENITORI PRINCIPALI RIDISEGNATI */
+    /* CONTENITORI PRINCIPALI */
     
     .creation-container {
         background: linear-gradient(135deg, rgba(16, 42, 84, 0.95) 0%, rgba(8, 28, 58, 0.95) 100%);
@@ -368,7 +368,7 @@ st.markdown("""
         75% { background-position: 0% 100%; opacity: 1; }
     }
     
-    /* INDICATORI DI FASE MIGLIORATI */
+    /* INDICATORI DI FASE */
     
     .phase-indicator {
         text-align: center;
@@ -1162,7 +1162,7 @@ def render_creation_phase():
     </div>
     """, unsafe_allow_html=True)
     
-    # Sezione di input migliorata
+    # Sezione di input 
     st.markdown("""
     <div style="background: rgba(255, 215, 0, 0.1); border: 2px solid rgba(255, 215, 0, 0.3); border-radius: 20px; padding: 2rem; margin: 2rem 0;">
         <h3 style="color: #ffd700; font-family: 'Cinzel', serif; text-align: center; margin-bottom: 1.5rem; font-size: 1.5rem;">
@@ -1603,7 +1603,7 @@ def render_plan_review():
         """
         st.markdown(html, unsafe_allow_html=True)
             
-        # Mostra il piano con styling migliorato
+        # Mostra il piano 
         st.markdown("### 📜 La Cronaca delle Tue Gesta:")
         
         for i, action in enumerate(st.session_state.current_plan, 1):
@@ -1641,7 +1641,7 @@ def render_plan_review():
         
         st.markdown("---")
         
-        # Sezione di controllo migliorata
+        # Sezione di controllo 
         st.markdown("""
         <div style="background: rgba(162, 155, 254, 0.1); border: 2px solid rgba(162, 155, 254, 0.3); border-radius: 20px; padding: 2rem; margin: 2rem 0;">
             <h4 style="color: #a29bfe; font-family: 'Cinzel', serif; text-align: center; margin-bottom: 1.5rem; font-size: 1.4rem;">
@@ -2089,15 +2089,15 @@ def download_adventure_files(adventure_data, filepath):
     zip_buffer = BytesIO()
     
     with zipfile.ZipFile(zip_buffer, 'w', zipfile.ZIP_DEFLATED) as zip_file:
-        # Aggiungi il file JSON completo
+        # Aggiunge il file JSON completo
         zip_file.writestr(f"{filepath.stem}.json", 
                          json.dumps(adventure_data, indent=2, ensure_ascii=False))
         
-        # Aggiungi il report leggibile
+        # Aggiunge il report leggibile
         report_content = create_adventure_report(adventure_data)
         zip_file.writestr(f"{filepath.stem}_report.txt", report_content)
         
-        # Aggiungi un file markdown formattato
+        # Aggiunge un file markdown formattato
         markdown_content = create_markdown_report(adventure_data)
         zip_file.writestr(f"{filepath.stem}_report.md", markdown_content)
     
@@ -2295,7 +2295,7 @@ def render_gameplay():
         </div>
         """, unsafe_allow_html=True)
 
-    # Mostra il testo della storia con effetti tipografici migliorati
+    # Mostra il testo della storia con effetti tipografici 
     st.markdown(f'<div class="story-text">{story_text}</div>', 
                 unsafe_allow_html=True)
     
