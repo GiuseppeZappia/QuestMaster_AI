@@ -1,128 +1,185 @@
 [
   {
     "node_id": "start",
-    "description": "Sei Pipo, il pagliaccio un tempo amato del Circus Aeturnum. Ora, il tuo 'tocco comico' è svanito. Il tendone, un tempo vibrante di colori, è grigio e silenzioso. La gioia che alimentava questo luogo magico si sta spegnendo. L'unica speranza è il leggendario 'Fiore che Ride', che cresce nella Foresta Sussurrante. Devi recuperarlo per salvare il tuo mondo.",
+    "description": "Le ombre avvolgono la capitale del Dominio dell'Alba Nascente. Lo Shogun è avvelenato, il Castello Imperiale è caduto nelle mani del Clan del Loto Nero. Tu sei Kaito, l'ultimo Shinobi della Guardia Imperiale, un fantasma tra i vicoli. Il tempo stringe: la luna di sangue si avvicina e con essa il rituale oscuro del nemico. Devi agire.",
     "choices": [
       {
-        "text": "Parti verso la Foresta Sussurrante, iniziando dal Ponte di Caramello.",
-        "next_node": "to_ponte_caramello",
+        "text": "Muoversi furtivamente tra i tetti verso la Biblioteca Proibita, dove sono custoditi i segreti alchemici.",
+        "next_node": "move_to_library",
         "is_correct": true
       },
       {
-        "text": "Prova a raccontare una barzelletta al tendone vuoto.",
-        "next_node": "fail_joke_1",
+        "text": "Tentare un assalto frontale al cancello del castello.",
+        "next_node": "fail_frontal_assault",
         "is_correct": false
       },
       {
-        "text": "Chiedi aiuto al Mimo Silente, il tuo rivale.",
-        "next_node": "fail_mime_1",
+        "text": "Cercare di radunare i cittadini terrorizzati per una rivolta.",
+        "next_node": "fail_rally_citizens",
         "is_correct": false
       },
       {
-        "text": "Aspetta che l'ispirazione torni da sola.",
-        "next_node": "fail_wait_1",
+        "text": "Fuggire dal dominio per salvare la tua vita.",
+        "next_node": "fail_flee",
         "is_correct": false
       }
     ]
   },
   {
-    "node_id": "to_ponte_caramello",
-    "description": "Dopo un breve cammino, arrivi al Ponte di Caramello. Il suo guardiano, un omone brontolone, ti sbarra la strada. 'Nessuno passa senza strapparmi un sorriso!' tuona. Con un vecchio trucco quasi dimenticato, una semplice smorfia e uno starnuto a sorpresa, riesci a farlo ridere fragorosamente. La via è libera. Oltre il ponte, il sentiero si biforca.",
+    "node_id": "move_to_library",
+    "description": "Sei arrivato alla Biblioteca Proibita, un luogo antico e silente, carico di pergamene e segreti. Le ronde del Loto Nero la ignorano, credendola inutile. Qui troverai la conoscenza per contrastarli. Devi trovare sia la formula dell'antidoto che i suoi rari ingredienti.",
     "choices": [
       {
-        "text": "Prendi il sentiero che porta al Labirinto degli Specchi Deformanti.",
-        "next_node": "to_labirinto",
+        "text": "Cercare la Radice d'Ombra, un ingrediente leggendario che cresce solo in luoghi intrisi di sapere antico.",
+        "next_node": "collect_ingredient",
         "is_correct": true
       },
       {
-        "text": "Prova a corrompere il guardiano con un fiore di zucchero filato.",
-        "next_node": "fail_bribe_1",
+        "text": "Ignorare gli ingredienti e cercare subito la formula, sperando di trovare i componenti altrove.",
+        "next_node": "fail_formula_only",
         "is_correct": false
       },
       {
-        "text": "Tenta di attraversare a nuoto il fiume di limonata sottostante.",
-        "next_node": "fail_swim_1",
+        "text": "Dare fuoco alla biblioteca per creare un diversivo e attirare le guardie del castello.",
+        "next_node": "fail_fire_distraction",
         "is_correct": false
       }
     ]
   },
   {
-    "node_id": "to_labirinto",
-    "description": "Ti addentri nel Labirinto degli Specchi Deformanti. Le superfici riflettono le tue paure più profonde: il pubblico che ti fischia, la tua famiglia delusa, il circo in rovina. Ogni riflesso è un'eco dei tuoi dubbi, un peso sul tuo cuore.",
+    "node_id": "collect_ingredient",
+    "description": "Dopo un'attenta ricerca, trovi la Radice d'Ombra, le cui venature pulsano di una debole luce. L'ingrediente è assicurato. Ora ti serve la pergamena con la formula per l'antidoto.",
     "choices": [
       {
-        "text": "Ignora le visioni, concentrandoti sul tuo obiettivo e cercando l'uscita.",
-        "next_node": "to_foresta",
+        "text": "Consultare gli archivi alchemici per trovare la formula dell'antidoto.",
+        "next_node": "find_formula",
         "is_correct": true
       },
       {
-        "text": "Fissa il riflesso di te stesso felice, perdendoti nei ricordi.",
-        "next_node": "fail_stare_1",
+        "text": "Provare a preparare un antidoto basandoti sulla tua intuizione e la Radice d'Ombra.",
+        "next_node": "fail_instinct_brew",
         "is_correct": false
       },
       {
-        "text": "Cerca di rompere gli specchi in un impeto di rabbia.",
-        "next_node": "fail_smash_1",
+        "text": "Uscire subito dalla biblioteca, credendo che la radice da sola sia sufficiente.",
+        "next_node": "fail_leave_early",
         "is_correct": false
       }
     ]
   },
   {
-    "node_id": "to_foresta",
-    "description": "Superate le tue paure, esci dal labirinto e finalmente entri nella Foresta Sussurrante. L'aria è pervasa da una magia antica. In una radura, senti la Melodia Malinconica di un carillon dimenticato che tenta di farti sprofondare nella tristezza. Ma poco più in là, vedi un bagliore caldo e gentile: è il Fiore che Ride.",
+    "node_id": "find_formula",
+    "description": "Hai trovato la formula! Una pergamena fragile descrive il complesso processo per neutralizzare il veleno del Loto Nero. Con la Radice d'Ombra e la conoscenza, sei pronto a procedere. La destinazione è la Sala del Trono, dove lo Shogun è prigioniero.",
     "choices": [
       {
-        "text": "Resisti alla tristezza della melodia e corri a cogliere il fiore.",
-        "next_node": "get_flower",
+        "text": "Muoversi attraverso i passaggi segreti del castello per raggiungere la Sala del Trono.",
+        "next_node": "move_to_throne_room",
         "is_correct": true
       },
       {
-        "text": "Cedi alla melodia malinconica e ti siedi ad ascoltarla.",
-        "next_node": "fail_melody_1",
+        "text": "Dirigersi verso il cortile interno per affrontare il Generale Onimaru.",
+        "next_node": "fail_face_onimaru",
         "is_correct": false
       },
       {
-        "text": "Raccogli un fiore dall'aspetto simile nelle vicinanze.",
-        "next_node": "fail_wrong_flower_1",
+        "text": "Tornare sui tetti per studiare meglio i movimenti delle pattuglie.",
+        "next_node": "fail_wait_on_roofs",
         "is_correct": false
       }
     ]
   },
   {
-    "node_id": "get_flower",
-    "description": "Hai il Fiore che Ride tra le mani! I suoi petali vibrano con una risata sommessa e contagiosa, e senti una scintilla di gioia riaccendersi dentro di te. La tristezza della foresta si dissolve intorno a te. Ora devi completare la tua missione.",
+    "node_id": "move_to_throne_room",
+    "description": "Sei giunto all'ingresso della Sala del Trono. L'aria è gelida e innaturale. A bloccare il passaggio non c'è una guardia, ma un antico Spirito Guardiano, evocato con la magia oscura del Loto Nero. La sua armatura fluttua minacciosamente.",
     "choices": [
       {
-        "text": "Torna di corsa al Circus Aeturnum per usare il potere del fiore.",
-        "next_node": "restore_joy",
+        "text": "Affrontare lo spirito usando le tue arti shinobi per colpire i suoi punti deboli.",
+        "next_node": "defeat_spirit",
         "is_correct": true
       },
       {
-        "text": "Decidi di tenere il fiore per te, per non essere mai più triste.",
-        "next_node": "fail_selfish_1",
+        "text": "Cercare di aggirarlo passando per le travi del soffitto.",
+        "next_node": "fail_bypass_spirit",
+        "is_correct": false
+      },
+      {
+        "text": "Provare a parlargli, sperando di placare la sua furia.",
+        "next_node": "fail_reason_spirit",
         "is_correct": false
       }
     ]
   },
   {
-    "node_id": "restore_joy",
-    "description": "Torni al circo e sollevi il Fiore che Ride. La sua risata echeggia nel tendone, scacciando il grigiore. I colori tornano più brillanti che mai, la musica riprende a suonare e il pubblico, richiamato dalla magia, riempie gli spalti. Il tuo sorriso è tornato, e il Circus Aeturnum è salvo. Missione compiuta!",
+    "node_id": "defeat_spirit",
+    "description": "Con agilità e precisione, hai sconfitto lo Spirito Guardiano, che si dissolve in un sussurro. La via è libera. All'interno della sala, vedi lo Shogun Takeda, incosciente sul trono. È il momento di agire.",
+    "choices": [
+      {
+        "text": "Usare la Radice d'Ombra e la formula per creare rapidamente l'antidoto.",
+        "next_node": "create_antidoto",
+        "is_correct": true
+      },
+      {
+        "text": "Somministrare la Radice d'Ombra direttamente allo Shogun.",
+        "next_node": "fail_raw_ingredient",
+        "is_correct": false
+      },
+      {
+        "text": "Nascondersi e attendere l'arrivo del leader del Loto Nero.",
+        "next_node": "fail_wait_for_leader",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "node_id": "create_antidoto",
+    "description": "In pochi istanti, la tua abilità alchemica trasforma gli ingredienti in un siero luminescente. L'antidoto è pronto. Lo Shogun è a pochi passi da te, il suo respiro sempre più debole.",
+    "choices": [
+      {
+        "text": "Somministrare l'antidoto allo Shogun Takeda.",
+        "next_node": "cure_shogun",
+        "is_correct": true
+      },
+      {
+        "text": "Bere tu stesso l'antidoto, pensando possa darti potere.",
+        "next_node": "fail_drink_antidote",
+        "is_correct": false
+      },
+      {
+        "text": "Lanciare l'antidoto sul trono come trappola per il leader nemico.",
+        "next_node": "fail_trap_antidote",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "node_id": "cure_shogun",
+    "description": "L'antidoto funziona. Lo Shogun riapre gli occhi, debole ma vivo. In quel momento, il leader del Loto Nero entra nella sala, la sua maschera cela un'espressione di furia. 'Hai interferito per l'ultima volta, ombra'. La battaglia finale è inevitabile.",
+    "choices": [
+      {
+        "text": "Combattere il leader del Loto Nero con l'aiuto dello Shogun per liberare il castello.",
+        "next_node": "final_victory",
+        "is_correct": true
+      },
+      {
+        "text": "Cercare di fuggire con lo Shogun.",
+        "next_node": "fail_escape_with_shogun",
+        "is_correct": false
+      },
+      {
+        "text": "Chiedere la resa al leader del Loto Nero.",
+        "next_node": "fail_surrender",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "node_id": "final_victory",
+    "description": "Insieme, tu e lo Shogun Takeda sconfiggete il leader del Loto Nero. Con la sua caduta, il controllo del clan sul castello si spezza. Il Dominio dell'Alba Nascente è salvo grazie al tuo coraggio e alla tua lealtà. Hai onorato il tuo ruolo di Shinobi. Missione compiuta.",
     "choices": []
   },
   {
-    "node_id": "fail_joke_1",
-    "description": "Apri la bocca per raccontare una barzelletta, ma ne esce solo un sospiro carico di malinconia. Il silenzio che segue è più pesante di qualsiasi fischio.",
-    "choices": [
-      {
-        "text": "Continua...",
-        "next_node": "fail_joke_2",
-        "is_correct": false
-      }
-    ]
-  },
-  {
-    "node_id": "fail_joke_2",
-    "description": "La tua incapacità di generare anche una singola scintilla di allegria accelera il decadimento del circo. La magia si spegne del tutto. Hai fallito.",
+    "node_id": "fail_frontal_assault",
+    "description": "Il tuo assalto solitario è suicida. Le guardie del Loto Nero, allertate e superiori in numero, ti sopraffanno prima ancora che tu possa raggiungere le mura interne.",
     "choices": [
       {
         "text": "Riprova",
@@ -132,19 +189,8 @@
     ]
   },
   {
-    "node_id": "fail_mime_1",
-    "description": "Cerchi il Mimo Silente. Lui ti osserva con un ghigno, poi mima la costruzione di un muro invisibile intorno a te. Ti senti intrappolato, non solo fisicamente, ma anche dalla sua perfidia.",
-    "choices": [
-      {
-        "text": "Continua...",
-        "next_node": "fail_mime_2",
-        "is_correct": false
-      }
-    ]
-  },
-  {
-    "node_id": "fail_mime_2",
-    "description": "Mentre sei bloccato dalla sua trappola silenziosa, il Mimo sabota le ultime vestigia di magia del circo. Hai perso tempo prezioso e la tua unica speranza. Hai fallito.",
+    "node_id": "fail_rally_citizens",
+    "description": "I cittadini sono troppo spaventati. Le tue parole cadono nel vuoto, e qualcuno, per paura o per una ricompensa, rivela la tua posizione al Loto Nero. Sei caduto in un'imboscata.",
     "choices": [
       {
         "text": "Riprova",
@@ -154,19 +200,8 @@
     ]
   },
   {
-    "node_id": "fail_wait_1",
-    "description": "Ti siedi su una palla da circo sgonfia, aspettando un'ispirazione che non arriva. La polvere si deposita su di te e il silenzio diventa assordante.",
-    "choices": [
-      {
-        "text": "Continua...",
-        "next_node": "fail_wait_2",
-        "is_correct": false
-      }
-    ]
-  },
-  {
-    "node_id": "fail_wait_2",
-    "description": "La tua passività ha permesso alla tristezza di consumare completamente il Circus Aeturnum. Il tendone si dissolve nell'oblio. Hai fallito.",
+    "node_id": "fail_flee",
+    "description": "Mentre fuggi, la luna di sangue sorge. Il rituale del Loto Nero ha successo, e il dominio cade in un'oscurità eterna. Il tuo fallimento perseguiterà te e il mondo.",
     "choices": [
       {
         "text": "Riprova",
@@ -176,19 +211,8 @@
     ]
   },
   {
-    "node_id": "fail_bribe_1",
-    "description": "Offri al guardiano un fiore di zucchero filato. Lui lo afferra, lo guarda con disprezzo e lo sbriciola in una nuvola rosa. Ora è ancora più arrabbiato.",
-    "choices": [
-      {
-        "text": "Continua...",
-        "next_node": "fail_bribe_2",
-        "is_correct": false
-      }
-    ]
-  },
-  {
-    "node_id": "fail_bribe_2",
-    "description": "Offeso dal tuo tentativo, il guardiano ti sbarra la strada per sempre. La Foresta Sussurrante è ormai irraggiungibile. Hai fallito.",
+    "node_id": "fail_formula_only",
+    "description": "Trovi la formula, ma senza la Radice d'Ombra è inutile. Quando torni a cercarla, scopri che le guardie hanno finalmente perquisito la biblioteca, distruggendo tutto.",
     "choices": [
       {
         "text": "Riprova",
@@ -198,19 +222,8 @@
     ]
   },
   {
-    "node_id": "fail_swim_1",
-    "description": "Ti tuffi nel fiume di limonata. La corrente è sorprendentemente forte e frizzante, e ti trascina via lontano dal ponte.",
-    "choices": [
-      {
-        "text": "Continua...",
-        "next_node": "fail_swim_2",
-        "is_correct": false
-      }
-    ]
-  },
-  {
-    "node_id": "fail_swim_2",
-    "description": "Perso, bagnato e appiccicoso, non riesci più a ritrovare la strada per la foresta. Il circo, privato del suo campione, svanisce. Hai fallito.",
+    "node_id": "fail_fire_distraction",
+    "description": "L'incendio distrugge pergamene di valore inestimabile, inclusa la formula dell'antidoto. Hai perso l'unica speranza di salvare lo Shogun.",
     "choices": [
       {
         "text": "Riprova",
@@ -220,19 +233,8 @@
     ]
   },
   {
-    "node_id": "fail_stare_1",
-    "description": "Il riflesso di te stesso, felice e acclamato, ti cattura. La nostalgia è una trappola dolce e letale, e tu ci sei cascato in pieno.",
-    "choices": [
-      {
-        "text": "Continua...",
-        "next_node": "fail_stare_2",
-        "is_correct": false
-      }
-    ]
-  },
-  {
-    "node_id": "fail_stare_2",
-    "description": "Perso nei ricordi, dimentichi il tuo scopo. Gli specchi ti hanno confuso la mente, e la via d'uscita svanisce. Il circo è condannato. Hai fallito.",
+    "node_id": "fail_instinct_brew",
+    "description": "Il tuo tentativo di creare un antidoto senza formula produce solo un veleno più potente. Hai sprecato l'unico ingrediente capace di salvare lo Shogun.",
     "choices": [
       {
         "text": "Riprova",
@@ -242,19 +244,8 @@
     ]
   },
   {
-    "node_id": "fail_smash_1",
-    "description": "Colpisci uno specchio con un pugno. Si frantuma in mille pezzi, e ogni frammento riflette una versione distorta e terrificante delle tue paure.",
-    "choices": [
-      {
-        "text": "Continua...",
-        "next_node": "fail_smash_2",
-        "is_correct": false
-      }
-    ]
-  },
-  {
-    "node_id": "fail_smash_2",
-    "description": "Sopraffatto da innumerevoli incubi, la tua mente cede. Cadi a terra, incapace di proseguire. Hai fallito.",
+    "node_id": "fail_leave_early",
+    "description": "Senza la formula, la Radice d'Ombra è solo una pianta curiosa. Non hai modo di preparare l'antidoto e il tempo per salvare lo Shogun scade.",
     "choices": [
       {
         "text": "Riprova",
@@ -264,19 +255,8 @@
     ]
   },
   {
-    "node_id": "fail_melody_1",
-    "description": "La melodia del carillon ti avvolge come una coperta fredda. Ti siedi ai piedi di un albero e ti abbandoni a una tristezza infinita, dimenticando il fiore, il circo, tutto.",
-    "choices": [
-      {
-        "text": "Continua...",
-        "next_node": "fail_melody_2",
-        "is_correct": false
-      }
-    ]
-  },
-  {
-    "node_id": "fail_melody_2",
-    "description": "La tristezza ti consuma completamente, prosciugando ogni tua forza e volontà. Non puoi più continuare. Hai fallito.",
+    "node_id": "fail_face_onimaru",
+    "description": "Il Generale Onimaru è un guerriero formidabile. In un combattimento diretto nel cortile, la sua forza bruta ha la meglio sulla tua furtività. Vieni sconfitto.",
     "choices": [
       {
         "text": "Riprova",
@@ -286,19 +266,8 @@
     ]
   },
   {
-    "node_id": "fail_wrong_flower_1",
-    "description": "Cogli un fiore che si rivela essere un 'Tulipano Piangente'. Appena lo tocchi, un'ondata di tristezza ti travolge e inizi a piangere a dirotto.",
-    "choices": [
-      {
-        "text": "Continua...",
-        "next_node": "fail_wrong_flower_2",
-        "is_correct": false
-      }
-    ]
-  },
-  {
-    "node_id": "fail_wrong_flower_2",
-    "description": "Le tue lacrime salate cadono sul vicino Fiore che Ride, facendolo avvizzire all'istante. Hai distrutto la tua unica speranza. Hai fallito.",
+    "node_id": "fail_wait_on_roofs",
+    "description": "Mentre aspetti, perdi tempo prezioso. Il leader del Loto Nero accelera il rituale e, quando finalmente decidi di agire, è troppo tardi. Lo Shogun è perduto.",
     "choices": [
       {
         "text": "Riprova",
@@ -308,19 +277,85 @@
     ]
   },
   {
-    "node_id": "fail_selfish_1",
-    "description": "Pensi di tenere il fiore solo per te, per garantirti una felicità eterna. Ma la magia del Fiore che Ride si nutre di condivisione, non di egoismo.",
+    "node_id": "fail_bypass_spirit",
+    "description": "Lo spirito non è legato solo al pavimento. Appena ti avvicini alle travi, esso si materializza di fronte a te, scagliandoti nel vuoto.",
     "choices": [
       {
-        "text": "Continua...",
-        "next_node": "fail_selfish_2",
+        "text": "Riprova",
+        "next_node": "game_over",
         "is_correct": false
       }
     ]
   },
   {
-    "node_id": "fail_selfish_2",
-    "description": "Percependo il tuo intento egoista, il fiore perde la sua luce, avvizzisce tra le tue mani e si trasforma in polvere. Hai perso tutto. Hai fallito.",
+    "node_id": "fail_reason_spirit",
+    "description": "Lo spirito è un guardiano vincolato dalla magia oscura, incapace di ragionare. Il tuo tentativo di comunicare ti lascia scoperto a un attacco devastante.",
+    "choices": [
+      {
+        "text": "Riprova",
+        "next_node": "game_over",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "node_id": "fail_raw_ingredient",
+    "description": "La Radice d'Ombra grezza è tossica. Invece di curarlo, acceleri la morte dello Shogun. Il tuo errore è fatale.",
+    "choices": [
+      {
+        "text": "Riprova",
+        "next_node": "game_over",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "node_id": "fail_wait_for_leader",
+    "description": "Attendi troppo a lungo. Il leader del Loto Nero arriva e completa il rituale prima che tu possa intervenire, usando l'energia vitale dello Shogun per i suoi scopi oscuri.",
+    "choices": [
+      {
+        "text": "Riprova",
+        "next_node": "game_over",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "node_id": "fail_drink_antidote",
+    "description": "L'antidoto non ha alcun effetto su di te, che non sei avvelenato. Mentre sei confuso, il leader del Loto Nero ti coglie di sorpresa e ti uccide. Hai sprecato l'unica cura.",
+    "choices": [
+      {
+        "text": "Riprova",
+        "next_node": "game_over",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "node_id": "fail_trap_antidote",
+    "description": "Il leader nemico percepisce la tua trappola. La ignora, ti attacca e finisce lo Shogun. Il tuo piano era troppo complicato e ti è costato la vittoria.",
+    "choices": [
+      {
+        "text": "Riprova",
+        "next_node": "game_over",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "node_id": "fail_escape_with_shogun",
+    "description": "Lo Shogun è troppo debole per muoversi velocemente. Il leader del Loto Nero e le sue guardie vi raggiungono facilmente e vi eliminano entrambi.",
+    "choices": [
+      {
+        "text": "Riprova",
+        "next_node": "game_over",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "node_id": "fail_surrender",
+    "description": "Il leader del Loto Nero non accetta rese. Ti deride per la tua ingenuità prima di darti il colpo di grazia. La speranza del Dominio muore con te.",
     "choices": [
       {
         "text": "Riprova",
@@ -331,10 +366,10 @@
   },
   {
     "node_id": "game_over",
-    "description": "Il sorriso di Pipo è perduto per sempre, e con esso il Circus Aeturnum. La gioia si è spenta. Vuoi tentare di riaccenderla?",
+    "description": "Hai fallito. L'ombra del Loto Nero si è estesa senza più ostacoli. Il Dominio è caduto. Vuoi tentare di nuovo di cambiare il destino?",
     "choices": [
       {
-        "text": "Ricomincia dall'inizio",
+        "text": "Ricomincia la missione.",
         "next_node": "start",
         "is_correct": true
       }

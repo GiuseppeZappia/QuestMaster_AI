@@ -1,0 +1,234 @@
+{
+  "metadata": {
+    "timestamp": "2025-07-28T22:08:19.179873",
+    "completion_date": "28/07/2025 alle 22:08",
+    "total_choices": 4,
+    "final_outcome": "In corso"
+  },
+  "original_input": "Scrivimi una quest fantasy riguardo la principessa Maria che deve diventare regina lottando contro le sue sorellastre cattive",
+  "generated_lore": {
+    "lore_document": {
+      "quest_description": {
+        "title": "La Corona Contesa",
+        "initial_state": "Nel regno di Aethelgard, il vecchio Re giace gravemente malato. La sua unica figlia di primo letto, la Principessa Maria, è la legittima erede al trono. Tuttavia, le sue ambiziose sorellastre, Anastasia e Genoveffa, figlie della seconda moglie del Re, stanno tramando nell'ombra per usurpare il potere, diffondendo calunnie per screditare Maria e guadagnandosi il favore di nobili corrotti a corte.",
+        "goal": "Smascherare gli intrighi delle sorellastre, ottenere il sostegno del Consiglio Reale e superare l'antica 'Prova dei Tre Sigilli' per essere incoronata legittima Regina di Aethelgard.",
+        "obstacles": [
+          "Le macchinazioni politiche e le menzogne diffuse da Anastasia e Genoveffa.",
+          "Il Duca delle Ombre, un potente e infido consigliere alleato delle sorellastre.",
+          "Un editto reale falsificato che dichiara Maria indegna alla successione.",
+          "Il sabotaggio della 'Prova dei Tre Sigilli', una serie di antiche sfide per dimostrare la propria saggezza, coraggio e compassione.",
+          "La Guardia Reale, ora fedele alle sorellastre, che limita i movimenti di Maria e dei suoi alleati.",
+          "La crescente sfiducia del popolo, sobillato da false voci e carestie orchestrate ad arte.",
+          "Un'antica maledizione che affligge la linea di sangue reale, la cui vera natura è stata manipolata dalle sorellastre per farla apparire come un segno dell'indegnità di Maria."
+        ],
+        "world_background": "Aethelgard è un regno la cui prosperità è legata alla stabilità della corona. La legge di successione favorisce il primogenito, ma il Consiglio Reale può contestare l'ascesa se l'erede viene giudicato 'inadatto'. La corte è un covo di intrighi, dove le grandi casate nobiliari lottano costantemente per influenza e potere.",
+        "contextual_information": "Le sorellastre hanno usato la loro influenza per porre un capitano a loro fedele a capo della Guardia Reale. Si vocifera che abbiano ottenuto un raro veleno dalla Gilda degli Alchimisti. Maria può contare su pochi alleati: il suo anziano tutore, un leale cavaliere della vecchia guardia e la sua dama di compagnia, che conosce molti segreti del palazzo."
+      },
+      "branching_factor": {
+        "min_actions_per_state": 2,
+        "max_actions_per_state": 4
+      },
+      "depth_constraints": {
+        "min_steps_to_goal": 4,
+        "max_steps_to_goal": 6
+      }
+    }
+  },
+  "story_path": [
+    {
+      "from_node": "start",
+      "choice": "Concentrati sullo smascherare l'editto falsificato davanti al Consiglio.",
+      "to_node": "expose_edict"
+    },
+    {
+      "from_node": "expose_edict",
+      "choice": "Contatta il tuo più leale cavaliere per raccogliere prove del loro tradimento.",
+      "to_node": "gather_proof"
+    },
+    {
+      "from_node": "gather_proof",
+      "choice": "Convochi una seduta d'emergenza del Consiglio Reale per svelare l'intrigo.",
+      "to_node": "reveal_plot"
+    },
+    {
+      "from_node": "reveal_plot",
+      "choice": "Accetta di sottoporti alle prove e preparati per l'incoronazione.",
+      "to_node": "get_crowned"
+    }
+  ],
+  "final_node": "get_crowned",
+  "story_details": [
+    {
+      "node_id": "start",
+      "description": "Sei la Principessa Maria, legittima erede al trono di Aethelgard. Tuo padre, il Re, è gravemente malato e le tue ambiziose sorellastre, Anastasia e Genoveffa, stanno tramando per usurp_are il potere. Hanno appena fatto circolare un editto reale, palesemente falsificato, che ti dichiara indegna alla successione. Il Consiglio Reale è turbato. Cosa fai?",
+      "choices": [
+        {
+          "text": "Concentrati sullo smascherare l'editto falsificato davanti al Consiglio.",
+          "next_node": "expose_edict",
+          "is_correct": true
+        },
+        {
+          "text": "Confronta apertamente le tue sorellastre nella sala del trono.",
+          "next_node": "fail_confront_sisters_1",
+          "is_correct": false
+        },
+        {
+          "text": "Cerca di fuggire dal castello per organizzare una resistenza.",
+          "next_node": "fail_flee_castle_1",
+          "is_correct": false
+        }
+      ]
+    },
+    {
+      "node_id": "expose_edict",
+      "description": "Hai deciso di agire con astuzia. Per smascherare l'inganno dell'editto, hai bisogno di prove inconfutabili dell'intrigo delle tue sorellastre. Da sola, rischi di essere scoperta dalla Guardia Reale, ora fedele a loro. Ti serve aiuto.",
+      "choices": [
+        {
+          "text": "Contatta il tuo più leale cavaliere per raccogliere prove del loro tradimento.",
+          "next_node": "gather_proof",
+          "is_correct": true
+        },
+        {
+          "text": "Tenta di corrompere una guardia per ottenere informazioni.",
+          "next_node": "fail_bribe_guard_1",
+          "is_correct": false
+        },
+        {
+          "text": "Invia la tua dama di compagnia a spiare il Duca delle Ombre.",
+          "next_node": "fail_spy_duke_1",
+          "is_correct": false
+        }
+      ]
+    },
+    {
+      "node_id": "gather_proof",
+      "description": "Il tuo fedele alleato è riuscito a intercettare una lettera tra le sorellastre e il Duca delle Ombre, che non solo prova la falsificazione dell'editto, ma svela anche il loro piano per sabotare le tue prove e avvelenare il Re. Hai le prove in mano. È il momento di agire.",
+      "choices": [
+        {
+          "text": "Convochi una seduta d'emergenza del Consiglio Reale per svelare l'intrigo.",
+          "next_node": "reveal_plot",
+          "is_correct": true
+        },
+        {
+          "text": "Usa le prove per ricattare le tue sorellastre e costringerle a ritirarsi.",
+          "next_node": "fail_blackmail_sisters_1",
+          "is_correct": false
+        },
+        {
+          "text": "Rendi pubbliche le prove, sperando in una sollevazione popolare a tuo favore.",
+          "next_node": "fail_public_revolt_1",
+          "is_correct": false
+        }
+      ]
+    },
+    {
+      "node_id": "reveal_plot",
+      "description": "Davanti al Consiglio Reale, presenti le prove schiaccianti. Le tue sorellastre e il Duca delle Ombre vengono smascherati e arrestati. Il Consiglio ti dichiara unica e legittima erede. Per consolidare il tuo diritto, devi ora superare l'antica 'Prova dei Tre Sigilli' e dimostrare la tua saggezza, coraggio e compassione.",
+      "choices": [
+        {
+          "text": "Accetta di sottoporti alle prove e preparati per l'incoronazione.",
+          "next_node": "get_crowned",
+          "is_correct": true
+        },
+        {
+          "text": "Chiedi l'esecuzione immediata dei traditori, mostrando pugno di ferro.",
+          "next_node": "fail_demand_execution_1",
+          "is_correct": false
+        }
+      ]
+    },
+    {
+      "node_id": "get_crowned",
+      "description": "Superi le prove con onore, dimostrando di possedere le qualità di una vera sovrana. Il popolo esulta mentre l'Arcivescovo posa la Corona di Aethelgard sulla tua testa. Il regno è salvo, la giustizia ha trionfato. Lunga vita alla Regina Maria!",
+      "choices": []
+    },
+    {
+      "node_id": "fail_confront_sisters_1",
+      "description": "Senza prove, le tue accuse vengono liquidate come l'isteria di una donna spaventata. Il Duca delle Ombre coglie l'occasione per dichiararti mentalmente instabile.",
+      "choices": [
+        {
+          "text": "La Guardia Reale ti scorta nelle tue stanze, ora una prigione dorata. Hai perso.",
+          "next_node": "game_over",
+          "is_correct": false
+        }
+      ]
+    },
+    {
+      "node_id": "fail_flee_castle_1",
+      "description": "Tenti di scappare attraverso i passaggi segreti, ma la Guardia Reale, allertata dalle tue sorellastre, ti stava aspettando. Vieni catturata prima di raggiungere le stalle.",
+      "choices": [
+        {
+          "text": "Vieni dichiarata traditrice e imprigionata. Le tue sorellastre hanno vinto.",
+          "next_node": "game_over",
+          "is_correct": false
+        }
+      ]
+    },
+    {
+      "node_id": "fail_bribe_guard_1",
+      "description": "La guardia che tenti di corrompere è un uomo del Duca delle Ombre. Finge di accettare, ma ti conduce dritto in una trappola.",
+      "choices": [
+        {
+          "text": "Il tuo tentativo di sovversione viene usato come prova della tua indegnità. Sei finita.",
+          "next_node": "game_over",
+          "is_correct": false
+        }
+      ]
+    },
+    {
+      "node_id": "fail_spy_duke_1",
+      "description": "La tua dama di compagnia è leale, ma non è una spia addestrata. Viene scoperta quasi subito dal Duca delle Ombre, che la usa per diffondere false informazioni e screditarti ulteriormente.",
+      "choices": [
+        {
+          "text": "La tua migliore amica è stata compromessa e la tua posizione è peggiorata. La partita è chiusa.",
+          "next_node": "game_over",
+          "is_correct": false
+        }
+      ]
+    },
+    {
+      "node_id": "fail_blackmail_sisters_1",
+      "description": "Le tue sorellastre, messe alle strette, giocano il tutto per tutto. Ti accusano pubblicamente di estorsione e falsificazione, usando la tua stessa mossa contro di te.",
+      "choices": [
+        {
+          "text": "In un turbine di accuse e contro-accuse, il Consiglio, confuso, ti esilia per evitare una guerra civile. Hai perso il trono.",
+          "next_node": "game_over",
+          "is_correct": false
+        }
+      ]
+    },
+    {
+      "node_id": "fail_public_revolt_1",
+      "description": "Il popolo, già avvelenato dalle calunnie, non crede alle tue prove. La mossa ti si ritorce contro, causando disordini che il Duca delle Ombre usa come pretesto per instaurare la legge marziale.",
+      "choices": [
+        {
+          "text": "Sei accusata di sedizione e la tua causa è irrimediabilmente perduta.",
+          "next_node": "game_over",
+          "is_correct": false
+        }
+      ]
+    },
+    {
+      "node_id": "fail_demand_execution_1",
+      "description": "La tua richiesta di sangue, seppur comprensibile, allarma il Consiglio. Vedono in te un potenziale tiranno, non un sovrano giusto e compassionevole. Hai fallito l'ultima, cruciale prova.",
+      "choices": [
+        {
+          "text": "Il Consiglio ti giudica 'inadatta' e passa la corona a un cugino lontano. Hai perso tutto all'ultimo passo.",
+          "next_node": "game_over",
+          "is_correct": false
+        }
+      ]
+    },
+    {
+      "node_id": "game_over",
+      "description": "Il tuo tentativo è fallito. Le macchinazioni delle tue sorellastre hanno avuto la meglio e il futuro di Aethelgard è precipitato nell'ombra. Vuoi tentare di nuovo di reclamare ciò che è tuo per diritto?",
+      "choices": [
+        {
+          "text": "Ricomincia la lotta per il trono.",
+          "next_node": "start",
+          "is_correct": true
+        }
+      ]
+    }
+  ]
+}

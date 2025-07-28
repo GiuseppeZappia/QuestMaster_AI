@@ -845,6 +845,40 @@ def detect_lore_tone(lore_text):
     else:
         return "adventure"
 
+def detect_story_tone(story_text):
+    """
+    Analizza il tono della storia per adattare la voce TTS
+    """
+    if not story_text:
+        return "neutral"
+    
+    text_lower = str(story_text).lower()
+    
+    # Parole chiave per diversi toni
+    dark_words = ['oscuro', 'tenebre', 'morte', 'sangue', 'demone', 'diavolo', 'inferno', 'maledizione', 'vendetta', 'ombra', 'paura', 'terrore']
+    epic_words = ['eroe', 'leggenda', 'gloria', 'onore', 'vittoria', 'trionfo', 'destino', 'regno', 'impero', 'battaglia', 'guerra', 'coraggio']
+    mystical_words = ['magia', 'incantesimo', 'mago', 'strega', 'cristallo', 'pozione', 'spirito', 'antico', 'mistico', 'arcano', 'elementale']
+    adventure_words = ['avventura', 'esplorazione', 'tesoro', 'mappa', 'viaggio', 'scoperta', 'ricerca', 'quest', 'dungeon', 'labirinto']
+    
+    # Conteggio occorrenze
+    dark_count = sum(1 for word in dark_words if word in text_lower)
+    epic_count = sum(1 for word in epic_words if word in text_lower)
+    mystical_count = sum(1 for word in mystical_words if word in text_lower)
+    adventure_count = sum(1 for word in adventure_words if word in text_lower)
+    
+    # Determina il tono dominante
+    max_count = max(dark_count, epic_count, mystical_count, adventure_count)
+    
+    if max_count == 0 or max_count < 2:
+        return "neutral"
+    elif dark_count == max_count:
+        return "dark"
+    elif epic_count == max_count:
+        return "epic"
+    elif mystical_count == max_count:
+        return "mystical"
+    else:
+        return "adventure"
 
 def clean_text_for_tts(text):
     """
@@ -1910,14 +1944,28 @@ def find_node_by_id(story_data: List[Dict], node_id: str) -> Dict[str, Any]:
     return {}
 
 def reset_game():
-    """Resetta il gioco allo stato iniziale"""
+    """Resetta il gioco allo stato iniziale - FUNZIONE CORRETTA"""
+    # Pulisce tutti gli audio in cache prima del reset
+    keys_to_remove = []
+    for key in st.session_state.keys():
+        if (key.startswith('audio_') or 
+            key.startswith('tone_') or 
+            key.startswith('last_text_')):
+            keys_to_remove.append(key)
+    
+    # Rimuove tutte le chiavi audio dalla cache
+    for key in keys_to_remove:
+        del st.session_state[key]
+    
+    # Azzera TUTTO lo stato del gioco - forza il reset completo
     for key in ['current_node', 'story_history', 'choices_made', 'choice_order_seed']:
         if key in st.session_state:
             del st.session_state[key]
     
+    # Re-inizializza con valori puliti
     st.session_state.current_node = 'start'
-    st.session_state.story_history = []
-    st.session_state.choices_made = []
+    st.session_state.story_history = []  # Lista vuota garantita
+    st.session_state.choices_made = []   # Lista vuota garantita 
     st.session_state.choice_order_seed = random.randint(1, 1000000)
 
 def shuffle_choices(choices: List[Dict], seed: int) -> List[Dict]:
@@ -2222,8 +2270,46 @@ def render_gameplay():
     # Contenitore principale della storia
     st.markdown('<div class="story-container fade-in">', unsafe_allow_html=True)
     
-    # Mostra il testo della storia
-    st.markdown(f'<div class="story-text">{current_node.get("description", "")}</div>', 
+    # Genera e mostra il player audio per il testo della storia
+    story_text = current_node.get("description", "")
+
+    # Controlla se TTS è disponibile
+    if GTTS_AVAILABLE or PYTTSX3_AVAILABLE:
+        # Genera audio se non esiste o se il testo è cambiato
+        cache_key = f"audio_{st.session_state.current_node}"
+        if (cache_key not in st.session_state or 
+            f'last_text_{st.session_state.current_node}' not in st.session_state or 
+            st.session_state[f'last_text_{st.session_state.current_node}'] != story_text):
+            
+            with st.spinner("🎵 Il narratore sta preparando la sua voce magica... ✨"):
+                tone = detect_story_tone(story_text)
+                audio_data = generate_tts_audio(story_text, tone)
+                
+                if audio_data:
+                    st.session_state[cache_key] = audio_data
+                    st.session_state[f'tone_{st.session_state.current_node}'] = tone
+                    st.session_state[f'last_text_{st.session_state.current_node}'] = story_text
+        
+        # Mostra il player se l'audio è disponibile
+        if cache_key in st.session_state and st.session_state[cache_key]:
+            audio_player = create_audio_player(
+                st.session_state[cache_key], 
+                st.session_state.get(f'tone_{st.session_state.current_node}', 'neutral')
+            )
+            st.markdown(audio_player, unsafe_allow_html=True)
+    else:
+        # Messaggio se TTS non è disponibile
+        st.markdown("""
+        <div style="background: rgba(255, 165, 0, 0.1); border: 2px solid rgba(255, 165, 0, 0.3); border-radius: 15px; padding: 1.5rem; margin: 1.5rem 0; text-align: center;">
+            <p style="color: #ffa500; font-family: 'Crimson Text', serif; font-size: 1rem; margin: 0;">
+                🔇 <strong>Narratore Magico non disponibile</strong><br>
+                <em style="color: #f0f0f0; font-size: 0.9rem;">Per attivare la lettura audio, installa: pip install gtts pyttsx3</em>
+            </p>
+        </div>
+        """, unsafe_allow_html=True)
+
+    # Mostra il testo della storia con effetti tipografici migliorati
+    st.markdown(f'<div class="story-text">{story_text}</div>', 
                 unsafe_allow_html=True)
     
     # Gestisce i diversi tipi di nodi

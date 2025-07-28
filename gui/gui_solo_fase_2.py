@@ -4,6 +4,24 @@ from pathlib import Path
 from typing import Dict, List, Any
 import time
 import random
+import base64
+import re
+from io import BytesIO
+from datetime import datetime
+import zipfile
+
+# Importa le librerie TTS se disponibili
+try:
+    from gtts import gTTS
+    GTTS_AVAILABLE = True
+except ImportError:
+    GTTS_AVAILABLE = False
+
+try:
+    import pyttsx3
+    PYTTSX3_AVAILABLE = True
+except ImportError:
+    PYTTSX3_AVAILABLE = False
 
 # Configurazione della pagina
 st.set_page_config(
@@ -492,6 +510,41 @@ st.markdown("""
         margin: 0.6rem 0;
     }
     
+    .save-section {
+        background: rgba(0, 184, 148, 0.15);
+        border: 2px solid rgba(0, 184, 148, 0.4);
+        border-radius: 15px;
+        padding: 1.5rem;
+        margin: 1rem 0;
+        font-family: 'Crimson Text', serif;
+    }
+    
+    .save-section h3 {
+        color: #00b894;
+        font-family: 'Cinzel', serif;
+        text-align: center;
+        margin-bottom: 1rem;
+        font-size: 1.2rem;
+    }
+    
+    .status-success {
+        background: rgba(0, 184, 148, 0.2);
+        border: 2px solid rgba(0, 184, 148, 0.6);
+        color: #55efc4;
+        padding: 1rem;
+        border-radius: 15px;
+        text-align: center;
+        margin: 1rem 0;
+        font-family: 'Crimson Text', serif;
+        font-weight: 600;
+        animation: statusGlow 2s infinite alternate;
+    }
+    
+    @keyframes statusGlow {
+        from { box-shadow: 0 0 20px rgba(0, 184, 148, 0.3); }
+        to { box-shadow: 0 0 40px rgba(0, 184, 148, 0.6); }
+    }
+    
     .footer {
         text-align: center;
         color: rgba(255, 215, 0, 0.8);
@@ -572,6 +625,364 @@ st.markdown("""
 </style>
 """, unsafe_allow_html=True)
 
+def detect_story_tone(story_text):
+    """
+    Analizza il tono della storia per adattare la voce TTS
+    """
+    if not story_text:
+        return "neutral"
+    
+    text_lower = str(story_text).lower()
+    
+    # Parole chiave per diversi toni
+    dark_words = ['oscuro', 'tenebre', 'morte', 'sangue', 'demone', 'diavolo', 'inferno', 'maledizione', 'vendetta', 'ombra', 'paura', 'terrore']
+    epic_words = ['eroe', 'leggenda', 'gloria', 'onore', 'vittoria', 'trionfo', 'destino', 'regno', 'impero', 'battaglia', 'guerra', 'coraggio']
+    mystical_words = ['magia', 'incantesimo', 'mago', 'strega', 'cristallo', 'pozione', 'spirito', 'antico', 'mistico', 'arcano', 'elementale']
+    adventure_words = ['avventura', 'esplorazione', 'tesoro', 'mappa', 'viaggio', 'scoperta', 'ricerca', 'quest', 'dungeon', 'labirinto']
+    
+    # Conteggio occorrenze
+    dark_count = sum(1 for word in dark_words if word in text_lower)
+    epic_count = sum(1 for word in epic_words if word in text_lower)
+    mystical_count = sum(1 for word in mystical_words if word in text_lower)
+    adventure_count = sum(1 for word in adventure_words if word in text_lower)
+    
+    # Determina il tono dominante
+    max_count = max(dark_count, epic_count, mystical_count, adventure_count)
+    
+    if max_count == 0 or max_count < 2:
+        return "neutral"
+    elif dark_count == max_count:
+        return "dark"
+    elif epic_count == max_count:
+        return "epic"
+    elif mystical_count == max_count:
+        return "mystical"
+    else:
+        return "adventure"
+
+def clean_text_for_tts(text):
+    """
+    Pulisce il testo per il TTS rimuovendo emoji, caratteri speciali e formattazione
+    """
+    if not text:
+        return ""
+    
+    # Converte in stringa se è un dizionario/oggetto
+    if not isinstance(text, str):
+        text = str(text)
+    
+    # Rimuove tutte le emoji usando regex Unicode
+    emoji_pattern = re.compile(
+        "["
+        "\U0001F600-\U0001F64F"  # emoticons
+        "\U0001F300-\U0001F5FF"  # symbols & pictographs
+        "\U0001F680-\U0001F6FF"  # transport & map symbols
+        "\U0001F1E0-\U0001F1FF"  # flags (iOS)
+        "\U0001F900-\U0001F9FF"  # supplemental symbols
+        "\U00002600-\U000027BF"  # misc symbols
+        "\U000024C2-\U0001F251"  # enclosed characters
+        "\U0001F170-\U0001F251"  # enclosed alphanumeric supplement
+        "]+", 
+        flags=re.UNICODE
+    )
+    text = emoji_pattern.sub('', text)
+    
+    # Rimuove caratteri markdown e formattazione
+    text = re.sub(r'[*_`#]', '', text)
+    text = re.sub(r'\[.*?\]', '', text)
+    text = re.sub(r'http[s]?://\S+', '', text)
+    
+    # Rimuove caratteri speciali comuni nelle liste
+    text = re.sub(r'[•◦▪▫▸▹‣⁃]', '', text)
+    
+    # Sostituisce i pattern di struttura con testo più naturale per TTS
+    text = re.sub(r'\*\*(.*?):\*\*', r'\1:', text)  # **Titolo:** -> Titolo:
+    text = re.sub(r'Min:\s*(\d+)\s*\|\s*Max:\s*(\d+)', r'da \1 a \2', text)  # Min: 1 | Max: 3 -> da 1 a 3
+    
+    # Pulisce caratteri speciali rimanenti
+    text = re.sub(r'[|\[\]{}]', '', text)
+    
+    # Sostituisce i bullet points con "punto" per una lettura più naturale
+    text = re.sub(r'^\s*\*\s*', 'Punto: ', text, flags=re.MULTILINE)
+    
+    # Pulisce spazi multipli e caratteri di controllo
+    text = re.sub(r'\s+', ' ', text)
+    text = re.sub(r'[\n\r\t]+', ' ', text)
+    
+    # Rimuove spazi prima e dopo i due punti
+    text = re.sub(r'\s*:\s*', ': ', text)
+    
+    # Limita la lunghezza per evitare timeout (aumentato il limite)
+    if len(text) > 1500:
+        # Trova l'ultimo punto prima del limite per non tagliare a metà frase
+        last_period = text.rfind('.', 0, 1500)
+        if last_period > 1000:  # Se troviamo un punto ragionevole
+            text = text[:last_period + 1]
+        else:
+            text = text[:1500] + "..."
+    
+    return text.strip()
+
+def generate_tts_audio(text, tone="neutral"):
+    """
+    Genera audio TTS con Google TTS o fallback su pyttsx3
+    """
+    if not text:
+        return None
+    
+    cleaned_text = clean_text_for_tts(text)
+    if not cleaned_text:
+        return None
+    
+    audio_data = None
+    
+    # Prova prima con Google TTS
+    if GTTS_AVAILABLE:
+        try:
+            # Seleziona parametri basati sul tono
+            if tone == "dark":
+                lang = 'it'
+                slow = True
+            elif tone == "epic":
+                lang = 'it'
+                slow = False
+            elif tone == "mystical":
+                lang = 'it'
+                slow = True
+            else:  # neutral, adventure
+                lang = 'it'
+                slow = False
+            
+            tts = gTTS(text=cleaned_text, lang=lang, slow=slow)
+            
+            # Salva in memoria
+            audio_buffer = BytesIO()
+            tts.write_to_fp(audio_buffer)
+            audio_buffer.seek(0)
+            audio_data = audio_buffer.getvalue()
+            
+        except Exception as e:
+            print(f"Errore Google TTS: {e}")
+            audio_data = None
+    
+    # Fallback su pyttsx3 (offline)
+    if audio_data is None and PYTTSX3_AVAILABLE:
+        try:
+            engine = pyttsx3.init()
+            
+            # Configura voce basata sul tono
+            voices = engine.getProperty('voices')
+            if voices:
+                # Seleziona voce femminile per mistico, maschile per epico
+                if tone == "mystical" and len(voices) > 1:
+                    engine.setProperty('voice', voices[1].id)
+                elif tone in ["epic", "dark"] and len(voices) > 0:
+                    engine.setProperty('voice', voices[0].id)
+            
+            # Configura velocità e volume
+            rate = engine.getProperty('rate')
+            if tone == "dark":
+                engine.setProperty('rate', rate - 50)
+            elif tone == "epic":
+                engine.setProperty('rate', rate + 20)
+            else:
+                engine.setProperty('rate', rate)
+            
+            # Salva in file temporaneo
+            temp_file = "temp_audio.wav"
+            engine.save_to_file(cleaned_text, temp_file)
+            engine.runAndWait()
+            
+            # Legge il file
+            try:
+                with open(temp_file, 'rb') as f:
+                    audio_data = f.read()
+                import os
+                os.remove(temp_file)  # Pulisce il file temporaneo
+            except:
+                pass
+                
+        except Exception as e:
+            print(f"Errore pyttsx3: {e}")
+            audio_data = None
+    
+    return audio_data
+
+def create_audio_player(audio_data, tone="neutral"):
+    """
+    Crea un player audio HTML5 con styling personalizzato
+    """
+    if not audio_data:
+        return ""
+    
+    # Converti in base64
+    audio_base64 = base64.b64encode(audio_data).decode()
+    
+    # Colori basati sul tono
+    if tone == "dark":
+        bg_color = "rgba(139, 69, 19, 0.3)"
+        accent_color = "#8B4513"
+    elif tone == "epic":
+        bg_color = "rgba(255, 215, 0, 0.3)"
+        accent_color = "#FFD700"
+    elif tone == "mystical":
+        bg_color = "rgba(138, 43, 226, 0.3)"
+        accent_color = "#8A2BE2"
+    else:  # neutral, adventure
+        bg_color = "rgba(74, 144, 226, 0.3)"
+        accent_color = "#4A90E2"
+    
+    return f"""
+    <div style="
+        background: {bg_color};
+        border: 2px solid {accent_color};
+        border-radius: 15px;
+        padding: 1.5rem;
+        margin: 1.5rem 0;
+        text-align: center;
+        backdrop-filter: blur(10px);
+    ">
+        <h4 style="
+            color: {accent_color};
+            font-family: 'Cinzel', serif;
+            margin-bottom: 1rem;
+            font-size: 1.2rem;
+        ">
+            🎵 NARRATORE MAGICO 🎵
+        </h4>
+        <audio controls style="
+            width: 100%;
+            max-width: 400px;
+            height: 40px;
+            border-radius: 20px;
+            outline: none;
+        ">
+            <source src="data:audio/wav;base64,{audio_base64}" type="audio/wav">
+            <source src="data:audio/mpeg;base64,{audio_base64}" type="audio/mpeg">
+            Il tuo browser non supporta l'audio HTML5.
+        </audio>
+        <p style="
+            color: #f0f0f0;
+            font-size: 0.9rem;
+            margin-top: 0.8rem;
+            font-style: italic;
+        ">
+            🎭 Tono: <strong style="color: {accent_color};">{tone.title()}</strong> | 
+            🔊 Ascolta la tua leggenda prendere vita!
+        </p>
+    </div>
+    """
+
+def save_adventure_log():
+    """Crea un log completo dell'avventura e lo salva in locale"""
+    
+    # Genera timestamp per il nome del file
+    timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
+    
+    # Raccoglie tutti i dati dell'avventura
+    adventure_data = {
+        "metadata": {
+            "timestamp": datetime.now().isoformat(),
+            "completion_date": datetime.now().strftime("%d/%m/%Y alle %H:%M"),
+            "total_choices": len(st.session_state.choices_made),
+            "final_outcome": "Vittoria" if st.session_state.current_node == 'victory' else "Game Over" if st.session_state.current_node == 'game_over' else "In corso"
+        },
+        "story_path": st.session_state.choices_made,
+        "final_node": st.session_state.current_node
+    }
+    
+    # Carica la storia completa per i dettagli
+    try:
+        story_data = load_story()
+        adventure_data["story_details"] = story_data
+    except:
+        adventure_data["story_details"] = []
+    
+    # Crea il log in formato JSON
+    filename = f"avventura_{timestamp}.json"
+    filepath = Path("salvataggi") / filename
+    
+    # Crea la cartella se non esiste
+    filepath.parent.mkdir(exist_ok=True)
+    
+    with open(filepath, 'w', encoding='utf-8') as f:
+        json.dump(adventure_data, f, indent=2, ensure_ascii=False)
+    
+    return filepath, adventure_data
+
+def create_adventure_report(adventure_data):
+    """Crea un report leggibile dell'avventura"""
+    report_lines = []
+    
+    # Header del report
+    report_lines.append("🎭 CRONACHE DELLA LEGGENDA VISSUTA 🎭")
+    report_lines.append("=" * 60)
+    report_lines.append(f"📅 Completata il: {adventure_data['metadata']['completion_date']}")
+    report_lines.append(f"🎯 Esito finale: {adventure_data['metadata']['final_outcome']}")
+    report_lines.append(f"⚔️ Decisioni totali: {adventure_data['metadata']['total_choices']}")
+    report_lines.append("")
+    
+    # Percorso delle scelte
+    report_lines.append("🛤️ IL TUO CAMMINO EROICO:")
+    report_lines.append("-" * 40)
+    
+    for i, choice in enumerate(adventure_data['story_path'], 1):
+        report_lines.append(f"⚡ Atto {i:2d}: {choice['choice']}")
+    
+    if not adventure_data['story_path']:
+        report_lines.append("Nessuna scelta registrata")
+    
+    report_lines.append("")
+    report_lines.append("✨ Fine delle Cronache ✨")
+    
+    return "\n".join(report_lines)
+
+def create_markdown_report(adventure_data):
+    """Crea un report in formato Markdown"""
+    md_lines = []
+    
+    md_lines.append("# 🎭 Cronache della Leggenda Vissuta")
+    md_lines.append("")
+    md_lines.append("## 📊 Informazioni Generali")
+    md_lines.append(f"- **Completata il**: {adventure_data['metadata']['completion_date']}")
+    md_lines.append(f"- **Esito finale**: {adventure_data['metadata']['final_outcome']}")
+    md_lines.append(f"- **Decisioni totali**: {adventure_data['metadata']['total_choices']}")
+    md_lines.append("")
+    
+    if adventure_data['story_path']:
+        md_lines.append("## 🛤️ Il Tuo Cammino Eroico")
+        for i, choice in enumerate(adventure_data['story_path'], 1):
+            md_lines.append(f"{i}. **{choice['choice']}**")
+            md_lines.append(f"   - *Da: {choice['from_node']} → A: {choice['to_node']}*")
+            md_lines.append("")
+    
+    md_lines.append("---")
+    md_lines.append("*Generato dal Maestro delle Leggende*")
+    
+    return "\n".join(md_lines)
+
+def download_adventure_files(adventure_data, filepath):
+    """Prepara i file per il download"""
+    
+    # Crea un archivio ZIP in memoria
+    zip_buffer = BytesIO()
+    
+    with zipfile.ZipFile(zip_buffer, 'w', zipfile.ZIP_DEFLATED) as zip_file:
+        # Aggiungi il file JSON completo
+        zip_file.writestr(f"{filepath.stem}.json", 
+                         json.dumps(adventure_data, indent=2, ensure_ascii=False))
+        
+        # Aggiungi il report leggibile
+        report_content = create_adventure_report(adventure_data)
+        zip_file.writestr(f"{filepath.stem}_report.txt", report_content)
+        
+        # Aggiungi un file markdown formattato
+        markdown_content = create_markdown_report(adventure_data)
+        zip_file.writestr(f"{filepath.stem}_report.md", markdown_content)
+    
+    zip_buffer.seek(0)
+    return zip_buffer.getvalue()
+
 def load_story() -> List[Dict[str, Any]]:
     """Carica la storia dal file JSON"""
     try:
@@ -606,6 +1017,18 @@ def initialize_game_state():
 
 def reset_game():
     """Resetta il gioco allo stato iniziale - FUNZIONE CORRETTA"""
+    # Pulisce tutti gli audio in cache prima del reset
+    keys_to_remove = []
+    for key in st.session_state.keys():
+        if (key.startswith('audio_') or 
+            key.startswith('tone_') or 
+            key.startswith('last_text_')):
+            keys_to_remove.append(key)
+    
+    # Rimuove tutte le chiavi audio dalla cache
+    for key in keys_to_remove:
+        del st.session_state[key]
+    
     # Azzera TUTTO lo stato del gioco - forza il reset completo
     for key in ['current_node', 'story_history', 'choices_made', 'game_started', 'choice_order_seed']:
         if key in st.session_state:
@@ -740,7 +1163,41 @@ def main():
             </ul>
         </div>
         """, unsafe_allow_html=True)
-    
+        
+        st.markdown("---")
+        
+        # Opzione di salvataggio in qualsiasi momento
+        if st.session_state.choices_made:  # Solo se ci sono scelte fatte
+            st.markdown("""
+            <div class="save-section">
+                <h3>💾 SALVATAGGIO</h3>
+                <p style="text-align: center; color: #f0f0f0; font-size: 0.9rem; margin-bottom: 1rem;">
+                    Salva il progresso attuale della tua avventura
+                </p>
+            </div>
+            """, unsafe_allow_html=True)
+            
+            if st.button("💾 Salva Avventura", key="save_current_progress", use_container_width=True):
+                try:
+                    filepath, adventure_data = save_adventure_log()
+                    zip_data = download_adventure_files(adventure_data, filepath)
+                    
+                    st.markdown("""
+                    <div class="status-success">
+                        ✅ Avventura salvata!
+                    </div>
+                    """, unsafe_allow_html=True)
+                    
+                    st.download_button(
+                        label="📥 Scarica",
+                        data=zip_data,
+                        file_name=f"avventura_in_corso_{filepath.stem}.zip",
+                        mime="application/zip",
+                        use_container_width=True
+                    )
+                except Exception as e:
+                    st.error(f"❌ Errore: {e}")
+
     # Trova il nodo corrente
     current_node = find_node_by_id(story_data, st.session_state.current_node)
     
@@ -751,8 +1208,46 @@ def main():
     # Contenitore principale della storia con animazione migliorata
     st.markdown('<div class="story-container fade-in">', unsafe_allow_html=True)
     
+    # Genera e mostra il player audio per il testo della storia
+    story_text = current_node.get("description", "")
+    
+    # Controlla se TTS è disponibile
+    if GTTS_AVAILABLE or PYTTSX3_AVAILABLE:
+        # Genera audio se non esiste o se il testo è cambiato
+        cache_key = f"audio_{st.session_state.current_node}"
+        if (cache_key not in st.session_state or 
+            f'last_text_{st.session_state.current_node}' not in st.session_state or 
+            st.session_state[f'last_text_{st.session_state.current_node}'] != story_text):
+            
+            with st.spinner("🎵 Il narratore sta preparando la sua voce magica... ✨"):
+                tone = detect_story_tone(story_text)
+                audio_data = generate_tts_audio(story_text, tone)
+                
+                if audio_data:
+                    st.session_state[cache_key] = audio_data
+                    st.session_state[f'tone_{st.session_state.current_node}'] = tone
+                    st.session_state[f'last_text_{st.session_state.current_node}'] = story_text
+        
+        # Mostra il player se l'audio è disponibile
+        if cache_key in st.session_state and st.session_state[cache_key]:
+            audio_player = create_audio_player(
+                st.session_state[cache_key], 
+                st.session_state.get(f'tone_{st.session_state.current_node}', 'neutral')
+            )
+            st.markdown(audio_player, unsafe_allow_html=True)
+    else:
+        # Messaggio se TTS non è disponibile
+        st.markdown("""
+        <div style="background: rgba(255, 165, 0, 0.1); border: 2px solid rgba(255, 165, 0, 0.3); border-radius: 15px; padding: 1.5rem; margin: 1.5rem 0; text-align: center;">
+            <p style="color: #ffa500; font-family: 'Crimson Text', serif; font-size: 1rem; margin: 0;">
+                🔇 <strong>Narratore Magico non disponibile</strong><br>
+                <em style="color: #f0f0f0; font-size: 0.9rem;">Per attivare la lettura audio, installa: pip install gtts pyttsx3</em>
+            </p>
+        </div>
+        """, unsafe_allow_html=True)
+    
     # Mostra il testo della storia con effetti tipografici migliorati
-    st.markdown(f'<div class="story-text">{current_node.get("description", "")}</div>', 
+    st.markdown(f'<div class="story-text">{story_text}</div>', 
                 unsafe_allow_html=True)
     
     # Gestisce i diversi tipi di nodi
@@ -818,15 +1313,45 @@ def main():
                 </div>
                 """, unsafe_allow_html=True)
         
-        col1, col2, col3 = st.columns([1, 2, 1])
+        # Opzioni post-vittoria
+        st.markdown("---")
+        
+        col1, col2 = st.columns(2)
+        
+        with col1:
+            if st.button("💾 SALVA LE CRONACHE DELLA GLORIA", key="save_victory_adventure", use_container_width=True):
+                try:
+                    filepath, adventure_data = save_adventure_log()
+                    zip_data = download_adventure_files(adventure_data, filepath)
+                    
+                    st.markdown("""
+                    <div class="status-success">
+                        📚 Le tue gesta eroiche sono state immortalate negli annali!
+                    </div>
+                    """, unsafe_allow_html=True)
+                    
+                    # Bottone per il download
+                    st.download_button(
+                        label="📥 Scarica Archivio Completo",
+                        data=zip_data,
+                        file_name=f"cronache_vittoria_{filepath.stem}.zip",
+                        mime="application/zip",
+                        use_container_width=True
+                    )
+                    
+                    # Anteprima del report
+                    with st.expander("👁️ Anteprima delle Cronache", expanded=False):
+                        report_preview = create_adventure_report(adventure_data)
+                        st.text(report_preview[:1000] + "..." if len(report_preview) > 1000 else report_preview)
+                        
+                except Exception as e:
+                    st.error(f"⚠️ Errore nel salvataggio delle cronache: {e}")
+        
         with col2:
             if st.button("🌟 Forgia una Nuova Leggenda", key="play_again_victory", use_container_width=True):
-                # Debug per vittoria
-                st.write(f"DEBUG VITTORIA - Prima: {len(st.session_state.get('choices_made', []))}")
                 reset_game()
-                st.write(f"DEBUG VITTORIA - Dopo: {len(st.session_state.get('choices_made', []))}")
                 st.rerun()
-    
+                
     elif st.session_state.current_node == 'game_over':
         # Schermata di game over ultra-drammatica
         st.markdown(f"""
@@ -846,6 +1371,36 @@ def main():
         </div>
         """, unsafe_allow_html=True)
         
+        # Opzioni di salvataggio anche per game over
+        st.markdown("---")
+        
+        col1, col2, col3 = st.columns([1, 2, 1])
+        with col2:
+            if st.button("💾 SALVA LE CRONACHE DEL TENTATIVO", key="save_gameover_adventure", use_container_width=True):
+                try:
+                    filepath, adventure_data = save_adventure_log()
+                    zip_data = download_adventure_files(adventure_data, filepath)
+                    
+                    st.markdown("""
+                    <div class="status-success">
+                        📚 Anche i tentativi coraggiosi meritano di essere ricordati!
+                    </div>
+                    """, unsafe_allow_html=True)
+                    
+                    # Bottone per il download
+                    st.download_button(
+                        label="📥 Scarica Archivio del Tentativo",
+                        data=zip_data,
+                        file_name=f"cronache_tentativo_{filepath.stem}.zip",
+                        mime="application/zip",
+                        use_container_width=True
+                    )
+                        
+                except Exception as e:
+                    st.error(f"⚠️ Errore nel salvataggio: {e}")
+        
+        st.markdown("---")
+
         # Mostra le scelte disponibili (dovrebbe essere solo "Ricomincia")
         shuffled_choices = shuffle_choices(choices, st.session_state.choice_order_seed)
         
@@ -856,9 +1411,7 @@ def main():
                 if st.button(f"{icon} {choice['text']}", key=f"choice_gameover_{i}", use_container_width=True):
                     # Se è il bottone ricomincia dal game over
                     if choice.get('next_node') == 'start' or 'ricomincia' in choice['text'].lower():
-                        st.write(f"DEBUG GAME OVER - Prima: {len(st.session_state.get('choices_made', []))}")
                         reset_game()
-                        st.write(f"DEBUG GAME OVER - Dopo: {len(st.session_state.get('choices_made', []))}")
                     else:
                         make_choice(choice['next_node'], choice['text'])
                     st.rerun()

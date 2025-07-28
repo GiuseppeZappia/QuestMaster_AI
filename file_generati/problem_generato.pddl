@@ -1,50 +1,43 @@
-;; problem.pddl
-;; File di problema per la quest "Il Sorriso Perduto di Pipo".
-;; Definisce lo stato iniziale del mondo e l'obiettivo finale della missione.
+;; problem.pddl - Istanza della quest "Il Silenzio del Loto Nero"
+(define (problem silenzio-loto-nero-quest)
+  (:domain silenzio-loto-nero) ; ; Specifica il dominio di riferimento per questo problema
 
-(define (problem ritrovare-il-sorriso-di-pipo)
-  (:domain sorriso-perduto-di-pipo) ;; Specifica il dominio di riferimento per questo problema
-
-  ;; --- OGGETTI ---
-  ;; Definizione degli oggetti specifici presenti in questa istanza del mondo.
+  ;; Definizione degli oggetti specifici per questa istanza della lore
   (:objects
-    pipo1 - pipo ;; Il nostro eroe, il pagliaccio Pipo
-    fiore-che-ride - fiore ;; L'oggetto magico da recuperare
-
-    circus-aeturnum - luogo ;; Il punto di partenza e di arrivo della quest
-    ponte-caramello - luogo ;; Il luogo dove si trova il Guardiano Brontolone
-    labirinto-specchi - luogo ;; Il luogo dove si trova il labirinto e il mimo
-    foresta-sussurrante - luogo ;; Il luogo dove si trova il fiore e la melodia
+    kaito - eroe ; ; Il protagonista, ultimo della Guardia Shinobi
+    shogun-takeda - shogun ; ; Lo Shogun avvelenato
+    generale-onimaru - nemico ; ; Il generale nemico nel cortile
+    leader-loto-nero - nemico ; ; Il capo del Clan del Loto Nero
+    vicoli-capitale - luogo ; ; Il punto di partenza di Kaito
+    cortile-interno - luogo ; ; Luogo presidiato dal Generale Onimaru
+    biblioteca-proibita - luogo ; ; Luogo dove si trova la formula
+    giardino-avvelenato - luogo ; ; Luogo dove si trova un ingrediente raro
+    sala-del-trono - luogo ; ; Luogo finale dove si trovano lo Shogun e il leader nemico
+    fiore-di-luna - ingrediente ; ; Primo ingrediente per l'antidoto
+    radice-ombra - ingrediente ; ; Secondo ingrediente per l'antidoto
+    formula-antidoto - formula ; ; La formula per creare l'antidoto
   )
 
-  ;; --- STATO INIZIALE ---
-  ;; Descrizione dello stato del mondo all'inizio della quest.
+  ;; Definizione dello stato iniziale del mondo basato sulla lore
   (:init
-    ;; Posizioni iniziali dei personaggi e degli oggetti
-    (at pipo1 circus-aeturnum) ;; Pipo parte dal tendone del circo
-    (flower-at fiore-che-ride foresta-sussurrante) ;; Il Fiore che Ride si trova nella foresta
-
-    ;; Stato iniziale di Pipo e del circo
-    (pipo-has-lost-touch) ;; Pipo ha perso la sua comicita, il problema principale
-
-    ;; Ostacoli attivi nel mondo
-    (guardian-blocks-bridge) ;; Il Guardiano Brontolone blocca il passaggio sul ponte
-    (labyrinth-is-confusing) ;; Il labirinto degli specchi e un ostacolo attivo
-    (mime-is-sabotaging) ;; Il Mimo Silente sta attivamente sabotando la missione
-    (melody-is-sad) ;; La Melodia Malinconica e attiva e induce tristezza
-
-    ;; Definizione dei percorsi percorribili tra i luoghi
-    (path-is-clear circus-aeturnum ponte-caramello) ;; Si puo viaggiare dal circo al ponte
-    (path-is-clear ponte-caramello circus-aeturnum) ;; Si puo tornare dal ponte al circo
-    (path-is-clear ponte-caramello labirinto-specchi) ;; Si puo viaggiare dal ponte al labirinto
-    (path-is-clear labirinto-specchi ponte-caramello) ;; Si puo tornare dal labirinto al ponte
-    (path-is-clear labirinto-specchi foresta-sussurrante) ;; Si puo viaggiare dal labirinto alla foresta
-    (path-is-clear foresta-sussurrante labirinto-specchi) ;; Si puo tornare dalla foresta al labirinto
+    (at kaito vicoli-capitale) ; ; Kaito inizia la sua missione nascosto nei vicoli della capitale
+    (at shogun-takeda sala-del-trono) ; ; Lo Shogun e' prigioniero nella sala del trono
+    (at generale-onimaru cortile-interno) ; ; Il Generale Onimaru si trova nel cortile interno
+    (at leader-loto-nero sala-del-trono) ; ; Il leader del clan e' nella sala del trono
+    (at-item formula-antidoto biblioteca-proibita) ; ; La formula dell'antidoto e' nella biblioteca
+    (at-item fiore-di-luna giardino-avvelenato) ; ; Il Fiore di Luna si trova nel giardino avvelenato
+    (at-item radice-ombra biblioteca-proibita) ; ; La Radice Ombra si trova anch'essa nella biblioteca
+    (shogun-avvelenato shogun-takeda) ; ; Lo Shogun e' stato avvelenato
+    (nemico-vivo generale-onimaru) ; ; Il Generale Onimaru e' vivo e rappresenta una minaccia
+    (nemico-vivo leader-loto-nero) ; ; Il leader del Loto Nero e' vivo
+    (pattugliato cortile-interno) ; ; Il cortile interno e' pattugliato da samurai corrotti
+    (trappola-attiva cortile-interno) ; ; Ci sono trappole nel cortile per impedire l'accesso
+    (spirito-guardiano-attivo sala-del-trono) ; ; Uno spirito protegge la sala del trono
   )
 
-  ;; --- OBIETTIVO ---
-  ;; Le condizioni che devono essere vere per considerare il problema risolto.
+  ;; Definizione dell'obiettivo finale della quest
   (:goal (and
-    (circus-is-saved) ;; L'obiettivo finale e salvare il Circus Aeturnum
+    (shogun-salvato shogun-takeda) ; ; L'obiettivo primario e' salvare la vita dello Shogun
+    (castello-liberato) ; ; L'obiettivo secondario e' liberare il castello sconfiggendo il leader
   ))
 )

@@ -1,0 +1,364 @@
+{
+  "metadata": {
+    "timestamp": "2025-07-28T21:30:18.462997",
+    "completion_date": "28/07/2025 alle 21:30",
+    "total_choices": 2,
+    "final_outcome": "In corso"
+  },
+  "story_path": [
+    {
+      "from_node": "start",
+      "choice": "Parti verso la Foresta Sussurrante, iniziando dal Ponte di Caramello.",
+      "to_node": "to_ponte_caramello"
+    },
+    {
+      "from_node": "to_ponte_caramello",
+      "choice": "Prendi il sentiero che porta al Labirinto degli Specchi Deformanti.",
+      "to_node": "to_labirinto"
+    }
+  ],
+  "final_node": "to_labirinto",
+  "story_details": [
+    {
+      "node_id": "start",
+      "description": "Sei Pipo, il pagliaccio un tempo amato del Circus Aeturnum. Ora, il tuo 'tocco comico' è svanito. Il tendone, un tempo vibrante di colori, è grigio e silenzioso. La gioia che alimentava questo luogo magico si sta spegnendo. L'unica speranza è il leggendario 'Fiore che Ride', che cresce nella Foresta Sussurrante. Devi recuperarlo per salvare il tuo mondo.",
+      "choices": [
+        {
+          "text": "Parti verso la Foresta Sussurrante, iniziando dal Ponte di Caramello.",
+          "next_node": "to_ponte_caramello",
+          "is_correct": true
+        },
+        {
+          "text": "Prova a raccontare una barzelletta al tendone vuoto.",
+          "next_node": "fail_joke_1",
+          "is_correct": false
+        },
+        {
+          "text": "Chiedi aiuto al Mimo Silente, il tuo rivale.",
+          "next_node": "fail_mime_1",
+          "is_correct": false
+        },
+        {
+          "text": "Aspetta che l'ispirazione torni da sola.",
+          "next_node": "fail_wait_1",
+          "is_correct": false
+        }
+      ]
+    },
+    {
+      "node_id": "to_ponte_caramello",
+      "description": "Dopo un breve cammino, arrivi al Ponte di Caramello. Il suo guardiano, un omone brontolone, ti sbarra la strada. 'Nessuno passa senza strapparmi un sorriso!' tuona. Con un vecchio trucco quasi dimenticato, una semplice smorfia e uno starnuto a sorpresa, riesci a farlo ridere fragorosamente. La via è libera. Oltre il ponte, il sentiero si biforca.",
+      "choices": [
+        {
+          "text": "Prendi il sentiero che porta al Labirinto degli Specchi Deformanti.",
+          "next_node": "to_labirinto",
+          "is_correct": true
+        },
+        {
+          "text": "Prova a corrompere il guardiano con un fiore di zucchero filato.",
+          "next_node": "fail_bribe_1",
+          "is_correct": false
+        },
+        {
+          "text": "Tenta di attraversare a nuoto il fiume di limonata sottostante.",
+          "next_node": "fail_swim_1",
+          "is_correct": false
+        }
+      ]
+    },
+    {
+      "node_id": "to_labirinto",
+      "description": "Ti addentri nel Labirinto degli Specchi Deformanti. Le superfici riflettono le tue paure più profonde: il pubblico che ti fischia, la tua famiglia delusa, il circo in rovina. Ogni riflesso è un'eco dei tuoi dubbi, un peso sul tuo cuore.",
+      "choices": [
+        {
+          "text": "Ignora le visioni, concentrandoti sul tuo obiettivo e cercando l'uscita.",
+          "next_node": "to_foresta",
+          "is_correct": true
+        },
+        {
+          "text": "Fissa il riflesso di te stesso felice, perdendoti nei ricordi.",
+          "next_node": "fail_stare_1",
+          "is_correct": false
+        },
+        {
+          "text": "Cerca di rompere gli specchi in un impeto di rabbia.",
+          "next_node": "fail_smash_1",
+          "is_correct": false
+        }
+      ]
+    },
+    {
+      "node_id": "to_foresta",
+      "description": "Superate le tue paure, esci dal labirinto e finalmente entri nella Foresta Sussurrante. L'aria è pervasa da una magia antica. In una radura, senti la Melodia Malinconica di un carillon dimenticato che tenta di farti sprofondare nella tristezza. Ma poco più in là, vedi un bagliore caldo e gentile: è il Fiore che Ride.",
+      "choices": [
+        {
+          "text": "Resisti alla tristezza della melodia e corri a cogliere il fiore.",
+          "next_node": "get_flower",
+          "is_correct": true
+        },
+        {
+          "text": "Cedi alla melodia malinconica e ti siedi ad ascoltarla.",
+          "next_node": "fail_melody_1",
+          "is_correct": false
+        },
+        {
+          "text": "Raccogli un fiore dall'aspetto simile nelle vicinanze.",
+          "next_node": "fail_wrong_flower_1",
+          "is_correct": false
+        }
+      ]
+    },
+    {
+      "node_id": "get_flower",
+      "description": "Hai il Fiore che Ride tra le mani! I suoi petali vibrano con una risata sommessa e contagiosa, e senti una scintilla di gioia riaccendersi dentro di te. La tristezza della foresta si dissolve intorno a te. Ora devi completare la tua missione.",
+      "choices": [
+        {
+          "text": "Torna di corsa al Circus Aeturnum per usare il potere del fiore.",
+          "next_node": "restore_joy",
+          "is_correct": true
+        },
+        {
+          "text": "Decidi di tenere il fiore per te, per non essere mai più triste.",
+          "next_node": "fail_selfish_1",
+          "is_correct": false
+        }
+      ]
+    },
+    {
+      "node_id": "restore_joy",
+      "description": "Torni al circo e sollevi il Fiore che Ride. La sua risata echeggia nel tendone, scacciando il grigiore. I colori tornano più brillanti che mai, la musica riprende a suonare e il pubblico, richiamato dalla magia, riempie gli spalti. Il tuo sorriso è tornato, e il Circus Aeturnum è salvo. Missione compiuta!",
+      "choices": []
+    },
+    {
+      "node_id": "fail_joke_1",
+      "description": "Apri la bocca per raccontare una barzelletta, ma ne esce solo un sospiro carico di malinconia. Il silenzio che segue è più pesante di qualsiasi fischio.",
+      "choices": [
+        {
+          "text": "Continua...",
+          "next_node": "fail_joke_2",
+          "is_correct": false
+        }
+      ]
+    },
+    {
+      "node_id": "fail_joke_2",
+      "description": "La tua incapacità di generare anche una singola scintilla di allegria accelera il decadimento del circo. La magia si spegne del tutto. Hai fallito.",
+      "choices": [
+        {
+          "text": "Riprova",
+          "next_node": "game_over",
+          "is_correct": false
+        }
+      ]
+    },
+    {
+      "node_id": "fail_mime_1",
+      "description": "Cerchi il Mimo Silente. Lui ti osserva con un ghigno, poi mima la costruzione di un muro invisibile intorno a te. Ti senti intrappolato, non solo fisicamente, ma anche dalla sua perfidia.",
+      "choices": [
+        {
+          "text": "Continua...",
+          "next_node": "fail_mime_2",
+          "is_correct": false
+        }
+      ]
+    },
+    {
+      "node_id": "fail_mime_2",
+      "description": "Mentre sei bloccato dalla sua trappola silenziosa, il Mimo sabota le ultime vestigia di magia del circo. Hai perso tempo prezioso e la tua unica speranza. Hai fallito.",
+      "choices": [
+        {
+          "text": "Riprova",
+          "next_node": "game_over",
+          "is_correct": false
+        }
+      ]
+    },
+    {
+      "node_id": "fail_wait_1",
+      "description": "Ti siedi su una palla da circo sgonfia, aspettando un'ispirazione che non arriva. La polvere si deposita su di te e il silenzio diventa assordante.",
+      "choices": [
+        {
+          "text": "Continua...",
+          "next_node": "fail_wait_2",
+          "is_correct": false
+        }
+      ]
+    },
+    {
+      "node_id": "fail_wait_2",
+      "description": "La tua passività ha permesso alla tristezza di consumare completamente il Circus Aeturnum. Il tendone si dissolve nell'oblio. Hai fallito.",
+      "choices": [
+        {
+          "text": "Riprova",
+          "next_node": "game_over",
+          "is_correct": false
+        }
+      ]
+    },
+    {
+      "node_id": "fail_bribe_1",
+      "description": "Offri al guardiano un fiore di zucchero filato. Lui lo afferra, lo guarda con disprezzo e lo sbriciola in una nuvola rosa. Ora è ancora più arrabbiato.",
+      "choices": [
+        {
+          "text": "Continua...",
+          "next_node": "fail_bribe_2",
+          "is_correct": false
+        }
+      ]
+    },
+    {
+      "node_id": "fail_bribe_2",
+      "description": "Offeso dal tuo tentativo, il guardiano ti sbarra la strada per sempre. La Foresta Sussurrante è ormai irraggiungibile. Hai fallito.",
+      "choices": [
+        {
+          "text": "Riprova",
+          "next_node": "game_over",
+          "is_correct": false
+        }
+      ]
+    },
+    {
+      "node_id": "fail_swim_1",
+      "description": "Ti tuffi nel fiume di limonata. La corrente è sorprendentemente forte e frizzante, e ti trascina via lontano dal ponte.",
+      "choices": [
+        {
+          "text": "Continua...",
+          "next_node": "fail_swim_2",
+          "is_correct": false
+        }
+      ]
+    },
+    {
+      "node_id": "fail_swim_2",
+      "description": "Perso, bagnato e appiccicoso, non riesci più a ritrovare la strada per la foresta. Il circo, privato del suo campione, svanisce. Hai fallito.",
+      "choices": [
+        {
+          "text": "Riprova",
+          "next_node": "game_over",
+          "is_correct": false
+        }
+      ]
+    },
+    {
+      "node_id": "fail_stare_1",
+      "description": "Il riflesso di te stesso, felice e acclamato, ti cattura. La nostalgia è una trappola dolce e letale, e tu ci sei cascato in pieno.",
+      "choices": [
+        {
+          "text": "Continua...",
+          "next_node": "fail_stare_2",
+          "is_correct": false
+        }
+      ]
+    },
+    {
+      "node_id": "fail_stare_2",
+      "description": "Perso nei ricordi, dimentichi il tuo scopo. Gli specchi ti hanno confuso la mente, e la via d'uscita svanisce. Il circo è condannato. Hai fallito.",
+      "choices": [
+        {
+          "text": "Riprova",
+          "next_node": "game_over",
+          "is_correct": false
+        }
+      ]
+    },
+    {
+      "node_id": "fail_smash_1",
+      "description": "Colpisci uno specchio con un pugno. Si frantuma in mille pezzi, e ogni frammento riflette una versione distorta e terrificante delle tue paure.",
+      "choices": [
+        {
+          "text": "Continua...",
+          "next_node": "fail_smash_2",
+          "is_correct": false
+        }
+      ]
+    },
+    {
+      "node_id": "fail_smash_2",
+      "description": "Sopraffatto da innumerevoli incubi, la tua mente cede. Cadi a terra, incapace di proseguire. Hai fallito.",
+      "choices": [
+        {
+          "text": "Riprova",
+          "next_node": "game_over",
+          "is_correct": false
+        }
+      ]
+    },
+    {
+      "node_id": "fail_melody_1",
+      "description": "La melodia del carillon ti avvolge come una coperta fredda. Ti siedi ai piedi di un albero e ti abbandoni a una tristezza infinita, dimenticando il fiore, il circo, tutto.",
+      "choices": [
+        {
+          "text": "Continua...",
+          "next_node": "fail_melody_2",
+          "is_correct": false
+        }
+      ]
+    },
+    {
+      "node_id": "fail_melody_2",
+      "description": "La tristezza ti consuma completamente, prosciugando ogni tua forza e volontà. Non puoi più continuare. Hai fallito.",
+      "choices": [
+        {
+          "text": "Riprova",
+          "next_node": "game_over",
+          "is_correct": false
+        }
+      ]
+    },
+    {
+      "node_id": "fail_wrong_flower_1",
+      "description": "Cogli un fiore che si rivela essere un 'Tulipano Piangente'. Appena lo tocchi, un'ondata di tristezza ti travolge e inizi a piangere a dirotto.",
+      "choices": [
+        {
+          "text": "Continua...",
+          "next_node": "fail_wrong_flower_2",
+          "is_correct": false
+        }
+      ]
+    },
+    {
+      "node_id": "fail_wrong_flower_2",
+      "description": "Le tue lacrime salate cadono sul vicino Fiore che Ride, facendolo avvizzire all'istante. Hai distrutto la tua unica speranza. Hai fallito.",
+      "choices": [
+        {
+          "text": "Riprova",
+          "next_node": "game_over",
+          "is_correct": false
+        }
+      ]
+    },
+    {
+      "node_id": "fail_selfish_1",
+      "description": "Pensi di tenere il fiore solo per te, per garantirti una felicità eterna. Ma la magia del Fiore che Ride si nutre di condivisione, non di egoismo.",
+      "choices": [
+        {
+          "text": "Continua...",
+          "next_node": "fail_selfish_2",
+          "is_correct": false
+        }
+      ]
+    },
+    {
+      "node_id": "fail_selfish_2",
+      "description": "Percependo il tuo intento egoista, il fiore perde la sua luce, avvizzisce tra le tue mani e si trasforma in polvere. Hai perso tutto. Hai fallito.",
+      "choices": [
+        {
+          "text": "Riprova",
+          "next_node": "game_over",
+          "is_correct": false
+        }
+      ]
+    },
+    {
+      "node_id": "game_over",
+      "description": "Il sorriso di Pipo è perduto per sempre, e con esso il Circus Aeturnum. La gioia si è spenta. Vuoi tentare di riaccenderla?",
+      "choices": [
+        {
+          "text": "Ricomincia dall'inizio",
+          "next_node": "start",
+          "is_correct": true
+        }
+      ]
+    }
+  ]
+}

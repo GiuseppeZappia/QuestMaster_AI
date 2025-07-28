@@ -1,24 +1,26 @@
 {
   "lore_document": {
     "quest_description": {
-      "title": "Il Sorriso Perduto di Pipo",
-      "initial_state": "Nel magico Circus Aeturnum, il pagliaccio Pipo ha perso il suo 'tocco comico'. Le sue battute non fanno più ridere, i suoi scherzi falliscono e la gioia che alimentava la magia del circo sta svanendo. Il tendone principale è diventato grigio e il pubblico è sempre più scarso.",
-      "goal": "Aiutare Pipo a ritrovare la sua capacità di far ridere, recuperando il leggendario 'Fiore che Ride', un fiore magico che sboccia solo nel cuore della Foresta Sussurrante. Solo così potrà salvare il Circus Aeturnum dal dissolversi nel nulla.",
+      "title": "Il Silenzio del Loto Nero",
+      "initial_state": "Il Dominio dell'Alba Nascente è caduto. Lo Shogun giace avvelenato da una tossina sconosciuta, e il Castello Imperiale è stato conquistato dal Clan del Loto Nero, un gruppo di assassini ritenuto estinto. Tu sei Kaito, l'ultimo membro superstite della Guardia Shinobi dello Shogun, e ti nascondi nelle ombre della capitale occupata.",
+      "goal": "Infiltrarti nel Castello Imperiale, trovare la formula e gli ingredienti per l'antidoto che salverà lo Shogun, sconfiggere il leader del Clan del Loto Nero e liberare il Dominio dalla sua morsa oscura.",
       "obstacles": [
-        "Il Guardiano Brontolone del Ponte di Caramello, che permette il passaggio solo a chi riesce a strappargli un sorriso.",
-        "Il Labirinto degli Specchi Deformanti, che confonde il percorso e riflette le paure e i dubbi di Pipo.",
-        "Il Mimo Silente, un rivale invidioso che cercherà di sabotare la ricerca di Pipo con trappole silenziose e ingannevoli.",
-        "La Melodia Malinconica del Carillon Dimenticato, un incantesimo che induce tristezza e fa dimenticare lo scopo della missione."
+        "Le ronde di samurai corrotti e shinobi del Loto Nero che pattugliano ogni strada.",
+        "Il Castello Imperiale, ora trasformato in una fortezza piena di trappole e allarmi magici.",
+        "Generale Onimaru, il brutale braccio destro del leader nemico, che presidia il cortile interno.",
+        "Un antico spirito guardiano evocato dal Loto Nero per proteggere la sala del trono.",
+        "Gli ingredienti rari per l'antidoto, custoditi in luoghi pericolosi e sorvegliati da creature corrotte dall'alchimia oscura.",
+        "La diffidenza dei cittadini, terrorizzati dal Loto Nero e pronti a tradirti per salvarsi la vita."
       ],
-      "world_background": "Il Circus Aeturnum non è un circo comune. È un'entità semi-senziente che viaggia tra i mondi, alimentata dalla pura gioia e meraviglia del suo pubblico. I suoi artisti non sono semplici performer, ma custodi di antiche arti magiche legate alle emozioni.",
-      "contextual_information": "La famiglia di Pipo ha guidato il circo per generazioni. La sua perdita del 'tocco' non è solo una crisi personale, ma una minaccia esistenziale per l'eredità della sua famiglia e per tutti gli abitanti magici del circo, come l'uomo cannone e la donna volante, la cui magia dipende dalla felicità collettiva."
+      "world_background": "Il Dominio dell'Alba Nascente è una terra feudale dove l'onore dei samurai e l'arte segreta degli shinobi hanno mantenuto la pace per secoli. Il Clan del Loto Nero era un gruppo eretico che praticava il ninjutsu proibito e l'alchimia oscura, bandito secoli fa dopo una sanguinosa guerra civile.",
+      "contextual_information": "La conquista non è solo un atto di potere. Il leader del Loto Nero sta cercando di completare un rituale durante la prossima luna di sangue per ottenere l'immortalità, usando l'energia vitale dello Shogun. Il tempo stringe."
     },
     "branching_factor": {
-      "min_actions_per_state": 2,
+      "min_actions_per_state": 3,
       "max_actions_per_state": 4
     },
     "depth_constraints": {
-      "min_steps_to_goal": 4,
+      "min_steps_to_goal": 6,
       "max_steps_to_goal": 8
     }
   }
