@@ -409,7 +409,7 @@ st.markdown("""
         100% { transform: translateX(100%); }
     }
     
-    /* DESCRIZIONI MIGLIORIATE */
+    /* DESCRIZIONI */
     
     .phase-description {
         text-align: center;
@@ -427,7 +427,7 @@ st.markdown("""
         text-shadow: 0 0 10px rgba(255, 255, 255, 0.3);
     }
     
-    /* TESTO DELLA STORIA MIGLIORATO */
+    /* TESTO DELLA STORIA */
     
     .story-text {
         font-family: 'Crimson Text', serif;
@@ -468,7 +468,7 @@ st.markdown("""
         font-family: 'Cinzel', serif;
     }
     
-    /* DISPLAY LORE MIGLIORATO */
+    /* DISPLAY LORE */
     
     .lore-display {
         font-family: 'Crimson Text', serif;
@@ -508,7 +508,7 @@ st.markdown("""
         background: linear-gradient(45deg, #74b9ff, #4a90e2);
     }
     
-    /* MESSAGGI DI STATO MIGLIORATI */
+    /* MESSAGGI DI STATO*/
     
     .status-message {
         padding: 1.5rem 2rem;
@@ -560,7 +560,7 @@ st.markdown("""
         75% { transform: translateX(5px); }
     }
     
-    /* BOTTONI MIGLIORATI */
+    /* BOTTONI*/
     
     .stButton > button {
         background: linear-gradient(135deg, #667eea 0%, #764ba2 25%, #f093fb 50%, #667eea 75%, #764ba2 100%);
@@ -625,7 +625,7 @@ st.markdown("""
         background-size: 400% 400%;
     }
     
-    /* TEXTAREA MIGLIORATA */
+    /* TEXTAREA */
     
     .stTextArea > div > div > textarea {
         background: linear-gradient(135deg, rgba(0, 0, 0, 0.8) 0%, rgba(20, 20, 40, 0.8) 100%) !important;
@@ -655,7 +655,7 @@ st.markdown("""
         font-style: italic !important;
     }
     
-    /* SIDEBAR MIGLIORATA (per le fasi successive) */
+    /* SIDEBAR */
     
     .sidebar-content {
         background: linear-gradient(135deg, rgba(0, 0, 0, 0.9) 0%, rgba(20, 20, 40, 0.9) 100%);
@@ -701,7 +701,7 @@ st.markdown("""
         }
     }
     
-    /* PLAN DISPLAY MIGLIORATO */
+    /* PLAN DISPLAY */
     
     .plan-item {
         background: linear-gradient(135deg, rgba(0, 0, 0, 0.7) 0%, rgba(30, 30, 50, 0.7) 100%);
@@ -739,7 +739,6 @@ st.markdown("""
         text-shadow: 0 0 5px rgba(255, 255, 255, 0.2);
     }
     
-    /* RESPONSIVE IMPROVEMENTS */
     
     @media (max-width: 768px) {
         .main-header {
@@ -783,8 +782,8 @@ class AppState:
     STORY_GENERATION = "story_generation"
     GAMEPLAY = "gameplay"
 
+# Inizializza lo stato dell'applicazione 
 def initialize_app_state():
-    """Inizializza lo stato dell'applicazione"""
     if 'app_state' not in st.session_state:
         st.session_state.app_state = AppState.CREATION
     if 'llm' not in st.session_state:
@@ -810,10 +809,9 @@ def initialize_app_state():
     if 'original_user_input' not in st.session_state:
         st.session_state.original_user_input = ""
 
+# Analizza il tono della lore per adattare la voce TTS
 def detect_lore_tone(lore_text):
-    """
-    Analizza il tono della lore per adattare la voce TTS
-    """
+    
     if not lore_text:
         return "neutral"
     
@@ -845,10 +843,9 @@ def detect_lore_tone(lore_text):
     else:
         return "adventure"
 
+# Analizza il tono della storia per adattare la voce TTS 
 def detect_story_tone(story_text):
-    """
-    Analizza il tono della storia per adattare la voce TTS
-    """
+
     if not story_text:
         return "neutral"
     
@@ -879,11 +876,9 @@ def detect_story_tone(story_text):
         return "mystical"
     else:
         return "adventure"
-
+    
+# Pulisce il testo per il TTS rimuovendo emoji, caratteri speciali e formattazione
 def clean_text_for_tts(text):
-    """
-    Pulisce il testo per il TTS rimuovendo emoji, caratteri speciali e formattazione
-    """
     if not text:
         return ""
     
@@ -943,11 +938,8 @@ def clean_text_for_tts(text):
     
     return text.strip()
 
-
+# Genera audio TTS con Google TTS o fallback su pyttsx3
 def generate_tts_audio(text, tone="neutral"):
-    """
-    Genera audio TTS con Google TTS o fallback su pyttsx3
-    """
     if not text:
         return None
     
@@ -1028,10 +1020,8 @@ def generate_tts_audio(text, tone="neutral"):
     
     return audio_data
 
+# Crea un player audio HTML5 con styling personalizzato
 def create_audio_player(audio_data, tone="neutral"):
-    """
-    Crea un player audio HTML5 con styling personalizzato
-    """
     if not audio_data:
         return ""
     
@@ -1093,12 +1083,11 @@ def create_audio_player(audio_data, tone="neutral"):
     </div>
     """
 
-
+# Configura il modello LLM
 def setup_llm():
-    """Configura il modello LLM"""
     if st.session_state.llm is None:
         load_dotenv()
-        API_KEY = os.getenv("API_KEY2")            
+        API_KEY = os.getenv("API_KEY")            
         os.environ["GOOGLE_API_KEY"] = API_KEY
         st.session_state.llm = ChatGoogleGenerativeAI(
             model="gemini-2.5-pro",
@@ -1106,12 +1095,8 @@ def setup_llm():
         )
     return True
 
-
+# Esegue la validazione completa PDDL con FastDownward e VAL. 
 def validate_pddl_complete(llm, max_attempts=100):
-    """
-    Esegue la validazione completa PDDL con FastDownward e VAL.
-    """
-    
     attempt = 0
     
     while attempt < max_attempts:
@@ -1261,8 +1246,8 @@ def render_creation_phase():
     
     st.markdown('</div>', unsafe_allow_html=True)
 
+# Renderizza la fase di revisione della lore con TTS
 def render_lore_review():
-    """Renderizza la fase di revisione della lore con TTS"""
     st.markdown('<div class="creation-container fade-in">', unsafe_allow_html=True)
     
     st.markdown("""
@@ -1441,8 +1426,9 @@ def render_lore_review():
     
     st.markdown('</div>', unsafe_allow_html=True)
 
+# Renderizza la fase di validazione PDDL
 def render_validation_phase():
-    """Renderizza la fase di validazione PDDL"""
+    
     st.markdown('<div class="validation-container fade-in">', unsafe_allow_html=True)
     
     st.markdown("""
@@ -1583,8 +1569,8 @@ def render_validation_phase():
     
     st.markdown('</div>', unsafe_allow_html=True)
 
+# Renderizza la fase di revisione del piano
 def render_plan_review():
-    """Renderizza la fase di revisione del piano"""
     st.markdown('<div class="validation-container fade-in">', unsafe_allow_html=True)
     
     st.markdown("""
@@ -1775,8 +1761,9 @@ def render_plan_review():
     
     st.markdown('</div>', unsafe_allow_html=True)
 
+# Renderizza la fase di generazione della storia interattiva
 def render_story_generation():
-    """Renderizza la fase di generazione della storia interattiva"""
+    
     st.markdown('<div class="story-container fade-in">', unsafe_allow_html=True)
     
     st.markdown("""

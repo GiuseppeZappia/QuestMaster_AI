@@ -968,15 +968,15 @@ def download_adventure_files(adventure_data, filepath):
     zip_buffer = BytesIO()
     
     with zipfile.ZipFile(zip_buffer, 'w', zipfile.ZIP_DEFLATED) as zip_file:
-        # Aggiungi il file JSON completo
+        # Aggiunge il file JSON completo
         zip_file.writestr(f"{filepath.stem}.json", 
                          json.dumps(adventure_data, indent=2, ensure_ascii=False))
         
-        # Aggiungi il report leggibile
+        # Aggiunge il report leggibile
         report_content = create_adventure_report(adventure_data)
         zip_file.writestr(f"{filepath.stem}_report.txt", report_content)
         
-        # Aggiungi un file markdown formattato
+        # Aggiunge un file markdown formattato
         markdown_content = create_markdown_report(adventure_data)
         zip_file.writestr(f"{filepath.stem}_report.md", markdown_content)
     
@@ -1016,7 +1016,7 @@ def initialize_game_state():
         st.session_state.choice_order_seed = random.randint(1, 1000000)
 
 def reset_game():
-    """Resetta il gioco allo stato iniziale - FUNZIONE CORRETTA"""
+    """Resetta il gioco allo stato iniziale"""
     # Pulisce tutti gli audio in cache prima del reset
     keys_to_remove = []
     for key in st.session_state.keys():
@@ -1115,7 +1115,7 @@ def main():
         
         st.markdown("---")
         
-        # Mostra la cronologia delle scelte e Controllo se ci sono effettivamente scelte per mostrare il progresso
+        # Mostra la cronologia delle scelte e controlla se ci sono effettivamente scelte per mostrare il progresso
         if st.session_state.choices_made:
             st.markdown("""
             <div class="sidebar-content">
