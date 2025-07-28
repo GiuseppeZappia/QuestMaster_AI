@@ -49,12 +49,12 @@ def create_problem_pddl(llm):
     # Genera il problem.pddl
     problem_response = llm.invoke(problem_prompt)
 
-    # Estrai e pulisci la risposta PROBLEM
+    # Estrae e pulisci la risposta PROBLEM
     problem_text = problem_response.content.strip()
 
     # Prova a estrarre il PDDL dalla risposta
     if "```" in problem_text:
-        # Rimuovi i code blocks se presenti
+        # Rimuove i code blocks se presenti
         start_idx = problem_text.find("```")
         if start_idx != -1:
             # Trova la fine del primo ```

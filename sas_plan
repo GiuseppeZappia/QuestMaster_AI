@@ -1,0 +1,6 @@
+(move pipo1 circus-aeturnum ponte-caramello)
+(move pipo1 ponte-caramello labirinto-specchi)
+(move pipo1 labirinto-specchi foresta-sussurrante)
+(get-laughing-flower pipo1 fiore-che-ride foresta-sussurrante)
+(restore-circus-joy pipo1 fiore-che-ride foresta-sussurrante)
+; cost = 5 (unit cost)

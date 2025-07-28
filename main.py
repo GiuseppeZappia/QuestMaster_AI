@@ -24,7 +24,7 @@ def main():
     # Configurazione API key
     os.environ["GOOGLE_API_KEY"] = API_KEY
 
-    # Inizializza il modello Gemini 
+    # Inizializzazione del modello Gemini 
     llm = ChatGoogleGenerativeAI(
         model="gemini-2.5-pro",
         temperature=0.6
@@ -65,7 +65,7 @@ def main():
         print(f"Errore: {validation_final_results['error']}")
         return validation_final_results
     
-    # Estrai i risultati finali
+    # Estrae i risultati finali
     pddl_validation_output = validation_final_results["pddl_output"]
     
     # Human in the Loop (HITL) per la validazione del piano

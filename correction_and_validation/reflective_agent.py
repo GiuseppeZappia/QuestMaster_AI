@@ -96,7 +96,6 @@ def correct_pddl(pddl_problem, llm):
         elif "PROBLEM" in first_lines:
             is_problem_correction = True
         else:
-            print("sono alla fine non ho trovato nulla")
             # Ultimo fallback: cerca pattern più specifici nel codice PDDL
             if "```" in response_text:
                 # Estrai il blocco di codice per l'analisi
@@ -113,15 +112,15 @@ def correct_pddl(pddl_problem, llm):
                             elif "(define (problem" in code_block:
                                 is_problem_correction = True
     
-    # Estrai il PDDL dalla risposta
+    # Estrae il PDDL dalla risposta
     corrected_pddl = response_text
     if "```" in corrected_pddl:
         # Trova tutti i blocchi di codice
         parts = corrected_pddl.split("```")
         if len(parts) >= 3:
-            # Prendi il primo blocco di codice (indice 1)
+            # Prende il primo blocco di codice (indice 1)
             code_block = parts[1]
-            # Rimuovi la prima riga se contiene "pddl" o altri marker
+            # Rimuove la prima riga se contiene "pddl" o altri marker
             lines = code_block.split('\n')
             if lines and ('pddl' in lines[0].lower() or lines[0].strip() == ''):
                 corrected_pddl = '\n'.join(lines[1:]).strip()
@@ -232,7 +231,7 @@ def update_lore_with_corrections(richieste_utente,llm):
 
     response=llm.invoke(prompt)
 
-    # Estrai e pulisci la risposta
+    # Estrae e pulisce la risposta
     response_text = response.content.strip()
 
     # Prova a estrarre il JSON dalla risposta
@@ -252,7 +251,7 @@ def update_lore_with_corrections(richieste_utente,llm):
             json_text = response_text
 
     try:
-        # Converti in dizionario per validare
+        # Converte in dizionario per validare
         lore_data = json.loads(json_text)
         
         # Salva la lore generata
@@ -339,7 +338,7 @@ def run_user_correction_pddl(user_corrections, llm):
                 # Trova tutti i blocchi ```pddl
                 parts = content.split("```pddl")
                 if len(parts) >= 2:
-                    # Prendi il contenuto dopo ```pddl fino al prossimo ```
+                    # Prende il contenuto dopo ```pddl fino al prossimo ```
                     pddl_content = parts[1].split("```")[0].strip()
                     return pddl_content
             elif "```" in content:
@@ -356,17 +355,14 @@ def run_user_correction_pddl(user_corrections, llm):
             problem_start = response_content.find("===PROBLEM===")
             
             if domain_start != -1 and problem_start != -1 and domain_start < problem_start:
-                # Estrai la sezione domain (da ===DOMAIN=== a ===PROBLEM===)
+                # Estrae la sezione domain (da ===DOMAIN=== a ===PROBLEM===)
                 domain_section = response_content[domain_start + len("===DOMAIN==="):problem_start].strip()
-                # Estrai la sezione problem (da ===PROBLEM=== in poi)
+                # Estrae la sezione problem (da ===PROBLEM=== in poi)
                 problem_section = response_content[problem_start + len("===PROBLEM==="):].strip()
-                
-                
-                # Estrai il contenuto PDDL dai blocchi markdown
+                  
+                # Estrae il contenuto PDDL dai blocchi markdown
                 domain_content = extract_pddl_from_markdown(domain_section)
                 problem_content = extract_pddl_from_markdown(problem_section)
-                
-    
                 
                 # Verifica che il contenuto estratto sia valido
                 if not domain_content or not problem_content:

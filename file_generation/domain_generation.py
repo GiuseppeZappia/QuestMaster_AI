@@ -44,12 +44,12 @@ def create_domain_pddl(llm):
     # Genera il domain.pddl 
     pddl_response = llm.invoke(pddl_prompt)
 
-    # Estrai e pulisci la risposta PDDL
+    # Estrae e pulisci la risposta PDDL
     pddl_text = pddl_response.content.strip()
 
     # Prova a estrarre il PDDL dalla risposta
     if "```" in pddl_text:
-        # Rimuovi i code blocks se presenti
+        # Rimuove i code blocks se presenti
         start_idx = pddl_text.find("```")
         if start_idx != -1:
             # Trova la fine del primo ```
